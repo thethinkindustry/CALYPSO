@@ -19,16 +19,23 @@ namespace CALYPSO
         OleDbCommand cmd;
         string query;
         OleDbDataReader reader;
-      
+
+
+        public String SelectedDoctorName="";
+        public String fromDate, toDate;
+        public int Totalprice = 0;
         DataTable table = new DataTable();
         public Form1()
         {
 
             InitializeComponent();
+
             Frm_print = new frm_print();
+            Frm_print.frm1 = this;
+
             frm_update = new Frm_update_patient();
             frm_update.frm1 = this;
-            Frm_print.frm1 = this;
+            
             con = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=db_calypso.mdb");
             cmd = new OleDbCommand();
 
@@ -145,8 +152,6 @@ namespace CALYPSO
         private void cb_doctor_name_SelectedIndexChanged(object sender, EventArgs e)
         {
             //cb_doctor_name.Items.Clear();
-
-
 
         }
 
@@ -293,7 +298,7 @@ namespace CALYPSO
         {
             pB_add_pattient_Click(sender, e);
         }
-          void view_data(OleDbDataAdapter adtr)
+        void view_data(OleDbDataAdapter adtr)
         {
             table.Clear();
             adtr.Fill(table);
@@ -311,6 +316,7 @@ namespace CALYPSO
             dgv_main.Columns[10].HeaderText = "Doktor Notu";
             dgv_main.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
+
         private void pb_search_Click(object sender, EventArgs e)
         {
 
@@ -414,6 +420,8 @@ namespace CALYPSO
 
         private void cmb_select_dr_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
+
             try
             {
                 String query = "SELECT proc_id,patient_name , process_name,deadline ,num ,unit_price, price FROM tbl_main  WHERE dr_name='" + cmb_select_dr.Text + "' AND (( deadline between #" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "# AND #" + dt_todate.Value.ToString("yyyy-MM-dd") + "#)) ";
@@ -451,15 +459,16 @@ namespace CALYPSO
 
         private void pb_printp_Click(object sender, EventArgs e)
         {
+            Totalprice = 0;
             //int paid = 1;
             string query;
             OleDbCommand cmd = new OleDbCommand();
             DataTable _table = new DataTable();
             try
             {
-
                 for (int i = 0; i < dgv_patients.Rows.Count-1; i++)
                 {
+                    Totalprice +=int.Parse(dgv_patients.Rows[i].Cells[6].Value.ToString());
                     #region Insert print              
                     query = "UPDATE  tbl_main SET printed=@pat WHERE proc_id=@id";
                     OleDbCommand cmdd = new OleDbCommand();
@@ -468,11 +477,15 @@ namespace CALYPSO
                     cmdd.Parameters.AddWithValue("@pat", "Evet");
                     cmdd.Parameters.AddWithValue("@id", dgv_patients.Rows[i].Cells[0].Value);
                     cmdd.ExecuteNonQuery();
-                    MessageBox.Show("OK");
-                   
                     #endregion
                 }
-                con.Close();
+                
+                SelectedDoctorName = cmb_select_dr.Text;
+                fromDate = dt_fromdate.Value.ToString("yyyy-MM-dd");
+                toDate = dt_todate.Value.ToString("yyyy-MM-dd");
+
+                MessageBox.Show("OK:");
+                //con.Close();
                 Frm_print.frm1.Frm_print.ShowDialog();
             }
             catch (Exception ex)
