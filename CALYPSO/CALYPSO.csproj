@@ -94,6 +94,7 @@
     <Compile Include="init_form.Designer.cs">
       <DependentUpon>init_form.cs</DependentUpon>
     </Compile>
+    <Compile Include="patient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
@@ -130,6 +131,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Report1.rdlc" />
     <EmbeddedResource Include="ReportPage.rdlc" />
     <EmbeddedResource Include="teeth.resx">
       <DependentUpon>teeth.cs</DependentUpon>
@@ -146,6 +148,7 @@
       <DependentUpon>DataQuery.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\patient.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

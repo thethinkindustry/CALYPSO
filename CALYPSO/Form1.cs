@@ -25,6 +25,7 @@ namespace CALYPSO
         public String fromDate, toDate;
         public int Totalprice = 0;
         DataTable table = new DataTable();
+       public List<patient> lst = new List<patient>();
         public Form1()
         {
 
@@ -76,7 +77,7 @@ namespace CALYPSO
             pnl_add_patient.Visible = false;
 
         }
-
+     
         public void onClickList(PictureBox rb)
         {
             if (rb.BackColor == Color.DarkSlateGray)
@@ -424,7 +425,7 @@ namespace CALYPSO
 
             try
             {
-                String query = "SELECT proc_id,patient_name , process_name,deadline ,num ,unit_price, price FROM tbl_main  WHERE dr_name='" + cmb_select_dr.Text + "' AND (( deadline between #" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "# AND #" + dt_todate.Value.ToString("yyyy-MM-dd") + "#)) ";
+                String query = "SELECT proc_id,patient_name , process_name,deadline ,num ,unit_price, price,printed FROM tbl_main  WHERE dr_name='" + cmb_select_dr.Text + "' AND (( deadline between #" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "# AND #" + dt_todate.Value.ToString("yyyy-MM-dd") + "#)) ";
                 OleDbDataAdapter _adtr = new OleDbDataAdapter(query, con);
                 DataTable ptable = new DataTable();
                 _adtr.Fill(ptable);
@@ -436,6 +437,7 @@ namespace CALYPSO
                 dgv_patients.Columns[4].HeaderText = "Adet";
                 dgv_patients.Columns[5].HeaderText = "Birim Fiyat";
                 dgv_patients.Columns[6].HeaderText = "Fiyat";
+                dgv_patients.Columns[7].HeaderText = "Yazdırıldı";
                 dgv_patients.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             }
             catch (Exception ex)
@@ -466,8 +468,11 @@ namespace CALYPSO
             DataTable _table = new DataTable();
             try
             {
+                 
+                lst.Clear();
                 for (int i = 0; i < dgv_patients.Rows.Count-1; i++)
                 {
+                    
                     Totalprice +=int.Parse(dgv_patients.Rows[i].Cells[6].Value.ToString());
                     #region Insert print              
                     query = "UPDATE  tbl_main SET printed=@pat WHERE proc_id=@id";
@@ -477,23 +482,56 @@ namespace CALYPSO
                     cmdd.Parameters.AddWithValue("@pat", "Evet");
                     cmdd.Parameters.AddWithValue("@id", dgv_patients.Rows[i].Cells[0].Value);
                     cmdd.ExecuteNonQuery();
+                    if ("Evet" == dgv_patients.Rows[i].Cells[7].Value.ToString())
+                    {
+                        DialogResult dialogResult = MessageBox.Show(dgv_patients.Rows[i].Cells[1].Value.ToString() + " Adlı Kullanıcı daha once yazdırılmış Yazdırmak istediğinizden emin misiniz?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (dialogResult == DialogResult.No)
+                        {
+                            int selectedIndex = dgv_patients.Rows[i].Cells[7].RowIndex;
+                            if (selectedIndex > -1)
+                            {
+                                dgv_patients.Rows.RemoveAt(selectedIndex);
+                                dgv_patients.Refresh();
+                            }
+                        }
+                  }
+                    
                     #endregion
                 }
                 
-                SelectedDoctorName = cmb_select_dr.Text;
+               
+                    SelectedDoctorName = cmb_select_dr.Text;
                 fromDate = dt_fromdate.Value.ToString("yyyy-MM-dd");
                 toDate = dt_todate.Value.ToString("yyyy-MM-dd");
 
                 MessageBox.Show("OK:");
                 //con.Close();
+                
+                for (int i = 0; i < dgv_patients.Rows.Count - 1; i++)
+                {
+                    lst.Add(new patient
+                    {
+                        patient_name = dgv_patients.Rows[i].Cells[1].Value.ToString(),
+                        proc_name = dgv_patients.Rows[i].Cells[2].Value.ToString(),
+                        date = dgv_patients.Rows[i].Cells[3].Value.ToString(),
+                        num = dgv_patients.Rows[i].Cells[4].Value.ToString(),
+                        price = dgv_patients.Rows[i].Cells[5].Value.ToString(),
+                        total_price = dgv_patients.Rows[i].Cells[6].Value.ToString()
+                    });
+                }
+                
                 Frm_print.frm1.Frm_print.ShowDialog();
+                cmb_select_dr_SelectedIndexChanged(sender, e);
+
             }
+        
             catch (Exception ex)
             {
                 MessageBox.Show("hata" + ex);
                  throw;
             }
         }
+      
     }
 }
 
