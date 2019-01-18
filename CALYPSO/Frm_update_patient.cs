@@ -18,7 +18,7 @@ namespace CALYPSO
         OleDbCommand cmd;
         string query;
         OleDbDataReader reader;
-       
+        int last_payment;
         public Frm_update_patient()
         {
             InitializeComponent();
@@ -43,7 +43,7 @@ namespace CALYPSO
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cb_doctor_name.Items.Add(reader["dr_name"].ToString());
+                    cb_doctor_name.Items.Add(reader["name"].ToString());
                 }
                 reader.Close();
             }
@@ -105,8 +105,9 @@ namespace CALYPSO
             txt_unit_price.Text= frm1.dgv_main.CurrentRow.Cells[9].Value.ToString();
            
             rtx_doctor_notes.Text= frm1.dgv_main.CurrentRow.Cells[10].Value.ToString();
+            last_payment =Convert.ToInt16(frm1.dgv_main.CurrentRow.Cells[8].Value.ToString())* Convert.ToInt16(frm1.dgv_main.CurrentRow.Cells[9].Value.ToString());
         }
-
+        
 
 
         private void btn_cancel_Click(object sender, EventArgs e)
@@ -181,10 +182,27 @@ namespace CALYPSO
                 cmd.Parameters.AddWithValue("@deadline", dtp_deadline.Value.ToShortDateString());
                 cmd.Parameters.AddWithValue("@dr_note", rtx_doctor_notes.Text);
                 cmd.Parameters.AddWithValue("@ID", txt_ID.Text);
-
-
                 cmd.ExecuteNonQuery();
+                string query_ = "SELECT kimlik, payment FROM tbl_dr WHERE name='" + cb_doctor_name.Text + "' ";
+                OleDbCommand cmdw = new OleDbCommand();
+                cmdw.Connection = con;
+                cmdw.CommandText = query_;
+                OleDbDataReader read = cmdw.ExecuteReader();
+                int payment = 0;
+                int kimlik = 0;
 
+                while (read.Read())
+                {
+                    payment = Convert.ToInt16(read["payment"].ToString());
+                    kimlik = Convert.ToInt16(read["kimlik"].ToString());
+                }
+                read.Close();
+                payment += counter * Convert.ToInt16(txt_unit_price.Text);
+                payment -= last_payment;
+                OleDbCommand cmdk = new OleDbCommand("UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id", con);
+                cmdk.Parameters.AddWithValue("@pay", payment.ToString());
+                cmdk.Parameters.AddWithValue("@id", kimlik);
+                cmdk.ExecuteNonQuery();
                 MessageBox.Show("Kayıt başarıyla tamamlandı");
                 this.Close();
             }
@@ -211,7 +229,7 @@ namespace CALYPSO
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cb_doctor_name.Items.Add(reader["dr_name"].ToString());
+                    cb_doctor_name.Items.Add(reader["name"].ToString());
                 }
                 reader.Close();
 
@@ -256,6 +274,8 @@ namespace CALYPSO
         {
 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
+
+       
     }
 
 }

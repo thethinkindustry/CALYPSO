@@ -20,14 +20,14 @@ namespace CALYPSO
         string query;
         OleDbDataReader reader;
 
-
-        public String SelectedDoctorName="";
-        public String fromDate, toDate;
+      public  print_informations p_info = new print_informations();
+      //  public String SelectedDoctorName="";
+       // public String fromDate, toDate;
         public int Totalprice = 0;
         DataTable table = new DataTable();
        public List<patient> lst = new List<patient>();
         public Form1()
-        {
+        { 
 
             InitializeComponent();
 
@@ -58,7 +58,7 @@ namespace CALYPSO
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cb_doctor_name.Items.Add(reader["dr_name"].ToString());
+                    cb_doctor_name.Items.Add(reader["name"].ToString());
                 }
                 reader.Close();
             }
@@ -116,9 +116,9 @@ namespace CALYPSO
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            con.Close();
+           /* con.Close();
             var newForm = new teeth();
-            newForm.ShowDialog();
+            newForm.ShowDialog();*/
 
         }
 
@@ -137,7 +137,7 @@ namespace CALYPSO
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cb_doctor_name.Items.Add(reader["dr_name"].ToString());
+                    cb_doctor_name.Items.Add(reader["name"].ToString());
                 }
                 reader.Close();
 
@@ -266,7 +266,26 @@ namespace CALYPSO
                  cmd.Parameters.AddWithValue("@deadline", dtp_deadline.Value.ToShortDateString());
                  cmd.Parameters.AddWithValue("@dr_note", rtx_doctor_notes.Text);
                 cmd.ExecuteNonQuery();
-
+               string query_ = "SELECT kimlik, payment FROM tbl_dr WHERE name='"+ cb_doctor_name.Text + "' ";
+                OleDbCommand cmdw = new OleDbCommand();
+                cmdw.Connection = con;
+                cmdw.CommandText = query_;
+                OleDbDataReader read = cmdw.ExecuteReader();
+                  int payment=0;
+                int kimlik=0;
+                   
+                  while (read.Read())
+                  {
+                     payment =Convert.ToInt16( read["payment"].ToString());
+                    kimlik = Convert.ToInt16(read["kimlik"].ToString());
+                  }
+                  read.Close();
+                 payment += counter*Convert.ToInt16(txt_unit_price.Text);
+                OleDbCommand cmdk= new OleDbCommand("UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id",con);
+                cmdk.Parameters.AddWithValue("@pay", payment.ToString());
+                cmdk.Parameters.AddWithValue("@id", kimlik);
+                cmdk.ExecuteNonQuery();
+                // MessageBox.Show("borç"+ payment+"kimlik ="+kimlik );
                 MessageBox.Show("Kayıt başarıyla tamamlandı");
 
                 pnl_add_patient.Visible = false;
@@ -293,6 +312,7 @@ namespace CALYPSO
             pnl_add_patient.Visible = true;
             pnl_search.Visible = false;
             pnl_print.Visible = false;
+            pnl_payment.Visible = false;
         }
 
         private void lbl_ad_patient_Click(object sender, EventArgs e)
@@ -320,7 +340,7 @@ namespace CALYPSO
 
         private void pb_search_Click(object sender, EventArgs e)
         {
-
+            pnl_payment.Visible = false;
             pnl_search.Visible = true;
             pnl_add_patient.Visible = false;
             pnl_print.Visible = false;
@@ -395,6 +415,8 @@ namespace CALYPSO
       
         private void pB_data_view_Click(object sender, EventArgs e)
         {
+            cmb_select_dr.Items.Clear();
+            pnl_payment.Visible = false;
             pnl_print.Visible = true;
             pnl_add_patient.Visible = false;
             pnl_search.Visible = false;
@@ -407,7 +429,7 @@ namespace CALYPSO
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cmb_select_dr.Items.Add(reader["dr_name"].ToString());
+                    cmb_select_dr.Items.Add(reader["name"].ToString());
                 }
                 reader.Close();
 
@@ -459,6 +481,98 @@ namespace CALYPSO
             }
         }
 
+        private void pb_payment_Click(object sender, EventArgs e)
+        {
+            pnl_print.Visible = false;
+            pnl_add_patient.Visible = false;
+            pnl_search.Visible = false;
+            pnl_payment.Visible = true;
+            try
+            {
+
+                cmd.Connection = con;
+                query = "select name,number,payment From tbl_dr ";
+                cmd.CommandText = query;
+                OleDbDataAdapter adapter = new OleDbDataAdapter(query, con);
+                DataTable paytable = new DataTable();
+                adapter.Fill(paytable);
+               dgv_dr_payment.DataSource = paytable;
+                dgv_dr_payment.Columns[0].HeaderText = "Doktor Adı";
+                dgv_dr_payment.Columns[1].HeaderText = "Tel. No";
+                dgv_dr_payment.Columns[2].HeaderText = "Borç Miktarı";
+                dgv_dr_payment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR" + ex);
+                throw;
+            }
+
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+             pB_data_view_Click(sender, e);
+        }
+
+        private void label51_Click(object sender, EventArgs e)
+        {
+            pb_payment_Click( sender,  e);
+        }
+
+        
+
+        private void btn_complate_payment_Click(object sender, EventArgs e)
+        {
+            int payment = Convert.ToInt16(txt_remainingpayment.Text) - Convert.ToInt16(txt_payment.Text);
+            DialogResult result = MessageBox.Show(txt_pdr_name.Text + " adlı doktordan " + txt_payment.Text + "₺ ödeme alınacaktır.\n Kalan borç=" + payment + "\n işlemi onaylıyor musunuz?","Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result==DialogResult.Yes)
+            {
+                string query_ = "SELECT kimlik FROM tbl_dr WHERE name='" + txt_pdr_name.Text + "' ";
+                OleDbCommand cmdw = new OleDbCommand();
+                cmdw.Connection = con;
+                cmdw.CommandText = query_;
+                OleDbDataReader read = cmdw.ExecuteReader();
+                int kimlik = 0;
+                while (read.Read())
+                {
+                    kimlik = Convert.ToInt16(read["kimlik"].ToString());
+                }
+                read.Close();
+                OleDbCommand cmdk = new OleDbCommand("UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id", con);
+                cmdk.Parameters.AddWithValue("@pay", payment.ToString());
+                cmdk.Parameters.AddWithValue("@id", kimlik);
+                cmdk.ExecuteNonQuery();
+              //  MessageBox.Show("Kayıt başarıyla tamamlandı kimlik= " + kimlik + "borç= " + payment);
+                query = "select name,number,payment From tbl_dr ";
+                cmd.CommandText = query;
+                OleDbDataAdapter adapter = new OleDbDataAdapter(query, con);
+                DataTable paytable = new DataTable();
+                adapter.Fill(paytable);
+                dgv_dr_payment.DataSource = paytable;
+            }
+            txt_pdr_name.Clear();
+            txt_remainingpayment.Clear();
+            txt_payment.Clear();
+        }
+
+        private void dgv_dr_payment_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int selectedIndex = dgv_dr_payment.CurrentCell.RowIndex;
+            if (selectedIndex > -1)
+            {
+                txt_pdr_name.Text = dgv_dr_payment.CurrentRow.Cells[0].Value.ToString();
+               txt_remainingpayment.Text = dgv_dr_payment.CurrentRow.Cells[2].Value.ToString();
+
+            }
+        }
+
+        private void txt_payment_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
         private void pb_printp_Click(object sender, EventArgs e)
         {
             Totalprice = 0;
@@ -473,7 +587,7 @@ namespace CALYPSO
                 for (int i = 0; i < dgv_patients.Rows.Count-1; i++)
                 {
                     
-                    Totalprice +=int.Parse(dgv_patients.Rows[i].Cells[6].Value.ToString());
+                   
                     #region Insert print              
                     query = "UPDATE  tbl_main SET printed=@pat WHERE proc_id=@id";
                     OleDbCommand cmdd = new OleDbCommand();
@@ -492,18 +606,21 @@ namespace CALYPSO
                             {
                                 dgv_patients.Rows.RemoveAt(selectedIndex);
                                 dgv_patients.Refresh();
+                                if(i>0)
+                                i--;
                             }
                         }
-                  }
+                        else
+                        {
+
+                        }
+                       
+                    }
                     
                     #endregion
                 }
-                
-               
-                    SelectedDoctorName = cmb_select_dr.Text;
-                fromDate = dt_fromdate.Value.ToString("yyyy-MM-dd");
-                toDate = dt_todate.Value.ToString("yyyy-MM-dd");
 
+                
                 MessageBox.Show("OK:");
                 //con.Close();
                 
@@ -517,9 +634,14 @@ namespace CALYPSO
                         num = dgv_patients.Rows[i].Cells[4].Value.ToString(),
                         price = dgv_patients.Rows[i].Cells[5].Value.ToString(),
                         total_price = dgv_patients.Rows[i].Cells[6].Value.ToString()
-                    });
+                         
+                });
+                    Totalprice += int.Parse(dgv_patients.Rows[i].Cells[6].Value.ToString());
                 }
-                
+                p_info.SelectedDoctorName = cmb_select_dr.Text;
+                p_info.fromDate = dt_fromdate.Value.ToString("yyyy-MM-dd");
+                p_info.toDate = dt_todate.Value.ToString("yyyy-MM-dd");
+                p_info.Totalprice = Totalprice;
                 Frm_print.frm1.Frm_print.ShowDialog();
                 cmb_select_dr_SelectedIndexChanged(sender, e);
 

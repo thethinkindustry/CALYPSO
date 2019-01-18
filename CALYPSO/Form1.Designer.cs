@@ -132,6 +132,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label51 = new System.Windows.Forms.Label();
+            this.pb_payment = new System.Windows.Forms.PictureBox();
             this.lbl_search = new System.Windows.Forms.Label();
             this.pb_search = new System.Windows.Forms.PictureBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -155,6 +157,17 @@
             this.dgv_patients = new System.Windows.Forms.DataGridView();
             this.label48 = new System.Windows.Forms.Label();
             this.cmb_select_dr = new System.Windows.Forms.ComboBox();
+            this.pnl_payment = new System.Windows.Forms.Panel();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.dgv_dr_payment = new System.Windows.Forms.DataGridView();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.txt_pdr_name = new System.Windows.Forms.TextBox();
+            this.label50 = new System.Windows.Forms.Label();
+            this.btn_complate_payment = new System.Windows.Forms.Button();
+            this.label52 = new System.Windows.Forms.Label();
+            this.txt_payment = new System.Windows.Forms.TextBox();
+            this.txt_remainingpayment = new System.Windows.Forms.TextBox();
+            this.label53 = new System.Windows.Forms.Label();
             this.pnl_add_patient.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -199,6 +212,7 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_payment)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_search)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_data_view)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_add_pattient)).BeginInit();
@@ -208,6 +222,10 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_printp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_patients)).BeginInit();
+            this.pnl_payment.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_dr_payment)).BeginInit();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_add_patient
@@ -223,9 +241,9 @@
             this.pnl_add_patient.Controls.Add(this.groupBox4);
             this.pnl_add_patient.Controls.Add(this.groupBox3);
             this.pnl_add_patient.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnl_add_patient.Location = new System.Drawing.Point(147, 0);
+            this.pnl_add_patient.Location = new System.Drawing.Point(139, 0);
             this.pnl_add_patient.Name = "pnl_add_patient";
-            this.pnl_add_patient.Size = new System.Drawing.Size(1308, 738);
+            this.pnl_add_patient.Size = new System.Drawing.Size(1316, 738);
             this.pnl_add_patient.TabIndex = 1;
             // 
             // groupBox6
@@ -1305,6 +1323,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.LightSlateGray;
+            this.panel1.Controls.Add(this.label51);
+            this.panel1.Controls.Add(this.pb_payment);
             this.panel1.Controls.Add(this.lbl_search);
             this.panel1.Controls.Add(this.pb_search);
             this.panel1.Controls.Add(this.label15);
@@ -1316,6 +1336,29 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(141, 738);
             this.panel1.TabIndex = 2;
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label51.ForeColor = System.Drawing.Color.White;
+            this.label51.Location = new System.Drawing.Point(24, 476);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(87, 20);
+            this.label51.TabIndex = 14;
+            this.label51.Text = "Ödemeler ";
+            this.label51.Click += new System.EventHandler(this.label51_Click);
+            // 
+            // pb_payment
+            // 
+            this.pb_payment.Image = ((System.Drawing.Image)(resources.GetObject("pb_payment.Image")));
+            this.pb_payment.Location = new System.Drawing.Point(23, 384);
+            this.pb_payment.Name = "pb_payment";
+            this.pb_payment.Size = new System.Drawing.Size(87, 91);
+            this.pb_payment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_payment.TabIndex = 12;
+            this.pb_payment.TabStop = false;
+            this.pb_payment.Click += new System.EventHandler(this.pb_payment_Click);
             // 
             // lbl_search
             // 
@@ -1350,6 +1393,7 @@
             this.label15.Size = new System.Drawing.Size(56, 20);
             this.label15.TabIndex = 9;
             this.label15.Text = "Yazdir";
+            this.label15.Click += new System.EventHandler(this.label15_Click);
             // 
             // pB_data_view
             // 
@@ -1394,9 +1438,9 @@
             this.pnl_search.Controls.Add(this.label1);
             this.pnl_search.Controls.Add(this.txt_search_dr);
             this.pnl_search.Controls.Add(this.dgv_main);
-            this.pnl_search.Location = new System.Drawing.Point(140, 0);
+            this.pnl_search.Location = new System.Drawing.Point(139, 0);
             this.pnl_search.Name = "pnl_search";
-            this.pnl_search.Size = new System.Drawing.Size(1320, 738);
+            this.pnl_search.Size = new System.Drawing.Size(1321, 738);
             this.pnl_search.TabIndex = 12;
             this.pnl_search.Visible = false;
             // 
@@ -1465,9 +1509,9 @@
             // pnl_print
             // 
             this.pnl_print.Controls.Add(this.groupBox1);
-            this.pnl_print.Location = new System.Drawing.Point(147, 5);
+            this.pnl_print.Location = new System.Drawing.Point(139, 5);
             this.pnl_print.Name = "pnl_print";
-            this.pnl_print.Size = new System.Drawing.Size(1308, 730);
+            this.pnl_print.Size = new System.Drawing.Size(1316, 730);
             this.pnl_print.TabIndex = 113;
             this.pnl_print.Visible = false;
             // 
@@ -1486,7 +1530,6 @@
             this.groupBox1.Size = new System.Drawing.Size(1264, 699);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            
             // 
             // pb_printp
             // 
@@ -1561,6 +1604,113 @@
             this.cmb_select_dr.TabIndex = 2;
             this.cmb_select_dr.SelectedIndexChanged += new System.EventHandler(this.cmb_select_dr_SelectedIndexChanged);
             // 
+            // pnl_payment
+            // 
+            this.pnl_payment.Controls.Add(this.groupBox8);
+            this.pnl_payment.Controls.Add(this.groupBox7);
+            this.pnl_payment.Location = new System.Drawing.Point(139, 0);
+            this.pnl_payment.Name = "pnl_payment";
+            this.pnl_payment.Size = new System.Drawing.Size(1316, 735);
+            this.pnl_payment.TabIndex = 114;
+            this.pnl_payment.Visible = false;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.dgv_dr_payment);
+            this.groupBox8.Location = new System.Drawing.Point(32, 31);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(460, 659);
+            this.groupBox8.TabIndex = 9;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "DOKTOR BORÇ TABLOSU";
+            // 
+            // dgv_dr_payment
+            // 
+            this.dgv_dr_payment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_dr_payment.Location = new System.Drawing.Point(11, 28);
+            this.dgv_dr_payment.Name = "dgv_dr_payment";
+            this.dgv_dr_payment.RowTemplate.Height = 24;
+            this.dgv_dr_payment.Size = new System.Drawing.Size(419, 608);
+            this.dgv_dr_payment.TabIndex = 7;
+            this.dgv_dr_payment.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_dr_payment_CellDoubleClick);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.txt_pdr_name);
+            this.groupBox7.Controls.Add(this.label50);
+            this.groupBox7.Controls.Add(this.btn_complate_payment);
+            this.groupBox7.Controls.Add(this.label52);
+            this.groupBox7.Controls.Add(this.txt_payment);
+            this.groupBox7.Controls.Add(this.txt_remainingpayment);
+            this.groupBox7.Controls.Add(this.label53);
+            this.groupBox7.Location = new System.Drawing.Point(516, 37);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(295, 208);
+            this.groupBox7.TabIndex = 8;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Ödeme işlemleri";
+            // 
+            // txt_pdr_name
+            // 
+            this.txt_pdr_name.Enabled = false;
+            this.txt_pdr_name.Location = new System.Drawing.Point(139, 40);
+            this.txt_pdr_name.Name = "txt_pdr_name";
+            this.txt_pdr_name.Size = new System.Drawing.Size(122, 22);
+            this.txt_pdr_name.TabIndex = 7;
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(51, 42);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(82, 17);
+            this.label50.TabIndex = 1;
+            this.label50.Text = "Doktor Adı :";
+            // 
+            // btn_complate_payment
+            // 
+            this.btn_complate_payment.Location = new System.Drawing.Point(149, 142);
+            this.btn_complate_payment.Name = "btn_complate_payment";
+            this.btn_complate_payment.Size = new System.Drawing.Size(112, 37);
+            this.btn_complate_payment.TabIndex = 6;
+            this.btn_complate_payment.Text = "işlemi tamamla";
+            this.btn_complate_payment.UseVisualStyleBackColor = true;
+            this.btn_complate_payment.Click += new System.EventHandler(this.btn_complate_payment_Click);
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(48, 79);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(85, 17);
+            this.label52.TabIndex = 2;
+            this.label52.Text = "Kalan Borç :";
+            // 
+            // txt_payment
+            // 
+            this.txt_payment.Location = new System.Drawing.Point(139, 110);
+            this.txt_payment.Name = "txt_payment";
+            this.txt_payment.Size = new System.Drawing.Size(122, 22);
+            this.txt_payment.TabIndex = 5;
+            this.txt_payment.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_payment_KeyPress);
+            // 
+            // txt_remainingpayment
+            // 
+            this.txt_remainingpayment.Enabled = false;
+            this.txt_remainingpayment.Location = new System.Drawing.Point(139, 76);
+            this.txt_remainingpayment.Name = "txt_remainingpayment";
+            this.txt_remainingpayment.Size = new System.Drawing.Size(122, 22);
+            this.txt_remainingpayment.TabIndex = 3;
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(14, 113);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(119, 17);
+            this.label53.TabIndex = 4;
+            this.label53.Text = "Ödenecek Tutar :";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1570,7 +1720,9 @@
             this.Controls.Add(this.pnl_print);
             this.Controls.Add(this.pnl_search);
             this.Controls.Add(this.pnl_add_patient);
+            this.Controls.Add(this.pnl_payment);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
@@ -1628,6 +1780,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_payment)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_search)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_data_view)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_add_pattient)).EndInit();
@@ -1639,6 +1792,11 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_printp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_patients)).EndInit();
+            this.pnl_payment.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_dr_payment)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1771,6 +1929,19 @@
         private System.Windows.Forms.DateTimePicker dt_todate;
         private System.Windows.Forms.DateTimePicker dt_fromdate;
         private System.Windows.Forms.PictureBox pb_printp;
+        private System.Windows.Forms.Panel pnl_payment;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.PictureBox pb_payment;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.DataGridView dgv_dr_payment;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.TextBox txt_pdr_name;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.Button btn_complate_payment;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.TextBox txt_payment;
+        private System.Windows.Forms.TextBox txt_remainingpayment;
+        private System.Windows.Forms.Label label53;
     }
 }
 

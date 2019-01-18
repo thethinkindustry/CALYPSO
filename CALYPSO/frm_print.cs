@@ -37,8 +37,8 @@ namespace CALYPSO
             reportViewer.LocalReport.ReportEmbeddedResource = "CALYPSO.Report1.rdlc";
             Microsoft.Reporting.WinForms.ReportParameter[] rParams = new Microsoft.Reporting.WinForms.ReportParameter[]
       {
-              new Microsoft.Reporting.WinForms.ReportParameter("ReportParameter_drname",frm1.SelectedDoctorName),
-            new Microsoft.Reporting.WinForms.ReportParameter("ReportParameter_totalprice","Toplam Ücret : "+frm1.Totalprice.ToString()+"₺")
+              new Microsoft.Reporting.WinForms.ReportParameter("ReportParameter_drname",frm1.p_info.SelectedDoctorName.ToString() ),
+            new Microsoft.Reporting.WinForms.ReportParameter("ReportParameter_totalprice","Toplam Ücret : " +frm1.p_info.Totalprice.ToString()+"₺")
       };
             this.reportViewer.LocalReport.SetParameters(rParams);
 
