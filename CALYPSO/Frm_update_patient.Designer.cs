@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_update_patient));
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.txt_unit_price = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dtp_deadline = new System.Windows.Forms.DateTimePicker();
@@ -130,6 +129,7 @@
             this.cb_color = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.txt_u_price = new System.Windows.Forms.TextBox();
             this.groupBox6.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grb_registered.SuspendLayout();
@@ -177,22 +177,13 @@
             // groupBox6
             // 
             this.groupBox6.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.groupBox6.Controls.Add(this.txt_unit_price);
+            this.groupBox6.Controls.Add(this.txt_u_price);
             this.groupBox6.Controls.Add(this.label17);
             this.groupBox6.Location = new System.Drawing.Point(1002, 483);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(303, 89);
             this.groupBox6.TabIndex = 121;
             this.groupBox6.TabStop = false;
-            // 
-            // txt_unit_price
-            // 
-            this.txt_unit_price.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txt_unit_price.Location = new System.Drawing.Point(181, 18);
-            this.txt_unit_price.Name = "txt_unit_price";
-            this.txt_unit_price.Size = new System.Drawing.Size(105, 30);
-            this.txt_unit_price.TabIndex = 12;
-            this.txt_unit_price.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_unit_price_KeyPress);
             // 
             // label17
             // 
@@ -1206,7 +1197,6 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 11;
             this.pictureBox2.TabStop = false;
-
             // 
             // cb_color
             // 
@@ -1248,6 +1238,14 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Yapılan İşlem :";
             // 
+            // txt_u_price
+            // 
+            this.txt_u_price.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.txt_u_price.Location = new System.Drawing.Point(175, 21);
+            this.txt_u_price.Name = "txt_u_price";
+            this.txt_u_price.Size = new System.Drawing.Size(100, 30);
+            this.txt_u_price.TabIndex = 12;
+            // 
             // Frm_update_patient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1262,9 +1260,10 @@
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Frm_update_patient";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Frm_update_patient";
+            this.Text = "Hasta Güncelleme Ekranı";
             this.Load += new System.EventHandler(this.Frm_update_patient_Load);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
@@ -1321,7 +1320,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.TextBox txt_unit_price;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DateTimePicker dtp_deadline;
@@ -1421,5 +1419,6 @@
         private System.Windows.Forms.ComboBox cb_color;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txt_u_price;
     }
 }

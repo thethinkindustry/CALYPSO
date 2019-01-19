@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_add_process));
             this.grb_registered = new System.Windows.Forms.GroupBox();
+            this.btn_cancel = new System.Windows.Forms.Button();
+            this.btn_save = new System.Windows.Forms.Button();
             this.txt_process_name = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.btn_save = new System.Windows.Forms.Button();
-            this.btn_cancel = new System.Windows.Forms.Button();
             this.grb_registered.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,6 +50,28 @@
             this.grb_registered.TabIndex = 75;
             this.grb_registered.TabStop = false;
             this.grb_registered.Text = "İşlem Ekleme :";
+            // 
+            // btn_cancel
+            // 
+            this.btn_cancel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btn_cancel.Location = new System.Drawing.Point(385, 81);
+            this.btn_cancel.Name = "btn_cancel";
+            this.btn_cancel.Size = new System.Drawing.Size(75, 33);
+            this.btn_cancel.TabIndex = 6;
+            this.btn_cancel.Text = "Iptal";
+            this.btn_cancel.UseVisualStyleBackColor = false;
+            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
+            // 
+            // btn_save
+            // 
+            this.btn_save.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btn_save.Location = new System.Drawing.Point(466, 81);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(75, 33);
+            this.btn_save.TabIndex = 5;
+            this.btn_save.Text = "Kaydet";
+            this.btn_save.UseVisualStyleBackColor = false;
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
             // 
             // txt_process_name
             // 
@@ -67,37 +90,16 @@
             this.label19.Text = "İslem Ekle :";
             this.label19.Click += new System.EventHandler(this.label19_Click);
             // 
-            // btn_save
-            // 
-            this.btn_save.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btn_save.Location = new System.Drawing.Point(466, 81);
-            this.btn_save.Name = "btn_save";
-            this.btn_save.Size = new System.Drawing.Size(75, 33);
-            this.btn_save.TabIndex = 5;
-            this.btn_save.Text = "Kaydet";
-            this.btn_save.UseVisualStyleBackColor = false;
-            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
-            // 
-            // btn_cancel
-            // 
-            this.btn_cancel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btn_cancel.Location = new System.Drawing.Point(385, 81);
-            this.btn_cancel.Name = "btn_cancel";
-            this.btn_cancel.Size = new System.Drawing.Size(75, 33);
-            this.btn_cancel.TabIndex = 6;
-            this.btn_cancel.Text = "Iptal";
-            this.btn_cancel.UseVisualStyleBackColor = false;
-            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
-            // 
             // Frm_add_process
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(669, 143);
             this.Controls.Add(this.grb_registered);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Frm_add_process";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Frm_add_process";
+            this.Text = "İşlem Ekleme";
             this.grb_registered.ResumeLayout(false);
             this.grb_registered.PerformLayout();
             this.ResumeLayout(false);

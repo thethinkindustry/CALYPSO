@@ -58,7 +58,7 @@ namespace CALYPSO
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cb_doctor_name.Items.Add(reader["name"].ToString());
+                    cb_doctor_name.Items.Add(reader["d_name"].ToString());
                 }
                 reader.Close();
             }
@@ -137,7 +137,7 @@ namespace CALYPSO
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cb_doctor_name.Items.Add(reader["name"].ToString());
+                    cb_doctor_name.Items.Add(reader["d_name"].ToString());
                 }
                 reader.Close();
 
@@ -253,7 +253,7 @@ namespace CALYPSO
                   cmd.Parameters.AddWithValue("@teeth", teeth);
                   cmd.Parameters.AddWithValue("@num", counter.ToString());
                  cmd.Parameters.AddWithValue("@price", txt_unit_price.Text);
-                cmd.Parameters.AddWithValue("@price",Convert.ToInt16(txt_unit_price.Text)*counter );
+                cmd.Parameters.AddWithValue("@total_price",Convert.ToInt16(txt_unit_price.Text)*counter );
 
                 var radioButtons = grb_steps.Controls.OfType<RadioButton>();
                  foreach (var rb in radioButtons)
@@ -266,29 +266,30 @@ namespace CALYPSO
                  cmd.Parameters.AddWithValue("@deadline", dtp_deadline.Value.ToShortDateString());
                  cmd.Parameters.AddWithValue("@dr_note", rtx_doctor_notes.Text);
                 cmd.ExecuteNonQuery();
-               string query_ = "SELECT kimlik, payment FROM tbl_dr WHERE name='"+ cb_doctor_name.Text + "' ";
+              string query_ = "SELECT kimlik, payment FROM tbl_dr WHERE d_name='"+ cb_doctor_name.Text + "' ";
                 OleDbCommand cmdw = new OleDbCommand();
                 cmdw.Connection = con;
                 cmdw.CommandText = query_;
                 OleDbDataReader read = cmdw.ExecuteReader();
-                  int payment=0;
+                double payment=0;
                 int kimlik=0;
                    
                   while (read.Read())
                   {
-                     payment =Convert.ToInt16( read["payment"].ToString());
+                    payment =Convert.ToDouble( read["payment"].ToString());
                     kimlik = Convert.ToInt16(read["kimlik"].ToString());
                   }
                   read.Close();
-                 payment += counter*Convert.ToInt16(txt_unit_price.Text);
+                 payment += counter*Convert.ToDouble(txt_unit_price.Text);
                 OleDbCommand cmdk= new OleDbCommand("UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id",con);
                 cmdk.Parameters.AddWithValue("@pay", payment.ToString());
                 cmdk.Parameters.AddWithValue("@id", kimlik);
                 cmdk.ExecuteNonQuery();
-                // MessageBox.Show("borç"+ payment+"kimlik ="+kimlik );
+                // MessageBox.Show("borç"+ payment+"kimlik ="+kimlik );*/
                 MessageBox.Show("Kayıt başarıyla tamamlandı");
 
                 pnl_add_patient.Visible = false;
+                pnl_init.Visible = true;
 
             }
             catch (Exception ex)
@@ -313,6 +314,7 @@ namespace CALYPSO
             pnl_search.Visible = false;
             pnl_print.Visible = false;
             pnl_payment.Visible = false;
+            pnl_init.Visible = false;
         }
 
         private void lbl_ad_patient_Click(object sender, EventArgs e)
@@ -344,6 +346,7 @@ namespace CALYPSO
             pnl_search.Visible = true;
             pnl_add_patient.Visible = false;
             pnl_print.Visible = false;
+            pnl_init.Visible = false;
             OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main", con);
             view_data(adtr);
         }
@@ -420,6 +423,7 @@ namespace CALYPSO
             pnl_print.Visible = true;
             pnl_add_patient.Visible = false;
             pnl_search.Visible = false;
+            pnl_init.Visible = false;
             try
             {
                
@@ -429,7 +433,7 @@ namespace CALYPSO
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cmb_select_dr.Items.Add(reader["name"].ToString());
+                    cmb_select_dr.Items.Add(reader["d_name"].ToString());
                 }
                 reader.Close();
 
@@ -487,11 +491,12 @@ namespace CALYPSO
             pnl_add_patient.Visible = false;
             pnl_search.Visible = false;
             pnl_payment.Visible = true;
+            pnl_init.Visible = false;
             try
             {
 
                 cmd.Connection = con;
-                query = "select name,number,payment From tbl_dr ";
+                query = "select d_name,d_number,payment From tbl_dr ";
                 cmd.CommandText = query;
                 OleDbDataAdapter adapter = new OleDbDataAdapter(query, con);
                 DataTable paytable = new DataTable();
@@ -525,11 +530,11 @@ namespace CALYPSO
 
         private void btn_complate_payment_Click(object sender, EventArgs e)
         {
-            int payment = Convert.ToInt16(txt_remainingpayment.Text) - Convert.ToInt16(txt_payment.Text);
-            DialogResult result = MessageBox.Show(txt_pdr_name.Text + " adlı doktordan " + txt_payment.Text + "₺ ödeme alınacaktır.\n Kalan borç=" + payment + "\n işlemi onaylıyor musunuz?","Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            double payment = Convert.ToInt32(txt_remainingpayment.Text) - Convert.ToInt32(txt_payment.Text);
+           DialogResult result = MessageBox.Show(txt_pdr_name.Text + " adlı doktordan " + txt_payment.Text + "₺ ödeme alınacaktır.\n Kalan borç=" + payment + "\n işlemi onaylıyor musunuz?","Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result==DialogResult.Yes)
             {
-                string query_ = "SELECT kimlik FROM tbl_dr WHERE name='" + txt_pdr_name.Text + "' ";
+                string query_ = "SELECT kimlik FROM tbl_dr WHERE d_name='" + txt_pdr_name.Text + "' ";
                 OleDbCommand cmdw = new OleDbCommand();
                 cmdw.Connection = con;
                 cmdw.CommandText = query_;
@@ -545,7 +550,7 @@ namespace CALYPSO
                 cmdk.Parameters.AddWithValue("@id", kimlik);
                 cmdk.ExecuteNonQuery();
               //  MessageBox.Show("Kayıt başarıyla tamamlandı kimlik= " + kimlik + "borç= " + payment);
-                query = "select name,number,payment From tbl_dr ";
+                query = "select d_name,d_number,payment From tbl_dr ";
                 cmd.CommandText = query;
                 OleDbDataAdapter adapter = new OleDbDataAdapter(query, con);
                 DataTable paytable = new DataTable();
@@ -606,8 +611,9 @@ namespace CALYPSO
                             {
                                 dgv_patients.Rows.RemoveAt(selectedIndex);
                                 dgv_patients.Refresh();
-                                if(i>0)
+                                if(i>-1 )
                                 i--;
+                                
                             }
                         }
                         else
@@ -621,7 +627,7 @@ namespace CALYPSO
                 }
 
                 
-                MessageBox.Show("OK:");
+                //MessageBox.Show("OK:");
                 //con.Close();
                 
                 for (int i = 0; i < dgv_patients.Rows.Count - 1; i++)

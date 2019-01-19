@@ -43,7 +43,7 @@ namespace CALYPSO
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cb_doctor_name.Items.Add(reader["name"].ToString());
+                    cb_doctor_name.Items.Add(reader["d_name"].ToString());
                 }
                 reader.Close();
             }
@@ -102,10 +102,10 @@ namespace CALYPSO
                 }
                
             }
-            txt_unit_price.Text= frm1.dgv_main.CurrentRow.Cells[9].Value.ToString();
+            txt_u_price.Text= frm1.dgv_main.CurrentRow.Cells[9].Value.ToString();
            
             rtx_doctor_notes.Text= frm1.dgv_main.CurrentRow.Cells[10].Value.ToString();
-            last_payment =Convert.ToInt16(frm1.dgv_main.CurrentRow.Cells[8].Value.ToString())* Convert.ToInt16(frm1.dgv_main.CurrentRow.Cells[9].Value.ToString());
+            last_payment =Convert.ToInt32(frm1.dgv_main.CurrentRow.Cells[8].Value.ToString())* Convert.ToInt32(frm1.dgv_main.CurrentRow.Cells[9].Value.ToString());
         }
         
 
@@ -152,9 +152,9 @@ namespace CALYPSO
             {
                 counter = 1;
             }
-            if (string.IsNullOrEmpty(txt_unit_price.Text))
+            if (string.IsNullOrEmpty(txt_u_price.Text))
             {
-                txt_unit_price.Text = "0";
+                txt_u_price.Text = "0";
             }
             if (string.IsNullOrEmpty(rtx_doctor_notes.Text))
             {
@@ -162,15 +162,17 @@ namespace CALYPSO
             }
             try
             {
-                OleDbCommand cmd = new OleDbCommand("UPDATE  tbl_main SET dr_name =@dr_name,patient_name=@pat,process_name=@proc,color=@color,teeth=@teeth,num=@num ,unit_price=@price,step=@step,deadline=@dealine,dr_note=@dr_note WHERE proc_id=@ID", con);
+               
+                OleDbCommand cmd = new OleDbCommand("UPDATE  tbl_main SET dr_name =@dr_name,patient_name=@pat,process_name=@proc,color=@color,teeth=@teeth,num=@num ,unit_price=@price,price=@total_price,step=@step,deadline=@dealine,dr_note=@dr_note WHERE proc_id=@ID", con);
 
-                cmd.Parameters.AddWithValue("@pname", cb_doctor_name.Text);
+                cmd.Parameters.AddWithValue("@dr_name", cb_doctor_name.Text);
                 cmd.Parameters.AddWithValue("@pat", txt_patient_name.Text);
                 cmd.Parameters.AddWithValue("@proc", cb_procces_bar.Text);
                 cmd.Parameters.AddWithValue("@color", cb_color.Text);
                 cmd.Parameters.AddWithValue("@teeth", teeth);
                 cmd.Parameters.AddWithValue("@num", counter.ToString());
-                cmd.Parameters.AddWithValue("@price", txt_unit_price.Text);
+                cmd.Parameters.AddWithValue("@price", txt_u_price.Text);
+                cmd.Parameters.AddWithValue("@total_price", Convert.ToInt16(txt_u_price.Text) * counter);
                 var radioButtons = grb_steps.Controls.OfType<RadioButton>();
                 foreach (var rb in radioButtons)
                 {
@@ -183,21 +185,21 @@ namespace CALYPSO
                 cmd.Parameters.AddWithValue("@dr_note", rtx_doctor_notes.Text);
                 cmd.Parameters.AddWithValue("@ID", txt_ID.Text);
                 cmd.ExecuteNonQuery();
-                string query_ = "SELECT kimlik, payment FROM tbl_dr WHERE name='" + cb_doctor_name.Text + "' ";
+                string query_ = "SELECT kimlik, payment FROM tbl_dr WHERE d_name='" + cb_doctor_name.Text + "' ";
                 OleDbCommand cmdw = new OleDbCommand();
                 cmdw.Connection = con;
                 cmdw.CommandText = query_;
                 OleDbDataReader read = cmdw.ExecuteReader();
-                int payment = 0;
+                double payment = 0;
                 int kimlik = 0;
 
                 while (read.Read())
                 {
-                    payment = Convert.ToInt16(read["payment"].ToString());
+                    payment = Convert.ToDouble(read["payment"].ToString());
                     kimlik = Convert.ToInt16(read["kimlik"].ToString());
                 }
                 read.Close();
-                payment += counter * Convert.ToInt16(txt_unit_price.Text);
+                payment += counter * Convert.ToInt64(txt_u_price.Text);
                 payment -= last_payment;
                 OleDbCommand cmdk = new OleDbCommand("UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id", con);
                 cmdk.Parameters.AddWithValue("@pay", payment.ToString());
@@ -229,7 +231,7 @@ namespace CALYPSO
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cb_doctor_name.Items.Add(reader["name"].ToString());
+                    cb_doctor_name.Items.Add(reader["d_name"].ToString());
                 }
                 reader.Close();
 

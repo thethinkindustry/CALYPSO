@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_dr_add));
             this.grb_new_register = new System.Windows.Forms.GroupBox();
+            this.btn_iptal = new System.Windows.Forms.Button();
             this.txt_dr_number = new System.Windows.Forms.MaskedTextBox();
             this.btn_new_dr_save = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.txt_doctor_name = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.btn_iptal = new System.Windows.Forms.Button();
             this.grb_new_register.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +55,17 @@
             this.grb_new_register.TabIndex = 74;
             this.grb_new_register.TabStop = false;
             this.grb_new_register.Text = "Doktor Ekle :";
+            // 
+            // btn_iptal
+            // 
+            this.btn_iptal.BackColor = System.Drawing.Color.White;
+            this.btn_iptal.Location = new System.Drawing.Point(420, 115);
+            this.btn_iptal.Name = "btn_iptal";
+            this.btn_iptal.Size = new System.Drawing.Size(99, 34);
+            this.btn_iptal.TabIndex = 10;
+            this.btn_iptal.Text = "İptal";
+            this.btn_iptal.UseVisualStyleBackColor = false;
+            this.btn_iptal.Click += new System.EventHandler(this.btn_iptal_Click);
             // 
             // txt_dr_number
             // 
@@ -99,26 +111,16 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Diş Hekimi / Hastane :";
             // 
-            // btn_iptal
-            // 
-            this.btn_iptal.BackColor = System.Drawing.Color.White;
-            this.btn_iptal.Location = new System.Drawing.Point(420, 115);
-            this.btn_iptal.Name = "btn_iptal";
-            this.btn_iptal.Size = new System.Drawing.Size(99, 34);
-            this.btn_iptal.TabIndex = 10;
-            this.btn_iptal.Text = "İptal";
-            this.btn_iptal.UseVisualStyleBackColor = false;
-            this.btn_iptal.Click += new System.EventHandler(this.btn_iptal_Click);
-            // 
             // frm_dr_add
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(665, 207);
             this.Controls.Add(this.grb_new_register);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frm_dr_add";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Doktor Ekle";
+            this.Text = "Doktor Ekleme";
             this.grb_new_register.ResumeLayout(false);
             this.grb_new_register.PerformLayout();
             this.ResumeLayout(false);

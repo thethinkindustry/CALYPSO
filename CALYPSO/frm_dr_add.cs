@@ -32,7 +32,7 @@ namespace CALYPSO
         {
             OleDbConnection con = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=db_calypso.mdb");
             con.Open();
-            string query = "insert into tbl_dr (dr_name,dr_number) values(@pname,@pnumber)";
+            string query = "insert into tbl_dr (d_name,d_number) values(@pname,@pnumber)";
             OleDbCommand cmd= new OleDbCommand();
             cmd.Connection = con;
             cmd.CommandText = query;

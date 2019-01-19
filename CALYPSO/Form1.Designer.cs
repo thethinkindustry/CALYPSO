@@ -168,6 +168,11 @@
             this.txt_payment = new System.Windows.Forms.TextBox();
             this.txt_remainingpayment = new System.Windows.Forms.TextBox();
             this.label53 = new System.Windows.Forms.Label();
+            this.pnl_init = new System.Windows.Forms.Panel();
+            this.label54 = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pnl_add_patient.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -226,6 +231,10 @@
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_dr_payment)).BeginInit();
             this.groupBox7.SuspendLayout();
+            this.pnl_init.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // pnl_add_patient
@@ -241,9 +250,9 @@
             this.pnl_add_patient.Controls.Add(this.groupBox4);
             this.pnl_add_patient.Controls.Add(this.groupBox3);
             this.pnl_add_patient.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnl_add_patient.Location = new System.Drawing.Point(139, 0);
+            this.pnl_add_patient.Location = new System.Drawing.Point(129, 0);
             this.pnl_add_patient.Name = "pnl_add_patient";
-            this.pnl_add_patient.Size = new System.Drawing.Size(1316, 738);
+            this.pnl_add_patient.Size = new System.Drawing.Size(1326, 738);
             this.pnl_add_patient.TabIndex = 1;
             // 
             // groupBox6
@@ -1334,7 +1343,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(141, 738);
+            this.panel1.Size = new System.Drawing.Size(133, 738);
             this.panel1.TabIndex = 2;
             // 
             // label51
@@ -1438,16 +1447,16 @@
             this.pnl_search.Controls.Add(this.label1);
             this.pnl_search.Controls.Add(this.txt_search_dr);
             this.pnl_search.Controls.Add(this.dgv_main);
-            this.pnl_search.Location = new System.Drawing.Point(139, 0);
+            this.pnl_search.Location = new System.Drawing.Point(132, 0);
             this.pnl_search.Name = "pnl_search";
-            this.pnl_search.Size = new System.Drawing.Size(1321, 738);
+            this.pnl_search.Size = new System.Drawing.Size(1328, 738);
             this.pnl_search.TabIndex = 12;
             this.pnl_search.Visible = false;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(416, 98);
+            this.label16.Location = new System.Drawing.Point(389, 28);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(94, 17);
             this.label16.TabIndex = 6;
@@ -1455,7 +1464,7 @@
             // 
             // txt_search_deadline
             // 
-            this.txt_search_deadline.Location = new System.Drawing.Point(522, 96);
+            this.txt_search_deadline.Location = new System.Drawing.Point(495, 26);
             this.txt_search_deadline.Name = "txt_search_deadline";
             this.txt_search_deadline.Size = new System.Drawing.Size(188, 22);
             this.txt_search_deadline.TabIndex = 5;
@@ -1464,7 +1473,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(64, 129);
+            this.label10.Location = new System.Drawing.Point(37, 59);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 17);
             this.label10.TabIndex = 4;
@@ -1472,7 +1481,7 @@
             // 
             // txt_search_patient
             // 
-            this.txt_search_patient.Location = new System.Drawing.Point(170, 127);
+            this.txt_search_patient.Location = new System.Drawing.Point(143, 57);
             this.txt_search_patient.Name = "txt_search_patient";
             this.txt_search_patient.Size = new System.Drawing.Size(188, 22);
             this.txt_search_patient.TabIndex = 3;
@@ -1481,7 +1490,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(64, 97);
+            this.label1.Location = new System.Drawing.Point(37, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(103, 17);
             this.label1.TabIndex = 2;
@@ -1489,7 +1498,7 @@
             // 
             // txt_search_dr
             // 
-            this.txt_search_dr.Location = new System.Drawing.Point(170, 97);
+            this.txt_search_dr.Location = new System.Drawing.Point(143, 27);
             this.txt_search_dr.Name = "txt_search_dr";
             this.txt_search_dr.Size = new System.Drawing.Size(188, 22);
             this.txt_search_dr.TabIndex = 1;
@@ -1499,19 +1508,19 @@
             // 
             this.dgv_main.AllowUserToAddRows = false;
             this.dgv_main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_main.Location = new System.Drawing.Point(16, 208);
+            this.dgv_main.Location = new System.Drawing.Point(16, 99);
             this.dgv_main.Name = "dgv_main";
             this.dgv_main.RowTemplate.Height = 24;
-            this.dgv_main.Size = new System.Drawing.Size(1273, 490);
+            this.dgv_main.Size = new System.Drawing.Size(1273, 599);
             this.dgv_main.TabIndex = 0;
             this.dgv_main.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_main_CellDoubleClick);
             // 
             // pnl_print
             // 
             this.pnl_print.Controls.Add(this.groupBox1);
-            this.pnl_print.Location = new System.Drawing.Point(139, 5);
+            this.pnl_print.Location = new System.Drawing.Point(129, 5);
             this.pnl_print.Name = "pnl_print";
-            this.pnl_print.Size = new System.Drawing.Size(1316, 730);
+            this.pnl_print.Size = new System.Drawing.Size(1326, 730);
             this.pnl_print.TabIndex = 113;
             this.pnl_print.Visible = false;
             // 
@@ -1608,9 +1617,9 @@
             // 
             this.pnl_payment.Controls.Add(this.groupBox8);
             this.pnl_payment.Controls.Add(this.groupBox7);
-            this.pnl_payment.Location = new System.Drawing.Point(139, 0);
+            this.pnl_payment.Location = new System.Drawing.Point(126, 0);
             this.pnl_payment.Name = "pnl_payment";
-            this.pnl_payment.Size = new System.Drawing.Size(1316, 735);
+            this.pnl_payment.Size = new System.Drawing.Size(1329, 735);
             this.pnl_payment.TabIndex = 114;
             this.pnl_payment.Visible = false;
             // 
@@ -1711,23 +1720,76 @@
             this.label53.TabIndex = 4;
             this.label53.Text = "Ödenecek Tutar :";
             // 
+            // pnl_init
+            // 
+            this.pnl_init.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pnl_init.Controls.Add(this.label54);
+            this.pnl_init.Controls.Add(this.pictureBox4);
+            this.pnl_init.Controls.Add(this.pictureBox1);
+            this.pnl_init.Controls.Add(this.pictureBox3);
+            this.pnl_init.Location = new System.Drawing.Point(137, 3);
+            this.pnl_init.Name = "pnl_init";
+            this.pnl_init.Size = new System.Drawing.Size(1315, 729);
+            this.pnl_init.TabIndex = 115;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label54.Location = new System.Drawing.Point(4, 706);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(88, 17);
+            this.label54.TabIndex = 3;
+            this.label54.Text = "Version1.0.0";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(835, 629);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(488, 116);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 2;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(388, 93);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(485, 374);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(270, 448);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(744, 191);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 1;
+            this.pictureBox3.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1455, 738);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnl_payment);
+            this.Controls.Add(this.pnl_init);
             this.Controls.Add(this.pnl_print);
             this.Controls.Add(this.pnl_search);
             this.Controls.Add(this.pnl_add_patient);
-            this.Controls.Add(this.pnl_payment);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ÖZEL CALYPSO ";
+            this.Text = "ÖZEL CALYPSO.Version1.1";
             this.TopMost = true;
             this.pnl_add_patient.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
@@ -1797,6 +1859,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_dr_payment)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.pnl_init.ResumeLayout(false);
+            this.pnl_init.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1942,6 +2009,11 @@
         private System.Windows.Forms.TextBox txt_payment;
         private System.Windows.Forms.TextBox txt_remainingpayment;
         private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Panel pnl_init;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Label label54;
     }
 }
 

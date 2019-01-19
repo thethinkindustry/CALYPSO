@@ -23,7 +23,7 @@ namespace CALYPSO
         private void timer1_Tick(object sender, EventArgs e)
         {
             counter++;
-            if (counter>=20)
+            if (counter>=40)
             {
                 timer1.Stop();
                 this.Close();
