@@ -39,28 +39,40 @@ namespace CALYPSO
             
             con = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=db_calypso.mdb");
             cmd = new OleDbCommand();
-
+            
             try
             {
+                
+                AutoCompleteStringCollection aCsC2 = new AutoCompleteStringCollection();
                 con.Open();
                 cmd.Connection = con;
-                query = "select * From tbl_process ";
-                cmd.CommandText = query;
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    cb_procces_bar.Items.Add(reader["process"].ToString());
-                }
-                reader.Close();
-
+               
+               
                 query = "select * From tbl_dr";
                 cmd.CommandText = query;
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cb_doctor_name.Items.Add(reader["d_name"].ToString());
+                    aCsC2.Add(reader["d_name"].ToString());
                 }
                 reader.Close();
+                cb_doctor_name.AutoCompleteCustomSource = aCsC2;
+                cb_doctor_name.DataSource = aCsC2;
+                aCsC2.Clear();
+
+                AutoCompleteStringCollection aCsC1 = new AutoCompleteStringCollection();
+
+                query = "select * From tbl_process ";
+                cmd.CommandText = query;
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    aCsC1.Add(reader["process"].ToString());
+                }
+                reader.Close();
+                cb_procces_bar.AutoCompleteCustomSource = aCsC1;
+                cb_procces_bar.DataSource = aCsC1;
+                aCsC1.Clear();
             }
             catch (Exception ex)
             {
@@ -128,19 +140,22 @@ namespace CALYPSO
             reader.Close();
             Form frmDRadd = new frm_dr_add();
             frmDRadd.ShowDialog();
-            cb_doctor_name.Items.Clear();
+          
             try
             {
                 con.Open();
+                AutoCompleteStringCollection aCsC = new AutoCompleteStringCollection();
                 query = "select * From tbl_dr";
                 cmd.CommandText = query;
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    cb_doctor_name.Items.Add(reader["d_name"].ToString());
+                    aCsC.Add(reader["d_name"].ToString());
                 }
                 reader.Close();
-
+                cb_doctor_name.AutoCompleteCustomSource = aCsC;
+                cb_doctor_name.DataSource = aCsC;
+                aCsC.Clear();
             }
             catch (Exception ex)
             {
@@ -187,6 +202,7 @@ namespace CALYPSO
         private void btn_cancel_Click(object sender, EventArgs e)
         {
             pnl_add_patient.Visible = false;
+            pnl_init.Visible = true;
         }
 
         private void btn_save_Click(object sender, EventArgs e)
@@ -213,6 +229,7 @@ namespace CALYPSO
             {
                 cb_color.Text = "Yok";
             }
+            
             var picture = grb_teeth.Controls.OfType<PictureBox>();
             int counter = 0;
             string teeth = "";
@@ -240,9 +257,10 @@ namespace CALYPSO
             {
                 teeth = "-";
             }
+            int val = Convert.ToInt32(txt_unit_price.Text) * counter;
             try
             {
-                string query = "insert into tbl_main(dr_name,patient_name,process_name,color,teeth,num ,unit_price,price,step,deadline,dr_note)values(@dr,@pat,@proc,@color,@teeth,@num,@price,@total_price,@step,@deadline,@dr_note)";
+                string query = "insert into tbl_main(dr_name,patient_name,process_name,color,teeth,num ,unit_price,price,step, init_date,deadline,dr_note)values(@dr,@pat,@proc,@color,@teeth,@num,@price,@total_price,@step,@init_date,@deadline,@dr_note)";
                 OleDbCommand cmd = new OleDbCommand();
                 cmd.Connection = con;
                 cmd.CommandText = query;
@@ -253,7 +271,7 @@ namespace CALYPSO
                   cmd.Parameters.AddWithValue("@teeth", teeth);
                   cmd.Parameters.AddWithValue("@num", counter.ToString());
                  cmd.Parameters.AddWithValue("@price", txt_unit_price.Text);
-                cmd.Parameters.AddWithValue("@total_price",Convert.ToInt16(txt_unit_price.Text)*counter );
+                cmd.Parameters.AddWithValue("@total_price",val.ToString() );
 
                 var radioButtons = grb_steps.Controls.OfType<RadioButton>();
                  foreach (var rb in radioButtons)
@@ -263,7 +281,8 @@ namespace CALYPSO
                          cmd.Parameters.AddWithValue("@step", rb.Text);
                      }
                  }
-                 cmd.Parameters.AddWithValue("@deadline", dtp_deadline.Value.ToShortDateString());
+                cmd.Parameters.AddWithValue("@init_date",dtp_register_date.Value.ToShortDateString());
+                cmd.Parameters.AddWithValue("@deadline", dtp_deadline.Value.ToShortDateString());
                  cmd.Parameters.AddWithValue("@dr_note", rtx_doctor_notes.Text);
                 cmd.ExecuteNonQuery();
               string query_ = "SELECT kimlik, payment FROM tbl_dr WHERE d_name='"+ cb_doctor_name.Text + "' ";
@@ -315,8 +334,69 @@ namespace CALYPSO
             pnl_print.Visible = false;
             pnl_payment.Visible = false;
             pnl_init.Visible = false;
-        }
+            clearText(pnl_add_patient);
+           
+            var lastId = new OleDbCommand("SELECT LAST(proc_id) FROM tbl_main", con).ExecuteScalar().ToString();
+            string val =lastId;
+            if (val=="")
+            {
 
+            }
+            else
+            {
+                txt_process_no.Text = (Convert.ToInt16(val) + 1).ToString();
+            }
+          //  
+            
+        }
+        private void clearText(Panel PanelID)
+        {
+            var grb = PanelID.Controls.OfType<GroupBox>();
+            foreach (GroupBox rb in grb)
+            {
+                foreach (Control c in rb.Controls)
+                {
+                    if (c is TextBox)
+                    {
+                        TextBox questionTextBox = c as TextBox;
+                        if (questionTextBox != null)
+                        {
+                            questionTextBox.Text = "";
+                        }
+                    }
+                    else if (c is ComboBox)
+                    {
+                        ComboBox questionTextBox = c as ComboBox;
+                        if (questionTextBox != null)
+                        {
+                            questionTextBox.Text = "";
+                        }
+                    }
+                    else if (c is RichTextBox)
+                    {
+                        RichTextBox questionTextBox = c as RichTextBox;
+                        if (questionTextBox != null)
+                        {
+                            questionTextBox.Text = "";
+                        }
+                    }
+                    else if (c is PictureBox)
+                    {
+                        PictureBox questionTextBox = c as PictureBox;
+                        questionTextBox.BackColor = Color.Transparent;
+                    }
+                    else if (c is RadioButton)
+                    {
+                        RadioButton questionTextBox = c as RadioButton;
+                        if (questionTextBox.Checked)
+                        {
+                            questionTextBox.Checked = false;
+                        }
+                    }
+                }
+         
+            }
+        }
         private void lbl_ad_patient_Click(object sender, EventArgs e)
         {
             pB_add_pattient_Click(sender, e);
@@ -331,12 +411,15 @@ namespace CALYPSO
             dgv_main.Columns[2].HeaderText = "Hasta Adı";
             dgv_main.Columns[3].HeaderText = "Yapılan İşlem";
             dgv_main.Columns[4].HeaderText = "Aşama";
-            dgv_main.Columns[5].HeaderText = "Tarih";
-            dgv_main.Columns[6].HeaderText = "Renk";
-            dgv_main.Columns[7].HeaderText = "Diş";
-            dgv_main.Columns[8].HeaderText = "Adet";
-            dgv_main.Columns[9].HeaderText = "Fiyat";
-            dgv_main.Columns[10].HeaderText = "Doktor Notu";
+            dgv_main.Columns[5].HeaderText = "Kayıt T.";
+            dgv_main.Columns[6].HeaderText = "İstenilen T.";
+            dgv_main.Columns[7].HeaderText = "Renk";
+            dgv_main.Columns[8].HeaderText = "Diş";
+            dgv_main.Columns[9].HeaderText = "Adet";
+            dgv_main.Columns[10].HeaderText = "Fiyat";
+            dgv_main.Columns[11].HeaderText = "Toplam Fiyat";
+            dgv_main.Columns[12].HeaderText = "Doktor Notu";
+            dgv_main.Columns[13].HeaderText = "Yazdırıldı";
             dgv_main.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
@@ -347,7 +430,7 @@ namespace CALYPSO
             pnl_add_patient.Visible = false;
             pnl_print.Visible = false;
             pnl_init.Visible = false;
-            OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main", con);
+            OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main  ", con);
             view_data(adtr);
         }
        
@@ -361,13 +444,13 @@ namespace CALYPSO
             if (txt_search_dr.Text.Trim()=="")
             {
               
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main", con);
+                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main ", con);
                 view_data(adtr);
             }
             else
             {
               
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where dr_name Like '%" + txt_search_dr.Text+"%'", con);
+                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where dr_name Like '%" + txt_search_dr.Text+ "%' ", con);
                 view_data(adtr);
             }
         }
@@ -383,7 +466,7 @@ namespace CALYPSO
             else
             {
             
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where patient_name Like '%" + txt_search_patient.Text + "%'", con);
+                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where patient_name Like '%" + txt_search_patient.Text + "%' '", con);
                 view_data(adtr);
             }
         }
@@ -393,24 +476,53 @@ namespace CALYPSO
             if (txt_search_deadline.Text.Trim() == "")
             {
                
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main", con);
+                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main ", con);
                 view_data(adtr);
             }
             else
             {
                
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where deadline Like '%" + txt_search_deadline.Text + "%'", con);
+                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where deadline Like '%" + txt_search_deadline.Text + "%' ", con);
                 view_data(adtr);
             }
            
         }
+        private void txt_id_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_id.Text.Trim() == "")
+            {
 
+                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main ", con);
+                view_data(adtr);
+            }
+            else
+            {
+
+                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where proc_id Like '%" + txt_id.Text + "%' ", con);
+                view_data(adtr);
+            }
+        }
+        private void txt_search_procces_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_search_procces.Text.Trim() == "")
+            {
+
+                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main ", con);
+                view_data(adtr);
+            }
+            else
+            {
+
+                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where process_name Like '%" + txt_search_procces.Text + "%' ", con);
+                view_data(adtr);
+            }
+        }
         private void dgv_main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             con.Close();
             frm_update.frm1.frm_update.ShowDialog();
             con.Open();
-            OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main", con);
+            OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main ", con);
             view_data(adtr);
 
         }
@@ -451,7 +563,7 @@ namespace CALYPSO
 
             try
             {
-                String query = "SELECT proc_id,patient_name , process_name,deadline ,num ,unit_price, price,printed FROM tbl_main  WHERE dr_name='" + cmb_select_dr.Text + "' AND (( deadline between #" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "# AND #" + dt_todate.Value.ToString("yyyy-MM-dd") + "#)) ";
+                String query = "SELECT proc_id,patient_name , process_name,deadline ,num ,unit_price, price,printed FROM tbl_main  WHERE dr_name='" + cmb_select_dr.Text + "' AND step Like '%" +"Bitiş" + "%' AND (( deadline between #" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "# AND #" + dt_todate.Value.ToString("yyyy-MM-dd") + "#)) ";
                 OleDbDataAdapter _adtr = new OleDbDataAdapter(query, con);
                 DataTable ptable = new DataTable();
                 _adtr.Fill(ptable);
@@ -560,10 +672,12 @@ namespace CALYPSO
             txt_pdr_name.Clear();
             txt_remainingpayment.Clear();
             txt_payment.Clear();
+            txt_payment.Enabled = false;
         }
 
         private void dgv_dr_payment_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            txt_payment.Enabled = true;
             int selectedIndex = dgv_dr_payment.CurrentCell.RowIndex;
             if (selectedIndex > -1)
             {
@@ -659,7 +773,14 @@ namespace CALYPSO
                  throw;
             }
         }
-      
+
+        private void cb_doctor_name_TextChanged(object sender, EventArgs e)
+        {
+            
+
+        }
+
+       
     }
 }
 

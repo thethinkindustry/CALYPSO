@@ -19,6 +19,7 @@ namespace CALYPSO
         string query;
         OleDbDataReader reader;
         int last_payment;
+        int counter = 0;
         public Frm_update_patient()
         {
             InitializeComponent();
@@ -86,9 +87,9 @@ namespace CALYPSO
                     rb.Checked = true;
                 }
             }
-            dtp_deadline.Text = frm1.dgv_main.CurrentRow.Cells[5].Value.ToString();
-            cb_color.Text = frm1.dgv_main.CurrentRow.Cells[6].Value.ToString();
-             string teeth= frm1.dgv_main.CurrentRow.Cells[7].Value.ToString();
+            dtp_deadline.Text = frm1.dgv_main.CurrentRow.Cells[6].Value.ToString();
+            cb_color.Text = frm1.dgv_main.CurrentRow.Cells[7].Value.ToString();
+             string teeth= frm1.dgv_main.CurrentRow.Cells[8].Value.ToString();
             string[] teethList = teeth.Split('/');
             var radioButton = grb_teeth.Controls.OfType<PictureBox>();
             foreach (PictureBox rb in radioButton)
@@ -102,10 +103,10 @@ namespace CALYPSO
                 }
                
             }
-            txt_u_price.Text= frm1.dgv_main.CurrentRow.Cells[9].Value.ToString();
+            txt_u_price.Text= frm1.dgv_main.CurrentRow.Cells[10].Value.ToString();
            
-            rtx_doctor_notes.Text= frm1.dgv_main.CurrentRow.Cells[10].Value.ToString();
-            last_payment =Convert.ToInt32(frm1.dgv_main.CurrentRow.Cells[8].Value.ToString())* Convert.ToInt32(frm1.dgv_main.CurrentRow.Cells[9].Value.ToString());
+            rtx_doctor_notes.Text= frm1.dgv_main.CurrentRow.Cells[12].Value.ToString();
+            last_payment =Convert.ToInt32(frm1.dgv_main.CurrentRow.Cells[9].Value.ToString())* Convert.ToInt32(frm1.dgv_main.CurrentRow.Cells[10].Value.ToString());
         }
         
 
@@ -138,7 +139,7 @@ namespace CALYPSO
                 cb_color.Text = "Yok";
             }
             var picture = grb_teeth.Controls.OfType<PictureBox>();
-            int counter = 0;
+          
             string teeth = "";
             foreach (PictureBox pb in picture)
             {
@@ -277,7 +278,46 @@ namespace CALYPSO
 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-       
+        private void btn_delete_Click(object sender, EventArgs e)
+        {
+          DialogResult result=  MessageBox.Show(txt_ID.Text+" Numaralı işlemi silmek istediğinizden emin misiniz?","Veriler Silinecek",MessageBoxButtons.YesNo);
+            if (result==DialogResult.Yes)
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand("DELETE FROM tbl_main  WHERE proc_id = @id", con);
+                    cmd.Parameters.AddWithValue("@id", txt_ID.Text);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("hata" + ex);
+                    throw;
+                }
+                string query_ = "SELECT kimlik, payment FROM tbl_dr WHERE d_name='" + cb_doctor_name.Text + "' ";
+                OleDbCommand cmdw = new OleDbCommand();
+                cmdw.Connection = con;
+                cmdw.CommandText = query_;
+                OleDbDataReader read = cmdw.ExecuteReader();
+                double payment = 0;
+                int kimlik = 0;
+
+                while (read.Read())
+                {
+                    payment = Convert.ToDouble(read["payment"].ToString());
+                    kimlik = Convert.ToInt16(read["kimlik"].ToString());
+                }
+                read.Close();
+                payment -= last_payment;
+                OleDbCommand cmdk = new OleDbCommand("UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id", con);
+                cmdk.Parameters.AddWithValue("@pay", payment.ToString());
+                cmdk.Parameters.AddWithValue("@id", kimlik);
+                cmdk.ExecuteNonQuery();
+                MessageBox.Show("Kayıt başarıyla silindi");
+                this.Close();
+            }
+
+        }
     }
 
 }

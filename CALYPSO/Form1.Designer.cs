@@ -30,7 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pnl_add_patient = new System.Windows.Forms.Panel();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.dtp_register_date = new System.Windows.Forms.DateTimePicker();
+            this.grb_unit_price = new System.Windows.Forms.GroupBox();
             this.txt_unit_price = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -119,11 +121,11 @@
             this.rb2 = new System.Windows.Forms.RadioButton();
             this.rb1 = new System.Windows.Forms.RadioButton();
             this.label7 = new System.Windows.Forms.Label();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.grb_dr_note = new System.Windows.Forms.GroupBox();
             this.rtx_doctor_notes = new System.Windows.Forms.RichTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txt_process_no = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.grb_process = new System.Windows.Forms.GroupBox();
             this.cb_procces_bar = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_add_process = new System.Windows.Forms.Button();
@@ -141,6 +143,10 @@
             this.lbl_ad_patient = new System.Windows.Forms.Label();
             this.pB_add_pattient = new System.Windows.Forms.PictureBox();
             this.pnl_search = new System.Windows.Forms.Panel();
+            this.label56 = new System.Windows.Forms.Label();
+            this.txt_search_procces = new System.Windows.Forms.TextBox();
+            this.label55 = new System.Windows.Forms.Label();
+            this.txt_id = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txt_search_deadline = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -174,7 +180,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pnl_add_patient.SuspendLayout();
-            this.groupBox6.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.grb_unit_price.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grb_registered.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -212,9 +219,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.t25)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.t44)).BeginInit();
             this.grb_steps.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.grb_dr_note.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.grb_process.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_payment)).BeginInit();
@@ -240,31 +247,51 @@
             // pnl_add_patient
             // 
             this.pnl_add_patient.BackColor = System.Drawing.Color.White;
-            this.pnl_add_patient.Controls.Add(this.groupBox6);
+            this.pnl_add_patient.Controls.Add(this.groupBox10);
+            this.pnl_add_patient.Controls.Add(this.grb_unit_price);
             this.pnl_add_patient.Controls.Add(this.groupBox2);
             this.pnl_add_patient.Controls.Add(this.grb_registered);
             this.pnl_add_patient.Controls.Add(this.groupBox9);
             this.pnl_add_patient.Controls.Add(this.grb_teeth);
             this.pnl_add_patient.Controls.Add(this.grb_steps);
-            this.pnl_add_patient.Controls.Add(this.groupBox5);
+            this.pnl_add_patient.Controls.Add(this.grb_dr_note);
             this.pnl_add_patient.Controls.Add(this.groupBox4);
-            this.pnl_add_patient.Controls.Add(this.groupBox3);
+            this.pnl_add_patient.Controls.Add(this.grb_process);
             this.pnl_add_patient.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnl_add_patient.Location = new System.Drawing.Point(129, 0);
             this.pnl_add_patient.Name = "pnl_add_patient";
             this.pnl_add_patient.Size = new System.Drawing.Size(1326, 738);
             this.pnl_add_patient.TabIndex = 1;
             // 
-            // groupBox6
+            // groupBox10
             // 
-            this.groupBox6.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.groupBox6.Controls.Add(this.txt_unit_price);
-            this.groupBox6.Controls.Add(this.label17);
-            this.groupBox6.Location = new System.Drawing.Point(1009, 513);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(305, 89);
-            this.groupBox6.TabIndex = 112;
-            this.groupBox6.TabStop = false;
+            this.groupBox10.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.groupBox10.Controls.Add(this.dtp_register_date);
+            this.groupBox10.Location = new System.Drawing.Point(1011, 164);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(305, 58);
+            this.groupBox10.TabIndex = 108;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Kayıt Tarihi :";
+            // 
+            // dtp_register_date
+            // 
+            this.dtp_register_date.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtp_register_date.Location = new System.Drawing.Point(6, 21);
+            this.dtp_register_date.Name = "dtp_register_date";
+            this.dtp_register_date.Size = new System.Drawing.Size(293, 22);
+            this.dtp_register_date.TabIndex = 15;
+            // 
+            // grb_unit_price
+            // 
+            this.grb_unit_price.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.grb_unit_price.Controls.Add(this.txt_unit_price);
+            this.grb_unit_price.Controls.Add(this.label17);
+            this.grb_unit_price.Location = new System.Drawing.Point(1009, 513);
+            this.grb_unit_price.Name = "grb_unit_price";
+            this.grb_unit_price.Size = new System.Drawing.Size(305, 89);
+            this.grb_unit_price.TabIndex = 112;
+            this.grb_unit_price.TabStop = false;
             // 
             // txt_unit_price
             // 
@@ -289,9 +316,9 @@
             // 
             this.groupBox2.BackColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox2.Controls.Add(this.dtp_deadline);
-            this.groupBox2.Location = new System.Drawing.Point(1011, 403);
+            this.groupBox2.Location = new System.Drawing.Point(1009, 451);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(305, 104);
+            this.groupBox2.Size = new System.Drawing.Size(305, 55);
             this.groupBox2.TabIndex = 107;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "İstenilen Tarih :";
@@ -299,7 +326,7 @@
             // dtp_deadline
             // 
             this.dtp_deadline.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtp_deadline.Location = new System.Drawing.Point(20, 36);
+            this.dtp_deadline.Location = new System.Drawing.Point(13, 21);
             this.dtp_deadline.Name = "dtp_deadline";
             this.dtp_deadline.Size = new System.Drawing.Size(266, 22);
             this.dtp_deadline.TabIndex = 15;
@@ -361,12 +388,16 @@
             // 
             // cb_doctor_name
             // 
+            this.cb_doctor_name.AutoCompleteCustomSource.AddRange(new string[] {
+            "CustomSource"});
+            this.cb_doctor_name.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cb_doctor_name.FormattingEnabled = true;
             this.cb_doctor_name.Location = new System.Drawing.Point(217, 37);
             this.cb_doctor_name.Name = "cb_doctor_name";
             this.cb_doctor_name.Size = new System.Drawing.Size(377, 24);
             this.cb_doctor_name.TabIndex = 2;
             this.cb_doctor_name.SelectedIndexChanged += new System.EventHandler(this.cb_doctor_name_SelectedIndexChanged);
+            this.cb_doctor_name.TextChanged += new System.EventHandler(this.cb_doctor_name_TextChanged);
             // 
             // label18
             // 
@@ -1128,7 +1159,7 @@
             this.grb_steps.Controls.Add(this.rb2);
             this.grb_steps.Controls.Add(this.rb1);
             this.grb_steps.Controls.Add(this.label7);
-            this.grb_steps.Location = new System.Drawing.Point(1011, 176);
+            this.grb_steps.Location = new System.Drawing.Point(1011, 228);
             this.grb_steps.Name = "grb_steps";
             this.grb_steps.Size = new System.Drawing.Size(305, 216);
             this.grb_steps.TabIndex = 108;
@@ -1193,16 +1224,16 @@
             this.label7.TabIndex = 8;
             this.label7.Text = "*";
             // 
-            // groupBox5
+            // grb_dr_note
             // 
-            this.groupBox5.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.groupBox5.Controls.Add(this.rtx_doctor_notes);
-            this.groupBox5.Location = new System.Drawing.Point(355, 403);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(650, 199);
-            this.groupBox5.TabIndex = 109;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Doktor Notu :";
+            this.grb_dr_note.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.grb_dr_note.Controls.Add(this.rtx_doctor_notes);
+            this.grb_dr_note.Location = new System.Drawing.Point(355, 403);
+            this.grb_dr_note.Name = "grb_dr_note";
+            this.grb_dr_note.Size = new System.Drawing.Size(650, 199);
+            this.grb_dr_note.TabIndex = 109;
+            this.grb_dr_note.TabStop = false;
+            this.grb_dr_note.Text = "Doktor Notu :";
             // 
             // rtx_doctor_notes
             // 
@@ -1218,7 +1249,7 @@
             this.groupBox4.Controls.Add(this.txt_process_no);
             this.groupBox4.Location = new System.Drawing.Point(1011, 51);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(305, 120);
+            this.groupBox4.Size = new System.Drawing.Size(305, 107);
             this.groupBox4.TabIndex = 106;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "İşlem No :";
@@ -1226,28 +1257,29 @@
             // txt_process_no
             // 
             this.txt_process_no.Enabled = false;
+            this.txt_process_no.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.txt_process_no.Location = new System.Drawing.Point(14, 29);
             this.txt_process_no.Multiline = true;
             this.txt_process_no.Name = "txt_process_no";
-            this.txt_process_no.Size = new System.Drawing.Size(285, 68);
+            this.txt_process_no.Size = new System.Drawing.Size(285, 59);
             this.txt_process_no.TabIndex = 1;
             // 
-            // groupBox3
+            // grb_process
             // 
-            this.groupBox3.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.groupBox3.Controls.Add(this.cb_procces_bar);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.btn_add_process);
-            this.groupBox3.Controls.Add(this.pictureBox2);
-            this.groupBox3.Controls.Add(this.cb_color);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Location = new System.Drawing.Point(355, 177);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(650, 217);
-            this.groupBox3.TabIndex = 105;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "İşlemler ";
+            this.grb_process.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.grb_process.Controls.Add(this.cb_procces_bar);
+            this.grb_process.Controls.Add(this.label4);
+            this.grb_process.Controls.Add(this.btn_add_process);
+            this.grb_process.Controls.Add(this.pictureBox2);
+            this.grb_process.Controls.Add(this.cb_color);
+            this.grb_process.Controls.Add(this.label6);
+            this.grb_process.Controls.Add(this.label2);
+            this.grb_process.Location = new System.Drawing.Point(355, 177);
+            this.grb_process.Name = "grb_process";
+            this.grb_process.Size = new System.Drawing.Size(650, 217);
+            this.grb_process.TabIndex = 105;
+            this.grb_process.TabStop = false;
+            this.grb_process.Text = "İşlemler ";
             // 
             // cb_procces_bar
             // 
@@ -1440,6 +1472,10 @@
             // 
             // pnl_search
             // 
+            this.pnl_search.Controls.Add(this.label56);
+            this.pnl_search.Controls.Add(this.txt_search_procces);
+            this.pnl_search.Controls.Add(this.label55);
+            this.pnl_search.Controls.Add(this.txt_id);
             this.pnl_search.Controls.Add(this.label16);
             this.pnl_search.Controls.Add(this.txt_search_deadline);
             this.pnl_search.Controls.Add(this.label10);
@@ -1453,10 +1489,44 @@
             this.pnl_search.TabIndex = 12;
             this.pnl_search.Visible = false;
             // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Location = new System.Drawing.Point(707, 27);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(93, 17);
+            this.label56.TabIndex = 10;
+            this.label56.Text = "İşlem Arama :";
+            // 
+            // txt_search_procces
+            // 
+            this.txt_search_procces.Location = new System.Drawing.Point(813, 25);
+            this.txt_search_procces.Name = "txt_search_procces";
+            this.txt_search_procces.Size = new System.Drawing.Size(188, 22);
+            this.txt_search_procces.TabIndex = 9;
+            this.txt_search_procces.TextChanged += new System.EventHandler(this.txt_search_procces_TextChanged);
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Location = new System.Drawing.Point(29, 60);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(111, 17);
+            this.label55.TabIndex = 8;
+            this.label55.Text = "Kayıt Numarası :";
+            // 
+            // txt_id
+            // 
+            this.txt_id.Location = new System.Drawing.Point(143, 58);
+            this.txt_id.Name = "txt_id";
+            this.txt_id.Size = new System.Drawing.Size(188, 22);
+            this.txt_id.TabIndex = 7;
+            this.txt_id.TextChanged += new System.EventHandler(this.txt_id_TextChanged);
+            // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(389, 28);
+            this.label16.Location = new System.Drawing.Point(395, 59);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(94, 17);
             this.label16.TabIndex = 6;
@@ -1464,7 +1534,7 @@
             // 
             // txt_search_deadline
             // 
-            this.txt_search_deadline.Location = new System.Drawing.Point(495, 26);
+            this.txt_search_deadline.Location = new System.Drawing.Point(501, 57);
             this.txt_search_deadline.Name = "txt_search_deadline";
             this.txt_search_deadline.Size = new System.Drawing.Size(188, 22);
             this.txt_search_deadline.TabIndex = 5;
@@ -1473,7 +1543,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(37, 59);
+            this.label10.Location = new System.Drawing.Point(395, 27);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 17);
             this.label10.TabIndex = 4;
@@ -1481,7 +1551,7 @@
             // 
             // txt_search_patient
             // 
-            this.txt_search_patient.Location = new System.Drawing.Point(143, 57);
+            this.txt_search_patient.Location = new System.Drawing.Point(501, 25);
             this.txt_search_patient.Name = "txt_search_patient";
             this.txt_search_patient.Size = new System.Drawing.Size(188, 22);
             this.txt_search_patient.TabIndex = 3;
@@ -1589,7 +1659,7 @@
             this.dgv_patients.Location = new System.Drawing.Point(32, 97);
             this.dgv_patients.Name = "dgv_patients";
             this.dgv_patients.RowTemplate.Height = 24;
-            this.dgv_patients.Size = new System.Drawing.Size(925, 575);
+            this.dgv_patients.Size = new System.Drawing.Size(1056, 575);
             this.dgv_patients.TabIndex = 4;
             this.dgv_patients.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_patients_CellMouseDoubleClick);
             // 
@@ -1697,6 +1767,7 @@
             // 
             // txt_payment
             // 
+            this.txt_payment.Enabled = false;
             this.txt_payment.Location = new System.Drawing.Point(139, 110);
             this.txt_payment.Name = "txt_payment";
             this.txt_payment.Size = new System.Drawing.Size(122, 22);
@@ -1778,11 +1849,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1455, 738);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnl_add_patient);
             this.Controls.Add(this.pnl_payment);
             this.Controls.Add(this.pnl_init);
             this.Controls.Add(this.pnl_print);
             this.Controls.Add(this.pnl_search);
-            this.Controls.Add(this.pnl_add_patient);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -1792,8 +1863,9 @@
             this.Text = "ÖZEL CALYPSO.Version1.1";
             this.TopMost = true;
             this.pnl_add_patient.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.grb_unit_price.ResumeLayout(false);
+            this.grb_unit_price.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.grb_registered.ResumeLayout(false);
             this.grb_registered.PerformLayout();
@@ -1834,11 +1906,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.t44)).EndInit();
             this.grb_steps.ResumeLayout(false);
             this.grb_steps.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
+            this.grb_dr_note.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.grb_process.ResumeLayout(false);
+            this.grb_process.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -1878,7 +1950,7 @@
         private System.Windows.Forms.PictureBox pB_data_view;
         private System.Windows.Forms.Label lbl_ad_patient;
         private System.Windows.Forms.PictureBox pB_add_pattient;
-        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox grb_unit_price;
         private System.Windows.Forms.TextBox txt_unit_price;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -1967,11 +2039,11 @@
         private System.Windows.Forms.RadioButton rb2;
         private System.Windows.Forms.RadioButton rb1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox grb_dr_note;
         private System.Windows.Forms.RichTextBox rtx_doctor_notes;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox txt_process_no;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox grb_process;
         private System.Windows.Forms.ComboBox cb_procces_bar;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_add_process;
@@ -2014,6 +2086,12 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.TextBox txt_id;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.DateTimePicker dtp_register_date;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.TextBox txt_search_procces;
     }
 }
 

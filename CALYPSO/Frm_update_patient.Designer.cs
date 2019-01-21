@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_update_patient));
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.txt_u_price = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dtp_deadline = new System.Windows.Forms.DateTimePicker();
@@ -129,7 +130,8 @@
             this.cb_color = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txt_u_price = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_delete = new System.Windows.Forms.Button();
             this.groupBox6.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grb_registered.SuspendLayout();
@@ -172,6 +174,7 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox6
@@ -184,6 +187,14 @@
             this.groupBox6.Size = new System.Drawing.Size(303, 89);
             this.groupBox6.TabIndex = 121;
             this.groupBox6.TabStop = false;
+            // 
+            // txt_u_price
+            // 
+            this.txt_u_price.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.txt_u_price.Location = new System.Drawing.Point(175, 21);
+            this.txt_u_price.Name = "txt_u_price";
+            this.txt_u_price.Size = new System.Drawing.Size(100, 30);
+            this.txt_u_price.TabIndex = 12;
             // 
             // label17
             // 
@@ -1135,6 +1146,7 @@
             // txt_ID
             // 
             this.txt_ID.Enabled = false;
+            this.txt_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.txt_ID.Location = new System.Drawing.Point(14, 29);
             this.txt_ID.Multiline = true;
             this.txt_ID.Name = "txt_ID";
@@ -1238,19 +1250,33 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Yapılan İşlem :";
             // 
-            // txt_u_price
+            // groupBox1
             // 
-            this.txt_u_price.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txt_u_price.Location = new System.Drawing.Point(175, 21);
-            this.txt_u_price.Name = "txt_u_price";
-            this.txt_u_price.Size = new System.Drawing.Size(100, 30);
-            this.txt_u_price.TabIndex = 12;
+            this.groupBox1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.groupBox1.Controls.Add(this.btn_delete);
+            this.groupBox1.Location = new System.Drawing.Point(675, 578);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(201, 91);
+            this.groupBox1.TabIndex = 122;
+            this.groupBox1.TabStop = false;
+            // 
+            // btn_delete
+            // 
+            this.btn_delete.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.btn_delete.Location = new System.Drawing.Point(6, 21);
+            this.btn_delete.Name = "btn_delete";
+            this.btn_delete.Size = new System.Drawing.Size(185, 58);
+            this.btn_delete.TabIndex = 0;
+            this.btn_delete.Text = "Kaydı Sil";
+            this.btn_delete.UseVisualStyleBackColor = false;
+            this.btn_delete.Click += new System.EventHandler(this.btn_delete_Click);
             // 
             // Frm_update_patient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1317, 687);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.grb_registered);
@@ -1313,6 +1339,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1420,5 +1447,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txt_u_price;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btn_delete;
     }
 }
