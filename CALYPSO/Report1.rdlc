@@ -9,19 +9,19 @@
               <Width>2.72339cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>5cm</Width>
+              <Width>3.26433cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.11383cm</Width>
+              <Width>4.06633cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>0.80667cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>0.976cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.3255cm</Width>
+              <Width>1.90733cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -39,7 +39,7 @@
                             <TextRun>
                               <Value>Hasta Adı</Value>
                               <Style>
-                                <FontSize>14pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -73,7 +73,7 @@
                             <TextRun>
                               <Value>Yapılan İşlem</Value>
                               <Style>
-                                <FontSize>14pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -107,7 +107,7 @@
                             <TextRun>
                               <Value>Tarih</Value>
                               <Style>
-                                <FontSize>14pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -141,7 +141,7 @@
                             <TextRun>
                               <Value>Adet</Value>
                               <Style>
-                                <FontSize>14pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -175,7 +175,7 @@
                             <TextRun>
                               <Value>fiyat</Value>
                               <Style>
-                                <FontSize>14pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -209,7 +209,7 @@
                             <TextRun>
                               <Value>Toplam Fiyat</Value>
                               <Style>
-                                <FontSize>14pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -248,7 +248,7 @@
                             <TextRun>
                               <Value>=Fields!patient_name.Value</Value>
                               <Style>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -280,7 +280,7 @@
                             <TextRun>
                               <Value>=Fields!proc_name.Value</Value>
                               <Style>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -312,7 +312,7 @@
                             <TextRun>
                               <Value>=Fields!date.Value</Value>
                               <Style>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -344,7 +344,7 @@
                             <TextRun>
                               <Value>=Fields!num.Value</Value>
                               <Style>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -376,7 +376,7 @@
                             <TextRun>
                               <Value>=Fields!price.Value</Value>
                               <Style>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -408,7 +408,7 @@
                             <TextRun>
                               <Value>=Fields!total_price.Value</Value>
                               <Style>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -454,10 +454,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>0.10583cm</Top>
-        <Left>0.30345cm</Left>
+        <Top>0.14111cm</Top>
+        <Left>2.21078cm</Left>
         <Height>1.36934cm</Height>
-        <Width>19.16272cm</Width>
+        <Width>13.74405cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -473,7 +473,7 @@
               <TextRun>
                 <Value>=Parameters!ReportParameter_totalprice.Value</Value>
                 <Style>
-                  <FontSize>12pt</FontSize>
+                  <FontSize>8pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -481,10 +481,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>ReportParameter_totalprice</rd:DefaultName>
-        <Top>1.65156cm</Top>
-        <Left>14.36034cm</Left>
+        <Top>1.68684cm</Top>
+        <Left>14.08278cm</Left>
         <Height>0.6cm</Height>
-        <Width>4.746cm</Width>
+        <Width>0.976cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -496,11 +496,171 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="ReportParameter_total_debt">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!ReportParameter_total_debt.Value</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>ReportParameter_total_debt</rd:DefaultName>
+        <Top>2.93484cm</Top>
+        <Left>14.08278cm</Left>
+        <Height>0.6cm</Height>
+        <Width>0.976cm</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Toplam Doktor Borcu :</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox2</rd:DefaultName>
+        <Top>2.97011cm</Top>
+        <Left>10.79017cm</Left>
+        <Height>0.6cm</Height>
+        <Width>3.32789cm</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox4">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Toplam işlem Ücretleri :</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox4</rd:DefaultName>
+        <Top>1.68684cm</Top>
+        <Left>10.61378cm</Left>
+        <Height>0.6cm</Height>
+        <Width>3.43372cm</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox8">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!ReportParameter_lastpayment.Value</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox8</rd:DefaultName>
+        <Top>2.29956cm</Top>
+        <Left>14.08278cm</Left>
+        <Height>0.6cm</Height>
+        <Width>0.94072cm</Width>
+        <ZIndex>5</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox6">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Alınan Bakiye :</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox2</rd:DefaultName>
+        <Top>2.28684cm</Top>
+        <Left>11.69561cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.31661cm</Width>
+        <ZIndex>6</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>1.109in</Height>
+    <Height>1.475in</Height>
     <Style />
   </Body>
-  <Width>8.72442in</Width>
+  <Width>6.40776in</Width>
   <Page>
     <PageHeader>
       <Height>3.87237cm</Height>
@@ -516,7 +676,7 @@
                 <TextRun>
                   <Value>Ödeme Listesi</Value>
                   <Style>
-                    <FontSize>22pt</FontSize>
+                    <FontSize>20pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
@@ -526,7 +686,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox13</rd:DefaultName>
           <Top>1.66934cm</Top>
-          <Left>8.02684cm</Left>
+          <Left>7.65283cm</Left>
           <Height>1.01036cm</Height>
           <Width>6.39467cm</Width>
           <Style>
@@ -557,7 +717,7 @@
           </Paragraphs>
           <rd:DefaultName>ReportParameterdr_name</rd:DefaultName>
           <Top>2.85609cm</Top>
-          <Left>3.54661cm</Left>
+          <Left>5.45394cm</Left>
           <Height>0.6cm</Height>
           <Width>2.754cm</Width>
           <ZIndex>1</ZIndex>
@@ -589,7 +749,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox15</rd:DefaultName>
           <Top>2.89137cm</Top>
-          <Left>0.97605cm</Left>
+          <Left>2.88338cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <ZIndex>2</ZIndex>
@@ -608,7 +768,7 @@
           <Value>CALYPSOpng</Value>
           <Sizing>FitProportional</Sizing>
           <Top>0.77046cm</Top>
-          <Left>0.68445cm</Left>
+          <Left>2.59178cm</Left>
           <Height>1.90924cm</Height>
           <Width>4.56256cm</Width>
           <ZIndex>3</ZIndex>
@@ -620,8 +780,9 @@
         </Image>
         <Line Name="Line1">
           <Top>3.5972cm</Top>
+          <Left>2.21078cm</Left>
           <Height>0cm</Height>
-          <Width>22.16003cm</Width>
+          <Width>13.74405cm</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border>
@@ -656,8 +817,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox17</rd:DefaultName>
-          <Top>0.39314cm</Top>
-          <Left>19.71784cm</Left>
+          <Top>0.07056cm</Top>
+          <Left>14.0475cm</Left>
           <Height>0.6cm</Height>
           <Width>1.58983cm</Width>
           <Style>
@@ -740,6 +901,14 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="ReportParameter_totalprice">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ReportParameter_total_debt">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ReportParameter_lastpayment">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>

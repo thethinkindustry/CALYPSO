@@ -38,7 +38,9 @@ namespace CALYPSO
             Microsoft.Reporting.WinForms.ReportParameter[] rParams = new Microsoft.Reporting.WinForms.ReportParameter[]
       {
               new Microsoft.Reporting.WinForms.ReportParameter("ReportParameter_drname",frm1.p_info.SelectedDoctorName.ToString() ),
-            new Microsoft.Reporting.WinForms.ReportParameter("ReportParameter_totalprice","Toplam Ücret : " +frm1.p_info.Totalprice.ToString()+"₺")
+            new Microsoft.Reporting.WinForms.ReportParameter("ReportParameter_totalprice",frm1.p_info.Totalprice.ToString()+"₺"),
+            new Microsoft.Reporting.WinForms.ReportParameter("ReportParameter_total_debt",frm1.p_info.Totaldebt.ToString()+"₺"),
+              new Microsoft.Reporting.WinForms.ReportParameter("ReportParameter_lastpayment",frm1.p_info.dr_last_payment.ToString()+"₺")
       };
             this.reportViewer.LocalReport.SetParameters(rParams);
 

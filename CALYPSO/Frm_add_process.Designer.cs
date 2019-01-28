@@ -88,7 +88,7 @@
             this.label19.Size = new System.Drawing.Size(79, 17);
             this.label19.TabIndex = 0;
             this.label19.Text = "İslem Ekle :";
-            this.label19.Click += new System.EventHandler(this.label19_Click);
+          
             // 
             // Frm_add_process
             // 

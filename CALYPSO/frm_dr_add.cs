@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
-
+using System.Data.SqlClient;
 namespace CALYPSO
 {
     public partial class frm_dr_add : Form
@@ -23,27 +23,29 @@ namespace CALYPSO
 
         }
 
-        private void grb_new_register_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void btn_new_dr_save_Click(object sender, EventArgs e)
         {
-            OleDbConnection con = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=db_calypso.mdb");
-            con.Open();
-            string query = "insert into tbl_dr (d_name,d_number) values(@pname,@pnumber)";
-            OleDbCommand cmd= new OleDbCommand();
-            cmd.Connection = con;
-            cmd.CommandText = query;
-            cmd.Parameters.AddWithValue("@pname", txt_doctor_name.Text);
-            cmd.Parameters.AddWithValue("@number", txt_dr_number.Text);
-            cmd.ExecuteNonQuery();
-            con.Close();
-            this.Close();
-           
+            try
+            {
+                string connetionString = "Data Source=DESKTOP-93568HR\\SQL_2014;Initial Catalog=db_calypso;Integrated Security=True";
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string sql = "insert into tbl_dr (d_name ,d_number,payment) values(@pname,@number,@payment)";
+                SqlCommand command = new SqlCommand(sql, cnn);
+                command.Parameters.Add(new SqlParameter("@pname", txt_doctor_name.Text));
+                command.Parameters.Add(new SqlParameter("@number", txt_dr_number.Text));
+                command.Parameters.Add(new SqlParameter("@payment", "0"));
+                command.ExecuteNonQuery();
+               cnn.Close();
+                this.Close();
+            }
+            catch (Exception ex )
+            {
+                MessageBox.Show(ex.ToString());
+                throw;
+            }
+            
         }
-
         private void btn_iptal_Click(object sender, EventArgs e)
         {
             this.Close();

@@ -38,7 +38,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txt_patient_name = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.btn_dr_add = new System.Windows.Forms.Button();
             this.cb_doctor_name = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -113,6 +112,7 @@
             this.t25 = new System.Windows.Forms.PictureBox();
             this.t44 = new System.Windows.Forms.PictureBox();
             this.grb_steps = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.rb4 = new System.Windows.Forms.RadioButton();
             this.rb3 = new System.Windows.Forms.RadioButton();
             this.rb2 = new System.Windows.Forms.RadioButton();
@@ -125,13 +125,13 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cb_procces_bar = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.btn_add_process = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.cb_color = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btn_delete = new System.Windows.Forms.Button();
+            this.pnl_update_patient = new System.Windows.Forms.Panel();
             this.groupBox6.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grb_registered.SuspendLayout();
@@ -175,6 +175,7 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.pnl_update_patient.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox6
@@ -182,10 +183,10 @@
             this.groupBox6.BackColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox6.Controls.Add(this.txt_u_price);
             this.groupBox6.Controls.Add(this.label17);
-            this.groupBox6.Location = new System.Drawing.Point(1002, 483);
+            this.groupBox6.Location = new System.Drawing.Point(1007, 487);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(303, 89);
-            this.groupBox6.TabIndex = 121;
+            this.groupBox6.TabIndex = 118;
             this.groupBox6.TabStop = false;
             // 
             // txt_u_price
@@ -210,10 +211,10 @@
             // 
             this.groupBox2.BackColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox2.Controls.Add(this.dtp_deadline);
-            this.groupBox2.Location = new System.Drawing.Point(1002, 373);
+            this.groupBox2.Location = new System.Drawing.Point(1007, 377);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(305, 104);
-            this.groupBox2.TabIndex = 116;
+            this.groupBox2.TabIndex = 117;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "İstenilen Tarih :";
             // 
@@ -231,11 +232,10 @@
             this.grb_registered.Controls.Add(this.label5);
             this.grb_registered.Controls.Add(this.txt_patient_name);
             this.grb_registered.Controls.Add(this.label3);
-            this.grb_registered.Controls.Add(this.btn_dr_add);
             this.grb_registered.Controls.Add(this.cb_doctor_name);
             this.grb_registered.Controls.Add(this.label18);
             this.grb_registered.Controls.Add(this.label19);
-            this.grb_registered.Location = new System.Drawing.Point(346, 21);
+            this.grb_registered.Location = new System.Drawing.Point(351, 25);
             this.grb_registered.Name = "grb_registered";
             this.grb_registered.Size = new System.Drawing.Size(650, 120);
             this.grb_registered.TabIndex = 113;
@@ -269,17 +269,6 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "*";
             // 
-            // btn_dr_add
-            // 
-            this.btn_dr_add.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btn_dr_add.Location = new System.Drawing.Point(600, 36);
-            this.btn_dr_add.Name = "btn_dr_add";
-            this.btn_dr_add.Size = new System.Drawing.Size(32, 30);
-            this.btn_dr_add.TabIndex = 5;
-            this.btn_dr_add.Text = "+";
-            this.btn_dr_add.UseVisualStyleBackColor = false;
-            this.btn_dr_add.Click += new System.EventHandler(this.btn_dr_add_Click);
-            // 
             // cb_doctor_name
             // 
             this.cb_doctor_name.FormattingEnabled = true;
@@ -311,10 +300,10 @@
             this.groupBox9.BackColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox9.Controls.Add(this.btn_cancel);
             this.groupBox9.Controls.Add(this.btn_save);
-            this.groupBox9.Location = new System.Drawing.Point(884, 578);
+            this.groupBox9.Location = new System.Drawing.Point(889, 582);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(421, 91);
-            this.groupBox9.TabIndex = 120;
+            this.groupBox9.TabIndex = 119;
             this.groupBox9.TabStop = false;
             // 
             // btn_cancel
@@ -407,7 +396,7 @@
             this.grb_teeth.Controls.Add(this.t24);
             this.grb_teeth.Controls.Add(this.t25);
             this.grb_teeth.Controls.Add(this.t44);
-            this.grb_teeth.Location = new System.Drawing.Point(9, 10);
+            this.grb_teeth.Location = new System.Drawing.Point(14, 14);
             this.grb_teeth.Name = "grb_teeth";
             this.grb_teeth.Size = new System.Drawing.Size(331, 562);
             this.grb_teeth.TabIndex = 119;
@@ -1043,23 +1032,36 @@
             // grb_steps
             // 
             this.grb_steps.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.grb_steps.Controls.Add(this.radioButton1);
             this.grb_steps.Controls.Add(this.rb4);
             this.grb_steps.Controls.Add(this.rb3);
             this.grb_steps.Controls.Add(this.rb2);
             this.grb_steps.Controls.Add(this.rb1);
             this.grb_steps.Controls.Add(this.label7);
-            this.grb_steps.Location = new System.Drawing.Point(1002, 146);
+            this.grb_steps.Location = new System.Drawing.Point(1007, 150);
             this.grb_steps.Name = "grb_steps";
-            this.grb_steps.Size = new System.Drawing.Size(305, 216);
-            this.grb_steps.TabIndex = 117;
+            this.grb_steps.Size = new System.Drawing.Size(305, 221);
+            this.grb_steps.TabIndex = 116;
             this.grb_steps.TabStop = false;
             this.grb_steps.Text = "işlem Sırası :";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.radioButton1.Location = new System.Drawing.Point(29, 184);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(72, 29);
+            this.radioButton1.TabIndex = 22;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "RPT";
+            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // rb4
             // 
             this.rb4.AutoSize = true;
             this.rb4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.rb4.Location = new System.Drawing.Point(30, 162);
+            this.rb4.Location = new System.Drawing.Point(29, 143);
             this.rb4.Name = "rb4";
             this.rb4.Size = new System.Drawing.Size(69, 29);
             this.rb4.TabIndex = 21;
@@ -1071,7 +1073,7 @@
             // 
             this.rb3.AutoSize = true;
             this.rb3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.rb3.Location = new System.Drawing.Point(30, 127);
+            this.rb3.Location = new System.Drawing.Point(29, 108);
             this.rb3.Name = "rb3";
             this.rb3.Size = new System.Drawing.Size(130, 29);
             this.rb3.TabIndex = 20;
@@ -1083,7 +1085,7 @@
             // 
             this.rb2.AutoSize = true;
             this.rb2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.rb2.Location = new System.Drawing.Point(30, 84);
+            this.rb2.Location = new System.Drawing.Point(29, 65);
             this.rb2.Name = "rb2";
             this.rb2.Size = new System.Drawing.Size(150, 29);
             this.rb2.TabIndex = 19;
@@ -1095,7 +1097,7 @@
             // 
             this.rb1.AutoSize = true;
             this.rb1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.rb1.Location = new System.Drawing.Point(30, 42);
+            this.rb1.Location = new System.Drawing.Point(29, 23);
             this.rb1.Name = "rb1";
             this.rb1.Size = new System.Drawing.Size(197, 29);
             this.rb1.TabIndex = 18;
@@ -1117,10 +1119,10 @@
             // 
             this.groupBox5.BackColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox5.Controls.Add(this.rtx_doctor_notes);
-            this.groupBox5.Location = new System.Drawing.Point(346, 373);
+            this.groupBox5.Location = new System.Drawing.Point(351, 377);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(632, 199);
-            this.groupBox5.TabIndex = 118;
+            this.groupBox5.TabIndex = 115;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Doktor Notu :";
             // 
@@ -1136,7 +1138,7 @@
             // 
             this.groupBox4.BackColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox4.Controls.Add(this.txt_ID);
-            this.groupBox4.Location = new System.Drawing.Point(1002, 21);
+            this.groupBox4.Location = new System.Drawing.Point(1007, 25);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(305, 120);
             this.groupBox4.TabIndex = 115;
@@ -1158,12 +1160,11 @@
             this.groupBox3.BackColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox3.Controls.Add(this.cb_procces_bar);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.btn_add_process);
             this.groupBox3.Controls.Add(this.pictureBox2);
             this.groupBox3.Controls.Add(this.cb_color);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Location = new System.Drawing.Point(346, 147);
+            this.groupBox3.Location = new System.Drawing.Point(351, 151);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(650, 217);
             this.groupBox3.TabIndex = 114;
@@ -1187,17 +1188,6 @@
             this.label4.Size = new System.Drawing.Size(13, 17);
             this.label4.TabIndex = 7;
             this.label4.Text = "*";
-            // 
-            // btn_add_process
-            // 
-            this.btn_add_process.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btn_add_process.Location = new System.Drawing.Point(588, 38);
-            this.btn_add_process.Name = "btn_add_process";
-            this.btn_add_process.Size = new System.Drawing.Size(32, 30);
-            this.btn_add_process.TabIndex = 6;
-            this.btn_add_process.Text = "+";
-            this.btn_add_process.UseVisualStyleBackColor = false;
-            this.btn_add_process.Click += new System.EventHandler(this.btn_add_process_Click);
             // 
             // pictureBox2
             // 
@@ -1254,10 +1244,10 @@
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox1.Controls.Add(this.btn_delete);
-            this.groupBox1.Location = new System.Drawing.Point(675, 578);
+            this.groupBox1.Location = new System.Drawing.Point(680, 582);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(201, 91);
-            this.groupBox1.TabIndex = 122;
+            this.groupBox1.TabIndex = 120;
             this.groupBox1.TabStop = false;
             // 
             // btn_delete
@@ -1271,21 +1261,30 @@
             this.btn_delete.UseVisualStyleBackColor = false;
             this.btn_delete.Click += new System.EventHandler(this.btn_delete_Click);
             // 
+            // pnl_update_patient
+            // 
+            this.pnl_update_patient.Controls.Add(this.grb_teeth);
+            this.pnl_update_patient.Controls.Add(this.groupBox1);
+            this.pnl_update_patient.Controls.Add(this.groupBox3);
+            this.pnl_update_patient.Controls.Add(this.groupBox6);
+            this.pnl_update_patient.Controls.Add(this.groupBox4);
+            this.pnl_update_patient.Controls.Add(this.groupBox2);
+            this.pnl_update_patient.Controls.Add(this.groupBox5);
+            this.pnl_update_patient.Controls.Add(this.grb_registered);
+            this.pnl_update_patient.Controls.Add(this.grb_steps);
+            this.pnl_update_patient.Controls.Add(this.groupBox9);
+            this.pnl_update_patient.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnl_update_patient.Location = new System.Drawing.Point(0, 0);
+            this.pnl_update_patient.Name = "pnl_update_patient";
+            this.pnl_update_patient.Size = new System.Drawing.Size(1317, 687);
+            this.pnl_update_patient.TabIndex = 8;
+            // 
             // Frm_update_patient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1317, 687);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.grb_registered);
-            this.Controls.Add(this.groupBox9);
-            this.Controls.Add(this.grb_teeth);
-            this.Controls.Add(this.grb_steps);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.pnl_update_patient);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Frm_update_patient";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1340,6 +1339,7 @@
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.pnl_update_patient.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1354,7 +1354,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txt_patient_name;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btn_dr_add;
         private System.Windows.Forms.ComboBox cb_doctor_name;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
@@ -1441,7 +1440,6 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ComboBox cb_procces_bar;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btn_add_process;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.ComboBox cb_color;
         private System.Windows.Forms.Label label6;
@@ -1449,5 +1447,7 @@
         private System.Windows.Forms.TextBox txt_u_price;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btn_delete;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Panel pnl_update_patient;
     }
 }

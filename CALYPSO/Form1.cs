@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.Globalization;
 
 namespace CALYPSO
 {
@@ -15,64 +17,63 @@ namespace CALYPSO
     {
         public Frm_update_patient frm_update;
         public frm_print Frm_print;
-        OleDbConnection con;
-        OleDbCommand cmd;
-        string query;
-        OleDbDataReader reader;
-
-      public  print_informations p_info = new print_informations();
-      //  public String SelectedDoctorName="";
-       // public String fromDate, toDate;
+        SqlConnection cnn;
+        SqlCommand command;
+        SqlDataReader dataReader;
+        SqlDataAdapter adapter;
+        DataView dv;
+        string sql = null;
+        public  print_informations p_info = new print_informations();
         public int Totalprice = 0;
         DataTable table = new DataTable();
-       public List<patient> lst = new List<patient>();
+        public List<patient> lst = new List<patient>();
         public Form1()
         { 
 
             InitializeComponent();
 
             Frm_print = new frm_print();
-            Frm_print.frm1 = this;
-
             frm_update = new Frm_update_patient();
+            Frm_print.frm1 = this;
             frm_update.frm1 = this;
-            
-            con = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=db_calypso.mdb");
-            cmd = new OleDbCommand();
-            
+            string connetionString = null;
+           connetionString = "Data Source=DESKTOP-93568HR\\SQL_2014;Initial Catalog=db_calypso;Integrated Security=True";
+            cnn = new SqlConnection(connetionString);
+        
             try
             {
-                
-                AutoCompleteStringCollection aCsC2 = new AutoCompleteStringCollection();
-                con.Open();
-                cmd.Connection = con;
-               
-               
-                query = "select * From tbl_dr";
-                cmd.CommandText = query;
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    aCsC2.Add(reader["d_name"].ToString());
-                }
-                reader.Close();
-                cb_doctor_name.AutoCompleteCustomSource = aCsC2;
-                cb_doctor_name.DataSource = aCsC2;
-                aCsC2.Clear();
+                cnn.Open();
+               // MessageBox.Show("Connection Open ! ");
+                cnn.Close();
+            }
+            catch (Exception )
+            {
+                MessageBox.Show("Can not open connection ! ");
+            }
 
-                AutoCompleteStringCollection aCsC1 = new AutoCompleteStringCollection();
-
-                query = "select * From tbl_process ";
-                cmd.CommandText = query;
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
+            try
+            {
+                cnn.Open();
+                sql = "SELECT d_name FROM tbl_dr";
+                command = new SqlCommand(sql, cnn);
+                dataReader = command.ExecuteReader();
+                while (dataReader.Read())
                 {
-                    aCsC1.Add(reader["process"].ToString());
+                    cb_doctor_name.Items.Add(dataReader["d_name"].ToString());
                 }
-                reader.Close();
-                cb_procces_bar.AutoCompleteCustomSource = aCsC1;
-                cb_procces_bar.DataSource = aCsC1;
-                aCsC1.Clear();
+                dataReader.Close();
+                command.Dispose();
+
+                sql = "SELECT process FROM tbl_process";
+                command = new SqlCommand(sql,cnn);
+                dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    cb_procces_bar.Items.Add(dataReader["process"].ToString());
+                }
+                dataReader.Close();
+                command.Dispose();
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -86,18 +87,15 @@ namespace CALYPSO
                 rb.MouseClick += new MouseEventHandler((o, a) => onClickList(rb));
             }
 
-            pnl_add_patient.Visible = false;
-
         }
-     
         public void onClickList(PictureBox rb)
         {
             if (rb.BackColor == Color.DarkSlateGray)
             {
 
-                rb.BackColor = Color.White;
+                rb.BackColor = Color.Transparent;
             }
-            else
+            else 
             {
                 rb.BackColor = Color.DarkSlateGray;
             }
@@ -124,38 +122,24 @@ namespace CALYPSO
             // Enable or disable the GroupBox.
             grp.Enabled = chk.Checked;
         }
-
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-           /* con.Close();
-            var newForm = new teeth();
-            newForm.ShowDialog();*/
-
-        }
-
         private void btn_dr_add_Click(object sender, EventArgs e)
         {
-            con.Close();
-            reader.Close();
-            Form frmDRadd = new frm_dr_add();
+           Form frmDRadd = new frm_dr_add();
             frmDRadd.ShowDialog();
           
             try
             {
-                con.Open();
-                AutoCompleteStringCollection aCsC = new AutoCompleteStringCollection();
-                query = "select * From tbl_dr";
-                cmd.CommandText = query;
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
+                cnn.Open();
+                sql = "select * From tbl_dr";
+                command = new SqlCommand(sql, cnn);
+                dataReader = command.ExecuteReader();
+                while (dataReader.Read())
                 {
-                    aCsC.Add(reader["d_name"].ToString());
+                    cb_doctor_name.Items.Add(dataReader["d_name"].ToString());
                 }
-                reader.Close();
-                cb_doctor_name.AutoCompleteCustomSource = aCsC;
-                cb_doctor_name.DataSource = aCsC;
-                aCsC.Clear();
+                dataReader.Close();
+                command.Dispose();
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -164,33 +148,25 @@ namespace CALYPSO
             }
 
         }
-
-        private void cb_doctor_name_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //cb_doctor_name.Items.Clear();
-
-        }
-
         private void btn_add_process_Click(object sender, EventArgs e)
         {
-            con.Close();
+            //con.Close();
             Form frm_add_process = new Frm_add_process();
             frm_add_process.ShowDialog();
             cb_procces_bar.Items.Clear();
             try
             {
-
-                con.Open();
-                cmd.Connection = con;
-                query = "select * From tbl_process ";
-                cmd.CommandText = query;
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
+                cnn.Open();
+                sql= "select * From tbl_process ";
+                command = new SqlCommand(sql,cnn);
+                dataReader = command.ExecuteReader();
+                while (dataReader.Read())
                 {
-                    cb_procces_bar.Items.Add(reader["process"].ToString());
+                    cb_procces_bar.Items.Add(dataReader["process"].ToString());
                 }
-                reader.Close();
-
+                dataReader.Close();
+                command.Dispose();
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -198,18 +174,14 @@ namespace CALYPSO
                 throw;
             }
         }
-
         private void btn_cancel_Click(object sender, EventArgs e)
         {
             pnl_add_patient.Visible = false;
             pnl_init.Visible = true;
         }
-
         private void btn_save_Click(object sender, EventArgs e)
         {
-            con.Close();
-            con.Open();
-            bool istrue = false;
+           bool istrue = false;
             var rbtn = grb_steps.Controls.OfType<RadioButton>();
             foreach (var rb in rbtn)
             {
@@ -260,73 +232,68 @@ namespace CALYPSO
             int val = Convert.ToInt32(txt_unit_price.Text) * counter;
             try
             {
-                string query = "insert into tbl_main(dr_name,patient_name,process_name,color,teeth,num ,unit_price,price,step, init_date,deadline,dr_note)values(@dr,@pat,@proc,@color,@teeth,@num,@price,@total_price,@step,@init_date,@deadline,@dr_note)";
-                OleDbCommand cmd = new OleDbCommand();
-                cmd.Connection = con;
-                cmd.CommandText = query;
-               cmd.Parameters.AddWithValue("@pname", cb_doctor_name.Text);
-                cmd.Parameters.AddWithValue("@pat", txt_patient_name.Text);
-                 cmd.Parameters.AddWithValue("@proc", cb_procces_bar.Text);
-                 cmd.Parameters.AddWithValue("@color", cb_color.Text);
-                  cmd.Parameters.AddWithValue("@teeth", teeth);
-                  cmd.Parameters.AddWithValue("@num", counter.ToString());
-                 cmd.Parameters.AddWithValue("@price", txt_unit_price.Text);
-                cmd.Parameters.AddWithValue("@total_price",val.ToString() );
-
-                var radioButtons = grb_steps.Controls.OfType<RadioButton>();
+                cnn.Open();
+                sql = "insert into tbl_main(dr_name,patient_name,process_name,color,teeth,num ,unit_price,price,step, init_date,deadline,dr_note)values(@pname,@pat,@proc,@color,@teeth,@num,@price,@total_price,@step,@init_date,@deadline,@dr_note)";
+                command = new SqlCommand(sql,cnn);
+                command.Parameters.Add(new SqlParameter("@pname", cb_doctor_name.Text));
+                command.Parameters.Add(new SqlParameter("@pat", txt_patient_name.Text));
+                command.Parameters.Add(new SqlParameter("@proc", cb_procces_bar.Text));
+                command.Parameters.Add(new SqlParameter("@color", cb_color.Text));
+                command.Parameters.Add(new SqlParameter("@teeth", teeth));
+                command.Parameters.Add(new SqlParameter("@num", counter.ToString()));
+                command.Parameters.Add(new SqlParameter("@price", txt_unit_price.Text));
+                command.Parameters.Add(new SqlParameter("@total_price",val.ToString() ));
+               var radioButtons = grb_steps.Controls.OfType<RadioButton>();
                  foreach (var rb in radioButtons)
                  {
                      if (rb.Checked)
                      {
-                         cmd.Parameters.AddWithValue("@step", rb.Text);
+                        command.Parameters.Add(new SqlParameter("@step", rb.Text));
                      }
                  }
-                cmd.Parameters.AddWithValue("@init_date",dtp_register_date.Value.ToShortDateString());
-                cmd.Parameters.AddWithValue("@deadline", dtp_deadline.Value.ToShortDateString());
-                 cmd.Parameters.AddWithValue("@dr_note", rtx_doctor_notes.Text);
-                cmd.ExecuteNonQuery();
-              string query_ = "SELECT kimlik, payment FROM tbl_dr WHERE d_name='"+ cb_doctor_name.Text + "' ";
-                OleDbCommand cmdw = new OleDbCommand();
-                cmdw.Connection = con;
-                cmdw.CommandText = query_;
-                OleDbDataReader read = cmdw.ExecuteReader();
+                command.Parameters.Add(new SqlParameter("@init_date",dtp_register_date.Value.ToString("yyyy-MM-dd")));
+                command.Parameters.Add(new SqlParameter("@deadline", dtp_deadline.Value.ToString("yyyy-MM-dd")));
+                command.Parameters.Add(new SqlParameter("@dr_note", rtx_doctor_notes.Text));
+                command.ExecuteNonQuery();
+                command.Dispose();
+                cnn.Close();
+                cnn.Open();
+                sql= "SELECT kimlik, payment FROM tbl_dr WHERE d_name='"+ cb_doctor_name.Text + "' ";
+                command= new SqlCommand(sql,cnn);
+                dataReader = command.ExecuteReader();
                 double payment=0;
                 int kimlik=0;
-                   
-                  while (read.Read())
+                while (dataReader.Read())
                   {
-                    payment =Convert.ToDouble( read["payment"].ToString());
-                    kimlik = Convert.ToInt16(read["kimlik"].ToString());
+                    payment =Convert.ToDouble(dataReader["payment"].ToString());
+                    kimlik = Convert.ToInt16(dataReader["kimlik"].ToString());
                   }
-                  read.Close();
-                 payment += counter*Convert.ToDouble(txt_unit_price.Text);
-                OleDbCommand cmdk= new OleDbCommand("UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id",con);
-                cmdk.Parameters.AddWithValue("@pay", payment.ToString());
-                cmdk.Parameters.AddWithValue("@id", kimlik);
-                cmdk.ExecuteNonQuery();
-                // MessageBox.Show("borç"+ payment+"kimlik ="+kimlik );*/
+                dataReader.Close();
+                command.Dispose();
+                cnn.Close();
+                cnn.Open();
+                payment += counter*Convert.ToDouble(txt_unit_price.Text);
+                sql = "UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id";
+                command = new SqlCommand(sql,cnn);
+                command.Parameters.AddWithValue("@pay", payment.ToString());
+                command.Parameters.AddWithValue("@id", kimlik);
+                command.ExecuteNonQuery();
+                command.Dispose();
+                cnn.Close();
                 MessageBox.Show("Kayıt başarıyla tamamlandı");
-
                 pnl_add_patient.Visible = false;
                 pnl_init.Visible = true;
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("hata" + ex);
                 throw;
             }
-
-
         }
-
         private void txt_unit_price_KeyPress(object sender, KeyPressEventArgs e)
         {
-
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
-
         }
-
         private void pB_add_pattient_Click(object sender, EventArgs e)
         {
             pnl_add_patient.Visible = true;
@@ -335,21 +302,27 @@ namespace CALYPSO
             pnl_payment.Visible = false;
             pnl_init.Visible = false;
             clearText(pnl_add_patient);
-           
-            var lastId = new OleDbCommand("SELECT LAST(proc_id) FROM tbl_main", con).ExecuteScalar().ToString();
-            string val =lastId;
-            if (val=="")
+            try
             {
-
+                cnn.Open();
+                command = new SqlCommand("SELECT TOP(1) proc_id FROM tbl_main ORDER BY 1 DESC", cnn);
+                dataReader = command.ExecuteReader();
+                dataReader.Read();
+                string val = dataReader["proc_id"].ToString();
+                if (val != "")
+                {
+                    txt_process_no.Text = (Convert.ToInt16(val) + 1).ToString();
+                }
+                dataReader.Close();
+                cnn.Close();
             }
-            else
+            catch (Exception ex)
             {
-                txt_process_no.Text = (Convert.ToInt16(val) + 1).ToString();
+                MessageBox.Show("HATA" + ex);
+                throw;
             }
-          //  
-            
         }
-        private void clearText(Panel PanelID)
+        public void clearText(Panel PanelID)
         {
             var grb = PanelID.Controls.OfType<GroupBox>();
             foreach (GroupBox rb in grb)
@@ -401,28 +374,14 @@ namespace CALYPSO
         {
             pB_add_pattient_Click(sender, e);
         }
-        void view_data(OleDbDataAdapter adtr)
+     
+        private void dgv_main_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
-            table.Clear();
-            adtr.Fill(table);
-            dgv_main.DataSource = table;
-            dgv_main.Columns[0].HeaderText = "ID";
-            dgv_main.Columns[1].HeaderText = "Doktor Adı";
-            dgv_main.Columns[2].HeaderText = "Hasta Adı";
-            dgv_main.Columns[3].HeaderText = "Yapılan İşlem";
-            dgv_main.Columns[4].HeaderText = "Aşama";
-            dgv_main.Columns[5].HeaderText = "Kayıt T.";
-            dgv_main.Columns[6].HeaderText = "İstenilen T.";
-            dgv_main.Columns[7].HeaderText = "Renk";
-            dgv_main.Columns[8].HeaderText = "Diş";
-            dgv_main.Columns[9].HeaderText = "Adet";
-            dgv_main.Columns[10].HeaderText = "Fiyat";
-            dgv_main.Columns[11].HeaderText = "Toplam Fiyat";
-            dgv_main.Columns[12].HeaderText = "Doktor Notu";
-            dgv_main.Columns[13].HeaderText = "Yazdırıldı";
-            dgv_main.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            for (int i = 0; i < dgv_main.Rows.Count; i += 2)
+            {
+                dgv_main.Rows[i].DefaultCellStyle.BackColor = Color.LightGray;
+            }
         }
-
         private void pb_search_Click(object sender, EventArgs e)
         {
             pnl_payment.Visible = false;
@@ -430,104 +389,61 @@ namespace CALYPSO
             pnl_add_patient.Visible = false;
             pnl_print.Visible = false;
             pnl_init.Visible = false;
-            OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main  ", con);
-            view_data(adtr);
+            try
+            {
+                cnn.Open();
+                adapter = new SqlDataAdapter("Select * From tbl_main ORDER BY proc_id DESC ", cnn); 
+                adapter.Fill(table);
+                dgv_main.DataSource = table;
+                dgv_main.Columns[0].HeaderText = "ID";
+                dgv_main.Columns[1].HeaderText = "Doktor Adı";
+                dgv_main.Columns[2].HeaderText = "Hasta Adı";
+                dgv_main.Columns[3].HeaderText = "Yapılan İşlem";
+                dgv_main.Columns[4].HeaderText = "Aşama";
+                dgv_main.Columns[5].HeaderText = "Kayıt T.";
+                dgv_main.Columns[6].HeaderText = "İstenilen T.";
+                dgv_main.Columns[7].HeaderText = "Renk";
+                dgv_main.Columns[8].HeaderText = "Diş";
+                dgv_main.Columns[9].HeaderText = "Adet";
+                dgv_main.Columns[10].HeaderText = "Fiyat";
+                dgv_main.Columns[11].HeaderText = "Toplam Fiyat";
+                dgv_main.Columns[12].HeaderText = "Doktor Notu";
+                dgv_main.Columns[13].HeaderText = "Yazdırıldı"; 
+                dgv_main.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                adapter.Dispose();
+                cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata" + ex);throw;
+            }
+            var text = pnl_search.Controls.OfType<TextBox>();
+            foreach (TextBox rb in text)
+            {
+                rb.Clear();
+            }
         }
-       
+        public void tableSeach(object sender, EventArgs e)
+        {
+            dv = new DataView(table);
+            dv.RowFilter = string.Format(CultureInfo.InvariantCulture.NumberFormat, "dr_name LIKE '%{0}%' And patient_name LIKE '%{1}%' And process_name LIKE '%{2}%' And init_date <  #{3}# And deadline <  #{4}# ", txt_search_dr.Text, txt_search_patient.Text,txt_search_procces.Text, dtp_init_date.Value.ToString("yyyy-MM-dd"), dtb_deadline.Value.ToString("yyyy-MM-dd"));
+            dgv_main.DataSource = dv;
+        }
         private void lbl_search_Click(object sender, EventArgs e)
         {
             pb_search_Click(sender, e);
         }
-
-        private void txt_search_TextChanged(object sender, EventArgs e)
-        {
-            if (txt_search_dr.Text.Trim()=="")
-            {
-              
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main ", con);
-                view_data(adtr);
-            }
-            else
-            {
-              
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where dr_name Like '%" + txt_search_dr.Text+ "%' ", con);
-                view_data(adtr);
-            }
-        }
-
-        private void txt_search_patient_TextChanged(object sender, EventArgs e)
-        {
-            if (txt_search_patient.Text.Trim() == "")
-            {
-               
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main", con);
-                view_data(adtr);
-            }
-            else
-            {
-            
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where patient_name Like '%" + txt_search_patient.Text + "%' '", con);
-                view_data(adtr);
-            }
-        }
-
-        private void txt_search_deadline_TextChanged(object sender, EventArgs e)
-        {
-            if (txt_search_deadline.Text.Trim() == "")
-            {
-               
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main ", con);
-                view_data(adtr);
-            }
-            else
-            {
-               
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where deadline Like '%" + txt_search_deadline.Text + "%' ", con);
-                view_data(adtr);
-            }
-           
-        }
+       
         private void txt_id_TextChanged(object sender, EventArgs e)
         {
-            if (txt_id.Text.Trim() == "")
-            {
-
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main ", con);
-                view_data(adtr);
-            }
-            else
-            {
-
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where proc_id Like '%" + txt_id.Text + "%' ", con);
-                view_data(adtr);
-            }
-        }
-        private void txt_search_procces_TextChanged(object sender, EventArgs e)
-        {
-            if (txt_search_procces.Text.Trim() == "")
-            {
-
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main ", con);
-                view_data(adtr);
-            }
-            else
-            {
-
-                OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main where process_name Like '%" + txt_search_procces.Text + "%' ", con);
-                view_data(adtr);
-            }
+            dv = new DataView(table);
+            dv.RowFilter = string.Format(CultureInfo.InvariantCulture.NumberFormat,"proc_id={0}",int.Parse(txt_id.Text) );
+            dgv_main.DataSource = dv;
         }
         private void dgv_main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            con.Close();
-            frm_update.frm1.frm_update.ShowDialog();
-            con.Open();
-            OleDbDataAdapter adtr = new OleDbDataAdapter("Select * From tbl_main ", con);
-            view_data(adtr);
-
+            frm_update.ShowDialog();
         }
-
-      
         private void pB_data_view_Click(object sender, EventArgs e)
         {
             cmb_select_dr.Items.Clear();
@@ -538,35 +454,32 @@ namespace CALYPSO
             pnl_init.Visible = false;
             try
             {
-               
-               // con.Open();
-                query = "select * From tbl_dr";
-                cmd.CommandText = query;
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
+                cnn.Open();
+                sql = "select * From tbl_dr";
+                command = new SqlCommand(sql,cnn);
+                dataReader = command.ExecuteReader();
+                while (dataReader.Read())
                 {
-                    cmb_select_dr.Items.Add(reader["d_name"].ToString());
+                    cmb_select_dr.Items.Add(dataReader["d_name"].ToString());
                 }
-                reader.Close();
-
+                dataReader.Close();
+                command.Dispose();
+                cnn.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ERROR" + ex);
-                throw;
+                MessageBox.Show("ERROR" + ex); throw;
             }
         }
-
         private void cmb_select_dr_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-
-            try
+             try
             {
-                String query = "SELECT proc_id,patient_name , process_name,deadline ,num ,unit_price, price,printed FROM tbl_main  WHERE dr_name='" + cmb_select_dr.Text + "' AND step Like '%" +"Bitiş" + "%' AND (( deadline between #" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "# AND #" + dt_todate.Value.ToString("yyyy-MM-dd") + "#)) ";
-                OleDbDataAdapter _adtr = new OleDbDataAdapter(query, con);
+                cnn.Open();
+                sql= "SELECT proc_id,patient_name , process_name,deadline ,num ,unit_price, price,printed FROM tbl_main  WHERE dr_name='" + cmb_select_dr.Text + "' AND step Like '%" +"Bitiş" + "%' AND (( deadline >= '" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "' AND deadline <='" + dt_todate.Value.ToString("yyyy-MM-dd") + "')) ";
+                adapter = new SqlDataAdapter(sql, cnn);
                 DataTable ptable = new DataTable();
-                _adtr.Fill(ptable);
+                adapter.Fill(ptable);
                 dgv_patients.DataSource = ptable;
                 dgv_patients.Columns[0].HeaderText = "ID";
                 dgv_patients.Columns[1].HeaderText = "Hasta Adı";
@@ -577,16 +490,27 @@ namespace CALYPSO
                 dgv_patients.Columns[6].HeaderText = "Fiyat";
                 dgv_patients.Columns[7].HeaderText = "Yazdırıldı";
                 dgv_patients.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                adapter.Dispose();
+                cnn.Close();
+                cnn.Open();
+                sql = "SELECT payment_price FROM tbl_payment  WHERE doctor_name='" + cmb_select_dr.Text + "'  AND (( payment_date >= '" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "' AND payment_date <= '" + dt_todate.Value.ToString("yyyy-MM-dd") + "')) ";
+                adapter= new SqlDataAdapter(sql,cnn);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                int dr_last_payment = 0;
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    dr_last_payment += int.Parse(table.Rows[i][0].ToString());
+                }
+                p_info.dr_last_payment = dr_last_payment;
+                adapter.Dispose();
+                cnn.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("hata" + ex);
-
-                throw;
+                MessageBox.Show("hata" + ex);throw;
             }
         }
-       
-
         private void dgv_patients_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             int selectedIndex = dgv_patients.CurrentCell.RowIndex;
@@ -596,7 +520,6 @@ namespace CALYPSO
                 dgv_patients.Refresh();
             }
         }
-
         private void pb_payment_Click(object sender, EventArgs e)
         {
             pnl_print.Visible = false;
@@ -606,75 +529,38 @@ namespace CALYPSO
             pnl_init.Visible = false;
             try
             {
-
-                cmd.Connection = con;
-                query = "select d_name,d_number,payment From tbl_dr ";
-                cmd.CommandText = query;
-                OleDbDataAdapter adapter = new OleDbDataAdapter(query, con);
+                cnn.Open();
+                sql = "select d_name,d_number,payment From tbl_dr ";
+                adapter = new SqlDataAdapter(sql, cnn);
                 DataTable paytable = new DataTable();
                 adapter.Fill(paytable);
-               dgv_dr_payment.DataSource = paytable;
+                dgv_dr_payment.DataSource = paytable;
+                int total_payment = 0;
+                for (int i = 0; i < dgv_dr_payment.Rows.Count - 1; i++)
+                {
+                    total_payment += int.Parse(dgv_dr_payment.Rows[i].Cells[2].Value.ToString());
+                }
+                txt_total_payment.Text = total_payment.ToString();
                 dgv_dr_payment.Columns[0].HeaderText = "Doktor Adı";
                 dgv_dr_payment.Columns[1].HeaderText = "Tel. No";
                 dgv_dr_payment.Columns[2].HeaderText = "Borç Miktarı";
-                dgv_dr_payment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
+                dgv_dr_payment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;adapter.Dispose();
+                cnn.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("ERROR" + ex);
                 throw;
             }
-
         }
-
         private void label15_Click(object sender, EventArgs e)
         {
              pB_data_view_Click(sender, e);
         }
-
         private void label51_Click(object sender, EventArgs e)
         {
             pb_payment_Click( sender,  e);
         }
-
-        
-
-        private void btn_complate_payment_Click(object sender, EventArgs e)
-        {
-            double payment = Convert.ToInt32(txt_remainingpayment.Text) - Convert.ToInt32(txt_payment.Text);
-           DialogResult result = MessageBox.Show(txt_pdr_name.Text + " adlı doktordan " + txt_payment.Text + "₺ ödeme alınacaktır.\n Kalan borç=" + payment + "\n işlemi onaylıyor musunuz?","Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result==DialogResult.Yes)
-            {
-                string query_ = "SELECT kimlik FROM tbl_dr WHERE d_name='" + txt_pdr_name.Text + "' ";
-                OleDbCommand cmdw = new OleDbCommand();
-                cmdw.Connection = con;
-                cmdw.CommandText = query_;
-                OleDbDataReader read = cmdw.ExecuteReader();
-                int kimlik = 0;
-                while (read.Read())
-                {
-                    kimlik = Convert.ToInt16(read["kimlik"].ToString());
-                }
-                read.Close();
-                OleDbCommand cmdk = new OleDbCommand("UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id", con);
-                cmdk.Parameters.AddWithValue("@pay", payment.ToString());
-                cmdk.Parameters.AddWithValue("@id", kimlik);
-                cmdk.ExecuteNonQuery();
-              //  MessageBox.Show("Kayıt başarıyla tamamlandı kimlik= " + kimlik + "borç= " + payment);
-                query = "select d_name,d_number,payment From tbl_dr ";
-                cmd.CommandText = query;
-                OleDbDataAdapter adapter = new OleDbDataAdapter(query, con);
-                DataTable paytable = new DataTable();
-                adapter.Fill(paytable);
-                dgv_dr_payment.DataSource = paytable;
-            }
-            txt_pdr_name.Clear();
-            txt_remainingpayment.Clear();
-            txt_payment.Clear();
-            txt_payment.Enabled = false;
-        }
-
         private void dgv_dr_payment_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             txt_payment.Enabled = true;
@@ -683,104 +569,167 @@ namespace CALYPSO
             {
                 txt_pdr_name.Text = dgv_dr_payment.CurrentRow.Cells[0].Value.ToString();
                txt_remainingpayment.Text = dgv_dr_payment.CurrentRow.Cells[2].Value.ToString();
-
+                cnn.Open();
+                sql = "select doctor_name,payment_date ,payment_price From tbl_payment where doctor_name='" + txt_pdr_name.Text + "'";
+                adapter = new SqlDataAdapter(sql,cnn);
+                DataTable oldpaytable = new DataTable();
+                adapter.Fill(oldpaytable);
+                cnn.Close();
+                dgv_old_payment.DataSource = oldpaytable;
+                dgv_old_payment.Columns[0].HeaderText = "Doktor Adı";
+                dgv_old_payment.Columns[1].HeaderText = "Ödeme Tarihi";
+                dgv_old_payment.Columns[2].HeaderText = "Miktar";
             }
         }
-
         private void txt_payment_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar)&& e.KeyChar != '-';
         }
-
         private void pb_printp_Click(object sender, EventArgs e)
         {
-            Totalprice = 0;
-            //int paid = 1;
-            string query;
-            OleDbCommand cmd = new OleDbCommand();
-            DataTable _table = new DataTable();
-            try
+            if (cmb_select_dr.SelectedIndex > -1)
             {
-                 
-                lst.Clear();
-                for (int i = 0; i < dgv_patients.Rows.Count-1; i++)
+                cnn.Open();
+                var totaldebt = new SqlCommand("SELECT payment FROM tbl_dr where d_name='" + cmb_select_dr.Text + "'", cnn).ExecuteScalar().ToString();
+                string debt = totaldebt.ToString();
+                p_info.Totaldebt = Convert.ToUInt16(debt);
+                cnn.Close();
+                Totalprice = 0;
+                try
                 {
-                    
-                   
-                    #region Insert print              
-                    query = "UPDATE  tbl_main SET printed=@pat WHERE proc_id=@id";
-                    OleDbCommand cmdd = new OleDbCommand();
-                    cmdd.Connection = con;
-                    cmdd.CommandText = query;
-                    cmdd.Parameters.AddWithValue("@pat", "Evet");
-                    cmdd.Parameters.AddWithValue("@id", dgv_patients.Rows[i].Cells[0].Value);
-                    cmdd.ExecuteNonQuery();
-                    if ("Evet" == dgv_patients.Rows[i].Cells[7].Value.ToString())
+                    lst.Clear();
+                    for (int i = 0; i < dgv_patients.Rows.Count - 1; i++)
                     {
-                        DialogResult dialogResult = MessageBox.Show(dgv_patients.Rows[i].Cells[1].Value.ToString() + " Adlı Kullanıcı daha once yazdırılmış Yazdırmak istediğinizden emin misiniz?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                        if (dialogResult == DialogResult.No)
+                        cnn.Open();
+                        sql = "UPDATE  tbl_main SET printed=@pat WHERE proc_id=@id";
+                        command = new SqlCommand(sql, cnn);
+                        command.Parameters.AddWithValue("@pat", "Evet");
+                        command.Parameters.AddWithValue("@id", dgv_patients.Rows[i].Cells[0].Value);
+                        command.ExecuteNonQuery();
+                        command.Dispose();
+                        cnn.Close();
+                        if ("Evet" == dgv_patients.Rows[i].Cells[7].Value.ToString())
                         {
-                            int selectedIndex = dgv_patients.Rows[i].Cells[7].RowIndex;
-                            if (selectedIndex > -1)
+                            DialogResult dialogResult = MessageBox.Show(dgv_patients.Rows[i].Cells[1].Value.ToString() + " Adlı Kullanıcı daha once yazdırılmış Yazdırmak istediğinizden emin misiniz?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                            if (dialogResult == DialogResult.No)
                             {
-                                dgv_patients.Rows.RemoveAt(selectedIndex);
-                                dgv_patients.Refresh();
-                                if(i>-1 )
-                                i--;
-                                
+                                int selectedIndex = dgv_patients.Rows[i].Cells[7].RowIndex;
+                                if (selectedIndex > -1)
+                                {
+                                    dgv_patients.Rows.RemoveAt(selectedIndex);
+                                    dgv_patients.Refresh();
+                                    if (i > -1) i--;
+                                }
                             }
                         }
-                        else
-                        {
-
-                        }
-                       
                     }
-                    
-                    #endregion
-                }
-
-                
-                //MessageBox.Show("OK:");
-                //con.Close();
-                
-                for (int i = 0; i < dgv_patients.Rows.Count - 1; i++)
-                {
-                    lst.Add(new patient
+                    for (int i = 0; i < dgv_patients.Rows.Count - 1; i++)
                     {
-                        patient_name = dgv_patients.Rows[i].Cells[1].Value.ToString(),
-                        proc_name = dgv_patients.Rows[i].Cells[2].Value.ToString(),
-                        date = dgv_patients.Rows[i].Cells[3].Value.ToString(),
-                        num = dgv_patients.Rows[i].Cells[4].Value.ToString(),
-                        price = dgv_patients.Rows[i].Cells[5].Value.ToString(),
-                        total_price = dgv_patients.Rows[i].Cells[6].Value.ToString()
-                         
-                });
-                    Totalprice += int.Parse(dgv_patients.Rows[i].Cells[6].Value.ToString());
+                        lst.Add(new patient
+                        {
+                            patient_name = dgv_patients.Rows[i].Cells[1].Value.ToString(),
+                            proc_name = dgv_patients.Rows[i].Cells[2].Value.ToString(),
+                            date = dgv_patients.Rows[i].Cells[3].Value.ToString(),
+                            num = dgv_patients.Rows[i].Cells[4].Value.ToString(),
+                            price = dgv_patients.Rows[i].Cells[5].Value.ToString(),
+                            total_price = dgv_patients.Rows[i].Cells[6].Value.ToString()
+
+                        });
+                        Totalprice += int.Parse(dgv_patients.Rows[i].Cells[6].Value.ToString());
+                    }
+                    p_info.SelectedDoctorName = cmb_select_dr.Text;
+                    p_info.fromDate = dt_fromdate.Value.ToString("yyyy-MM-dd");
+                    p_info.toDate = dt_todate.Value.ToString("yyyy-MM-dd");
+                    p_info.Totalprice = Totalprice;
+                    Frm_print.frm1.Frm_print.ShowDialog();
+                    cmb_select_dr_SelectedIndexChanged(sender, e);
                 }
-                p_info.SelectedDoctorName = cmb_select_dr.Text;
-                p_info.fromDate = dt_fromdate.Value.ToString("yyyy-MM-dd");
-                p_info.toDate = dt_todate.Value.ToString("yyyy-MM-dd");
-                p_info.Totalprice = Totalprice;
-                Frm_print.frm1.Frm_print.ShowDialog();
-                cmb_select_dr_SelectedIndexChanged(sender, e);
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show("hata" + ex);
+                    throw;
+                }
             }
-        
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("hata" + ex);
-                 throw;
+                MessageBox.Show("Herhangi Bir Doktor Seçilmelidir.");
             }
         }
-
-        private void cb_doctor_name_TextChanged(object sender, EventArgs e)
+        private void btn_complate_payment_Click(object sender, EventArgs e)
         {
-            
-
+            if (txt_payment.Text == "")
+            {
+                MessageBox.Show("HATA : Herhangi bir tutar girilmedi");
+            }
+            else
+            {
+                double payment = Convert.ToInt32(txt_remainingpayment.Text) - Convert.ToInt32(txt_payment.Text);
+                DialogResult result = MessageBox.Show(txt_pdr_name.Text + " adlı doktordan " + txt_payment.Text + "₺ ödeme alınacaktır.\n Kalan borç=" + payment + "\n işlemi onaylıyor musunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        cnn.Open();
+                        sql = "SELECT kimlik FROM tbl_dr WHERE d_name='" + txt_pdr_name.Text + "' ";
+                        command = new SqlCommand(sql, cnn);
+                        dataReader = command.ExecuteReader();
+                        int kimlik = 0;
+                        dataReader.Read();
+                        kimlik = Convert.ToInt16(dataReader["kimlik"].ToString());
+                       // MessageBox.Show(kimlik.ToString());
+                        dataReader.Close();
+                        command.Dispose();
+                        cnn.Close();
+                        cnn.Open();
+                        sql = "UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id";
+                        command = new SqlCommand(sql, cnn);
+                        command.Parameters.AddWithValue("@pay", payment.ToString());
+                        command.Parameters.AddWithValue("@id", kimlik);
+                        command.ExecuteNonQuery();
+                        command.Dispose();
+                        cnn.Close();
+                        cnn.Open();
+                        sql = "select d_name,d_number,payment From tbl_dr ";
+                        adapter = new SqlDataAdapter(sql, cnn);
+                        DataTable paytable = new DataTable();
+                        adapter.Fill(paytable);
+                        dgv_dr_payment.DataSource = paytable;
+                        sql = "insert into tbl_payment(doctor_name,payment_date,payment_price)values(@name,@date,@price)";
+                        command = new SqlCommand(sql, cnn);
+                        command.Parameters.AddWithValue("@name", txt_pdr_name.Text);
+                        command.Parameters.AddWithValue("@date", dtp_old_payment.Value.ToString("yyyy-MM-dd"));
+                        command.Parameters.AddWithValue("@price", txt_payment.Text);
+                        command.ExecuteNonQuery();
+                        command.Dispose();
+                        cnn.Close();
+                    }
+                    catch (Exception ex )
+                    {
+                        MessageBox.Show("hata"+ex);
+                        throw;
+                    }
+                }
+                txt_pdr_name.Clear();
+                txt_remainingpayment.Clear();
+                txt_payment.Clear();
+                txt_pdr_name.Text = dgv_dr_payment.CurrentRow.Cells[0].Value.ToString();
+                txt_remainingpayment.Text = dgv_dr_payment.CurrentRow.Cells[2].Value.ToString();
+                cnn.Open();
+                sql = "select doctor_name,payment_date ,payment_price From tbl_payment where doctor_name='" + txt_pdr_name.Text + "'";
+                adapter = new SqlDataAdapter(sql,cnn);
+                DataTable oldpaytable = new DataTable();
+                adapter.Fill(oldpaytable);
+                dgv_old_payment.DataSource = oldpaytable;
+                dgv_old_payment.Columns[0].HeaderText = "Doktor Adı";
+                dgv_old_payment.Columns[1].HeaderText = "Ödeme Tarihi";
+                dgv_old_payment.Columns[2].HeaderText = "Miktar";
+                cnn.Close();
+            }
         }
-
-       
+        private void txt_total_payment_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }
 
