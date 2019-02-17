@@ -67,6 +67,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_addColor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_addColor.Designer.cs">
+      <DependentUpon>frm_addColor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_add_process.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,12 @@
     </Compile>
     <Compile Include="frm_dr_add.Designer.cs">
       <DependentUpon>frm_dr_add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_new_user.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_new_user.Designer.cs">
+      <DependentUpon>Frm_new_user.cs</DependentUpon>
     </Compile>
     <Compile Include="frm_print.cs">
       <SubType>Form</SubType>
@@ -97,6 +109,12 @@
     <Compile Include="init_form.Designer.cs">
       <DependentUpon>init_form.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_login.Designer.cs">
+      <DependentUpon>frm_login.cs</DependentUpon>
+    </Compile>
     <Compile Include="patient.cs" />
     <Compile Include="print_informations.cs" />
     <Compile Include="Program.cs" />
@@ -111,11 +129,17 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frm_addColor.resx">
+      <DependentUpon>frm_addColor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frm_add_process.resx">
       <DependentUpon>Frm_add_process.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_dr_add.resx">
       <DependentUpon>frm_dr_add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_new_user.resx">
+      <DependentUpon>Frm_new_user.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_print.resx">
       <DependentUpon>frm_print.cs</DependentUpon>
@@ -125,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="init_form.resx">
       <DependentUpon>init_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_login.resx">
+      <DependentUpon>frm_login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

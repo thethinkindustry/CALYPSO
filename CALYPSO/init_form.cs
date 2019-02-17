@@ -27,8 +27,10 @@ namespace CALYPSO
             {
                 timer1.Stop();
                 this.Close();
-                Form1 frm1 = new Form1();
-                frm1.Show();
+                /* Form1 frm1 = new Form1();
+                  frm1.Show*/
+                frm_login Frm_login = new frm_login();
+                Frm_login.Show();
 
             }
         }

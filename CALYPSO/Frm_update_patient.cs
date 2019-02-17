@@ -17,6 +17,8 @@ namespace CALYPSO
         SqlConnection cnn;
         SqlCommand command;
         SqlDataReader dataReader;
+        //SqlDataAdapter adapter;
+        DataTable table = new DataTable();
         string sql = null;
         int last_payment;
         int counter = 0;
@@ -183,12 +185,18 @@ namespace CALYPSO
         {
             bool istrue = false;
             var rbtn = grb_steps.Controls.OfType<RadioButton>();
+            bool bitis = false;
             foreach (var rb in rbtn)
             {
                 if (rb.Checked)
                 {
                     istrue = true;
+                    if (rb.Text=="Bitiş")
+                    {
+                        bitis = true;
+                    }
                 }
+               
             }
             if (txt_patient_name.Text == "" || string.IsNullOrEmpty(cb_doctor_name.Text) ||
                 string.IsNullOrEmpty(cb_procces_bar.Text) || !istrue)
@@ -197,6 +205,16 @@ namespace CALYPSO
 
                 return;
             }
+            if (bitis)
+            {
+                if (txt_u_price.Text == "0" || txt_u_price.Text == "")
+                {
+                    MessageBox.Show("Bitiş aşamasında fiyat girilimelidir.");
+                    return;
+                }
+
+            }
+
             if (string.IsNullOrEmpty(cb_color.Text))
             {
                 cb_color.Text = "Yok";
@@ -272,6 +290,7 @@ namespace CALYPSO
                 command.ExecuteNonQuery();
                 command.Dispose();
                 cnn.Close();
+             
                 MessageBox.Show("Kayıt başarıyla tamamlandı");
                 this.Close();
             }

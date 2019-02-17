@@ -15,6 +15,7 @@ namespace CALYPSO
     {
         SqlConnection cnn;
         SqlCommand command;
+        SqlDataReader dataReader;
     
         string sql = null;
         public Frm_add_process()
@@ -27,23 +28,36 @@ namespace CALYPSO
             cnn = new SqlConnection(connetionString);
         
         }
-         private void btn_cancel_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
+        private void Frm_add_process_Load(object sender, EventArgs e)
+        {
+            cnn.Open();
+            sql = "SELECT process FROM tbl_process";
+            command = new SqlCommand(sql, cnn);
+            dataReader = command.ExecuteReader();
+            while (dataReader.Read())
+            {
+                cmb_procces_delete.Items.Add(dataReader["process"].ToString());
+            }
+            dataReader.Close();
+            command.Dispose();
+            cnn.Close();
+        }
         private void btn_save_Click(object sender, EventArgs e)
         {
             try
             {
-                cnn.Open();
-                sql = "insert into tbl_process (process) values(@pprocess)";
-                command = new SqlCommand(sql, cnn);
-                command.Parameters.Add(new SqlParameter("@pprocess", txt_process_name.Text));
-                command.ExecuteNonQuery();
-                command.Dispose();
-                cnn.Close();
-                this.Close();
+                if (txt_process_name.Text!="")
+                {
+                    cnn.Open();
+                    sql = "insert into tbl_process (process) values(@pprocess)";
+                    command = new SqlCommand(sql, cnn);
+                    command.Parameters.Add(new SqlParameter("@pprocess", txt_process_name.Text));
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                    cnn.Close();
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
@@ -51,6 +65,21 @@ namespace CALYPSO
                 throw;
             }
         
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (cmb_procces_delete.SelectedItem.ToString() != "")
+            {
+                cnn.Open();
+                sql = "DELETE FROM tbl_process  WHERE process = @proc";
+                command = new SqlCommand(sql, cnn);
+                command.Parameters.AddWithValue("@proc", cmb_procces_delete.SelectedItem.ToString());
+                command.ExecuteNonQuery();
+                command.Dispose();
+                cnn.Close();
+                this.Close();
+            }
         }
     }
 }

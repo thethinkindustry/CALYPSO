@@ -17,29 +17,41 @@ namespace CALYPSO
     {
         public Frm_update_patient frm_update;
         public frm_print Frm_print;
+        public frm_login Frm_login;
+        public frm_addColor Frm_addColor;
         SqlConnection cnn;
         SqlCommand command;
         SqlDataReader dataReader;
         SqlDataAdapter adapter;
         DataView dv;
+        int status;
         string sql = null;
         public  print_informations p_info = new print_informations();
         public int Totalprice = 0;
         DataTable table = new DataTable();
         public List<patient> lst = new List<patient>();
-        public Form1()
+        public Form1(int _status)
         { 
 
             InitializeComponent();
-
+            status = _status;
             Frm_print = new frm_print();
             frm_update = new Frm_update_patient();
             Frm_print.frm1 = this;
             frm_update.frm1 = this;
             string connetionString = null;
-           connetionString = "Data Source=DESKTOP-93568HR\\SQL_2014;Initial Catalog=db_calypso;Integrated Security=True";
+            connetionString = "Data Source=DESKTOP-93568HR\\SQL_2014;Initial Catalog=db_calypso;Integrated Security=True";
             cnn = new SqlConnection(connetionString);
-        
+          //  MessageBox.Show(""+status);
+            if (status == 0)
+            {
+                pb_payment.Visible = false;
+                lbl_payments.Visible = false;
+            }
+            else {
+                pb_payment.Visible = true;
+                lbl_payments.Visible = true;
+            }
             try
             {
                 cnn.Open();
@@ -74,18 +86,29 @@ namespace CALYPSO
                 dataReader.Close();
                 command.Dispose();
                 cnn.Close();
+                cnn.Open();
+                sql = "SELECT Color_name FROM tbl_colors";
+                command = new SqlCommand(sql,cnn);
+                dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    cb_color.Items.Add(dataReader["Color_name"].ToString());
+                }
+                dataReader.Close();
+                command.Dispose();
+                cnn.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error" + ex);
                 throw;
             }
-
             var radioButtons = grb_teeth.Controls.OfType<PictureBox>();
             foreach (PictureBox rb in radioButtons)
             {
                 rb.MouseClick += new MouseEventHandler((o, a) => onClickList(rb));
             }
+
 
         }
         public void onClickList(PictureBox rb)
@@ -126,7 +149,7 @@ namespace CALYPSO
         {
            Form frmDRadd = new frm_dr_add();
             frmDRadd.ShowDialog();
-          
+            cb_doctor_name.Items.Clear();
             try
             {
                 cnn.Open();
@@ -174,6 +197,31 @@ namespace CALYPSO
                 throw;
             }
         }
+        private void btn_addColor_Click(object sender, EventArgs e)
+        {
+            Form frm_add_Color = new frm_addColor();
+            frm_add_Color.ShowDialog();
+            cb_color.Items.Clear();
+            try
+            {
+                cnn.Open();
+                sql = "select * From tbl_colors ";
+                command = new SqlCommand(sql, cnn);
+                dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    cb_color.Items.Add(dataReader["Color_name"].ToString());
+                }
+                dataReader.Close();
+                command.Dispose();
+                cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR" + ex);
+                throw;
+            }
+        }
         private void btn_cancel_Click(object sender, EventArgs e)
         {
             pnl_add_patient.Visible = false;
@@ -183,12 +231,18 @@ namespace CALYPSO
         {
            bool istrue = false;
             var rbtn = grb_steps.Controls.OfType<RadioButton>();
+            bool bitis=false;
             foreach (var rb in rbtn)
             {
                 if (rb.Checked)
                 {
                     istrue = true;
+                    if (rb.Text == "Bitiş")
+                    {
+                        bitis = true;
+                    }
                 }
+               
             }
             if (txt_patient_name.Text == "" || string.IsNullOrEmpty(cb_doctor_name.Text) ||
                 string.IsNullOrEmpty(cb_procces_bar.Text) || !istrue)
@@ -197,6 +251,16 @@ namespace CALYPSO
 
                 return;
             }
+            if (bitis)
+            {
+                if ((txt_unit_price.Text == "0") || txt_unit_price.Text == "")
+                {
+                    MessageBox.Show("Bitiş aşamasında fiyat girilimelidir.");
+                    return;
+                }
+               
+            }
+           
             if (string.IsNullOrEmpty(cb_color.Text))
             {
                 cb_color.Text = "Yok";
@@ -389,10 +453,20 @@ namespace CALYPSO
             pnl_add_patient.Visible = false;
             pnl_print.Visible = false;
             pnl_init.Visible = false;
+            dtp_init_date_init.Enabled = false;
+            dtb_deadline_init.Enabled = false;
+            chk_deadline.Checked = false;
+            chk_save_date.Checked= false;
+            var txtbtn = pnl_search.Controls.OfType<TextBox>();
+            foreach (TextBox txt in txtbtn)
+            {
+                txt.Clear();
+            }
             try
             {
                 cnn.Open();
-                adapter = new SqlDataAdapter("Select * From tbl_main ORDER BY proc_id DESC ", cnn); 
+                adapter = new SqlDataAdapter("Select * From tbl_main ORDER BY proc_id DESC ", cnn);
+                table.Clear();
                 adapter.Fill(table);
                 dgv_main.DataSource = table;
                 dgv_main.Columns[0].HeaderText = "ID";
@@ -411,6 +485,8 @@ namespace CALYPSO
                 dgv_main.Columns[13].HeaderText = "Yazdırıldı"; 
                 dgv_main.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 adapter.Dispose();
+                table.Dispose();
+                   
                 cnn.Close();
             }
             catch (Exception ex)
@@ -426,8 +502,32 @@ namespace CALYPSO
         public void tableSeach(object sender, EventArgs e)
         {
             dv = new DataView(table);
-            dv.RowFilter = string.Format(CultureInfo.InvariantCulture.NumberFormat, "dr_name LIKE '%{0}%' And patient_name LIKE '%{1}%' And process_name LIKE '%{2}%' And init_date <  #{3}# And deadline <  #{4}# ", txt_search_dr.Text, txt_search_patient.Text,txt_search_procces.Text, dtp_init_date.Value.ToString("yyyy-MM-dd"), dtb_deadline.Value.ToString("yyyy-MM-dd"));
+            if (chk_deadline.Checked && chk_save_date.Checked)
+            {
+                dv.RowFilter = string.Format(CultureInfo.InvariantCulture.NumberFormat, "dr_name LIKE '%{0}%' And patient_name LIKE '%{1}%' And process_name LIKE '%{2}%' And deadline >=#{3}# And deadline <=#{4}#And init_date>= #{5}# And init_date <= #{6}# And step LIKE '%{7}%'", txt_search_dr.Text, txt_search_patient.Text, txt_search_procces.Text, dtb_deadline_init.Value.ToString("yyyy-MM-dd"),dtp_deadline_upperlimit.Value.ToString("yyyy-MM-dd"), dtp_init_date_init.Value.ToString("yyyy-MM-dd"),dtp_init_date_upperlimit.Value.ToString("yyyy-MM-dd"),txt_step.Text);
+            }
+            else if (chk_save_date.Checked)
+            {
+                dv.RowFilter = string.Format(CultureInfo.InvariantCulture.NumberFormat, "dr_name LIKE '%{0}%' And patient_name LIKE '%{1}%' And process_name LIKE '%{2}%' And init_date >=#{3}#And init_date <=#{4}#  And step LIKE '%{5}%'", txt_search_dr.Text, txt_search_patient.Text, txt_search_procces.Text, dtp_init_date_init.Value.ToString("yyyy-MM-dd"),dtp_init_date_upperlimit.Value.ToString("yyyy-MM-dd"),txt_step.Text);
+            }
+            else if (chk_deadline.Checked) 
+            {
+                dv.RowFilter = string.Format(CultureInfo.InvariantCulture.NumberFormat, "dr_name LIKE '%{0}%' And patient_name LIKE '%{1}%' And process_name LIKE '%{2}%' And deadline >=#{3}# And deadline <=#{4}# And step LIKE '%{5}%'", txt_search_dr.Text, txt_search_patient.Text, txt_search_procces.Text, dtb_deadline_init.Value.ToString("yyyy-MM-dd"),dtp_deadline_upperlimit.Value.ToString("yyyy-MM-dd"),txt_step.Text);
+            }
+            else
+            {
+                dv.RowFilter = string.Format(CultureInfo.InvariantCulture.NumberFormat, "dr_name LIKE '%{0}%' And patient_name LIKE '%{1}%' And process_name LIKE '%{2}%' And step LIKE '%{3}%'", txt_search_dr.Text, txt_search_patient.Text, txt_search_procces.Text,txt_step.Text);
+            }
+          
+            
             dgv_main.DataSource = dv;
+           
+            int totalTeeth = 0; ;
+             for (int i = 0; i < dgv_main.Rows.Count; i++)
+            {
+                totalTeeth += int.Parse(dgv_main.Rows[i].Cells[9].Value.ToString());
+            }
+            txt_result.Text = totalTeeth.ToString();
         }
         private void lbl_search_Click(object sender, EventArgs e)
         {
@@ -436,13 +536,46 @@ namespace CALYPSO
        
         private void txt_id_TextChanged(object sender, EventArgs e)
         {
-            dv = new DataView(table);
-            dv.RowFilter = string.Format(CultureInfo.InvariantCulture.NumberFormat,"proc_id={0}",int.Parse(txt_id.Text) );
-            dgv_main.DataSource = dv;
+            if (txt_id.Text != "")
+            {
+                dv = new DataView(table);
+                dv.RowFilter = string.Format(CultureInfo.InvariantCulture.NumberFormat, "proc_id={0}", int.Parse(txt_id.Text));
+                dgv_main.DataSource = dv;
+            }
+            else
+            {
+                tableSeach(sender, e);
+            }
+           
         }
         private void dgv_main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             frm_update.ShowDialog();
+            cnn.Open();
+            adapter = new SqlDataAdapter("Select * From tbl_main ORDER BY proc_id DESC ", cnn);
+            table.Dispose();
+            table.Clear();
+            adapter.Fill(table);
+            dgv_main.DataSource = table;
+            dgv_main.Columns[0].HeaderText = "ID";
+            dgv_main.Columns[1].HeaderText = "Doktor Adı";
+            dgv_main.Columns[2].HeaderText = "Hasta Adı";
+            dgv_main.Columns[3].HeaderText = "Yapılan İşlem";
+            dgv_main.Columns[4].HeaderText = "Aşama";
+            dgv_main.Columns[5].HeaderText = "Kayıt T.";
+            dgv_main.Columns[6].HeaderText = "İstenilen T.";
+            dgv_main.Columns[7].HeaderText = "Renk";
+            dgv_main.Columns[8].HeaderText = "Diş";
+            dgv_main.Columns[9].HeaderText = "Adet";
+            dgv_main.Columns[10].HeaderText = "Fiyat";
+            dgv_main.Columns[11].HeaderText = "Toplam Fiyat";
+            dgv_main.Columns[12].HeaderText = "Doktor Notu";
+            dgv_main.Columns[13].HeaderText = "Yazdırıldı";
+            dgv_main.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            adapter.Dispose();
+            table.Dispose();
+            cnn.Close();
+
         }
         private void pB_data_view_Click(object sender, EventArgs e)
         {
@@ -592,7 +725,7 @@ namespace CALYPSO
                 cnn.Open();
                 var totaldebt = new SqlCommand("SELECT payment FROM tbl_dr where d_name='" + cmb_select_dr.Text + "'", cnn).ExecuteScalar().ToString();
                 string debt = totaldebt.ToString();
-                p_info.Totaldebt = Convert.ToUInt16(debt);
+                p_info.Totaldebt = Convert.ToInt16(debt);
                 cnn.Close();
                 Totalprice = 0;
                 try
@@ -702,6 +835,7 @@ namespace CALYPSO
                         command.ExecuteNonQuery();
                         command.Dispose();
                         cnn.Close();
+                      
                     }
                     catch (Exception ex )
                     {
@@ -730,6 +864,46 @@ namespace CALYPSO
         {
             e.Handled = true;
         }
+
+   
+        private void chk_deadline_CheckedChanged(object sender, EventArgs e)
+        {
+            if (dtb_deadline_init.Enabled)
+            {
+                dtb_deadline_init.Enabled = false;
+                dtp_deadline_upperlimit.Enabled = false;
+            }
+            else
+            {
+                dtb_deadline_init.Enabled = true;
+                dtp_deadline_upperlimit.Enabled = true;
+            }
+            tableSeach(sender, e);
+
+        }
+
+        private void chk_save_date_CheckedChanged(object sender, EventArgs e)
+        {
+            if (dtp_init_date_init.Enabled)
+            {
+                dtp_init_date_init.Enabled = false;
+                dtp_init_date_upperlimit.Enabled = false;
+
+            }
+            else
+            {
+                dtp_init_date_init.Enabled = true;
+                dtp_init_date_upperlimit.Enabled = true;
+            }
+            tableSeach(sender, e);
+        }
+
+        private void txt_id_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+     
     }
 }
 

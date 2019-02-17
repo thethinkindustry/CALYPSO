@@ -116,6 +116,7 @@
             this.t25 = new System.Windows.Forms.PictureBox();
             this.t44 = new System.Windows.Forms.PictureBox();
             this.grb_steps = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.rb4 = new System.Windows.Forms.RadioButton();
             this.rb3 = new System.Windows.Forms.RadioButton();
             this.rb2 = new System.Windows.Forms.RadioButton();
@@ -126,6 +127,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txt_process_no = new System.Windows.Forms.TextBox();
             this.grb_process = new System.Windows.Forms.GroupBox();
+            this.btn_addColor = new System.Windows.Forms.Button();
             this.cb_procces_bar = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_add_process = new System.Windows.Forms.Button();
@@ -134,7 +136,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label51 = new System.Windows.Forms.Label();
+            this.lbl_payments = new System.Windows.Forms.Label();
             this.pb_payment = new System.Windows.Forms.PictureBox();
             this.lbl_search = new System.Windows.Forms.Label();
             this.pb_search = new System.Windows.Forms.PictureBox();
@@ -143,8 +145,18 @@
             this.lbl_ad_patient = new System.Windows.Forms.Label();
             this.pB_add_pattient = new System.Windows.Forms.PictureBox();
             this.pnl_search = new System.Windows.Forms.Panel();
-            this.dtp_init_date = new System.Windows.Forms.DateTimePicker();
-            this.dtb_deadline = new System.Windows.Forms.DateTimePicker();
+            this.txt_step = new System.Windows.Forms.TextBox();
+            this.label63 = new System.Windows.Forms.Label();
+            this.label62 = new System.Windows.Forms.Label();
+            this.label61 = new System.Windows.Forms.Label();
+            this.dtp_init_date_upperlimit = new System.Windows.Forms.DateTimePicker();
+            this.dtp_deadline_upperlimit = new System.Windows.Forms.DateTimePicker();
+            this.txt_result = new System.Windows.Forms.TextBox();
+            this.label60 = new System.Windows.Forms.Label();
+            this.chk_save_date = new System.Windows.Forms.CheckBox();
+            this.chk_deadline = new System.Windows.Forms.CheckBox();
+            this.dtp_init_date_init = new System.Windows.Forms.DateTimePicker();
+            this.dtb_deadline_init = new System.Windows.Forms.DateTimePicker();
             this.label58 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
             this.txt_search_procces = new System.Windows.Forms.TextBox();
@@ -1162,6 +1174,7 @@
             // grb_steps
             // 
             this.grb_steps.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.grb_steps.Controls.Add(this.radioButton1);
             this.grb_steps.Controls.Add(this.rb4);
             this.grb_steps.Controls.Add(this.rb3);
             this.grb_steps.Controls.Add(this.rb2);
@@ -1174,11 +1187,23 @@
             this.grb_steps.TabStop = false;
             this.grb_steps.Text = "işlem Sırası :";
             // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.radioButton1.Location = new System.Drawing.Point(30, 39);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(87, 29);
+            this.radioButton1.TabIndex = 13;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Geçiçi";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
             // rb4
             // 
             this.rb4.AutoSize = true;
             this.rb4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.rb4.Location = new System.Drawing.Point(30, 162);
+            this.rb4.Location = new System.Drawing.Point(30, 175);
             this.rb4.Name = "rb4";
             this.rb4.Size = new System.Drawing.Size(69, 29);
             this.rb4.TabIndex = 12;
@@ -1190,7 +1215,7 @@
             // 
             this.rb3.AutoSize = true;
             this.rb3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.rb3.Location = new System.Drawing.Point(30, 127);
+            this.rb3.Location = new System.Drawing.Point(30, 140);
             this.rb3.Name = "rb3";
             this.rb3.Size = new System.Drawing.Size(130, 29);
             this.rb3.TabIndex = 11;
@@ -1202,7 +1227,7 @@
             // 
             this.rb2.AutoSize = true;
             this.rb2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.rb2.Location = new System.Drawing.Point(30, 84);
+            this.rb2.Location = new System.Drawing.Point(30, 105);
             this.rb2.Name = "rb2";
             this.rb2.Size = new System.Drawing.Size(150, 29);
             this.rb2.TabIndex = 10;
@@ -1214,7 +1239,7 @@
             // 
             this.rb1.AutoSize = true;
             this.rb1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.rb1.Location = new System.Drawing.Point(30, 42);
+            this.rb1.Location = new System.Drawing.Point(30, 70);
             this.rb1.Name = "rb1";
             this.rb1.Size = new System.Drawing.Size(197, 29);
             this.rb1.TabIndex = 8;
@@ -1275,6 +1300,7 @@
             // grb_process
             // 
             this.grb_process.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.grb_process.Controls.Add(this.btn_addColor);
             this.grb_process.Controls.Add(this.cb_procces_bar);
             this.grb_process.Controls.Add(this.label4);
             this.grb_process.Controls.Add(this.btn_add_process);
@@ -1288,6 +1314,17 @@
             this.grb_process.TabIndex = 105;
             this.grb_process.TabStop = false;
             this.grb_process.Text = "İşlemler ";
+            // 
+            // btn_addColor
+            // 
+            this.btn_addColor.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btn_addColor.Location = new System.Drawing.Point(588, 72);
+            this.btn_addColor.Name = "btn_addColor";
+            this.btn_addColor.Size = new System.Drawing.Size(32, 30);
+            this.btn_addColor.TabIndex = 12;
+            this.btn_addColor.Text = "+";
+            this.btn_addColor.UseVisualStyleBackColor = false;
+            this.btn_addColor.Click += new System.EventHandler(this.btn_addColor_Click);
             // 
             // cb_procces_bar
             // 
@@ -1331,23 +1368,9 @@
             // cb_color
             // 
             this.cb_color.FormattingEnabled = true;
-            this.cb_color.Items.AddRange(new object[] {
-            "A1",
-            "A2",
-            "A3",
-            "B1",
-            "B2",
-            "B3",
-            "C1",
-            "C2",
-            "C3",
-            "D1",
-            "D2",
-            "D3",
-            "HB"});
             this.cb_color.Location = new System.Drawing.Point(522, 76);
             this.cb_color.Name = "cb_color";
-            this.cb_color.Size = new System.Drawing.Size(98, 24);
+            this.cb_color.Size = new System.Drawing.Size(60, 24);
             this.cb_color.TabIndex = 6;
             // 
             // label6
@@ -1373,7 +1396,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.BackColor = System.Drawing.Color.LightSlateGray;
-            this.panel1.Controls.Add(this.label51);
+            this.panel1.Controls.Add(this.lbl_payments);
             this.panel1.Controls.Add(this.pb_payment);
             this.panel1.Controls.Add(this.lbl_search);
             this.panel1.Controls.Add(this.pb_search);
@@ -1386,17 +1409,17 @@
             this.panel1.Size = new System.Drawing.Size(133, 738);
             this.panel1.TabIndex = 2;
             // 
-            // label51
+            // lbl_payments
             // 
-            this.label51.AutoSize = true;
-            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label51.ForeColor = System.Drawing.Color.White;
-            this.label51.Location = new System.Drawing.Point(24, 476);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(87, 20);
-            this.label51.TabIndex = 14;
-            this.label51.Text = "Ödemeler ";
-            this.label51.Click += new System.EventHandler(this.label51_Click);
+            this.lbl_payments.AutoSize = true;
+            this.lbl_payments.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_payments.ForeColor = System.Drawing.Color.White;
+            this.lbl_payments.Location = new System.Drawing.Point(24, 476);
+            this.lbl_payments.Name = "lbl_payments";
+            this.lbl_payments.Size = new System.Drawing.Size(87, 20);
+            this.lbl_payments.TabIndex = 14;
+            this.lbl_payments.Text = "Ödemeler ";
+            this.lbl_payments.Click += new System.EventHandler(this.label51_Click);
             // 
             // pb_payment
             // 
@@ -1485,8 +1508,18 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnl_search.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.pnl_search.Controls.Add(this.dtp_init_date);
-            this.pnl_search.Controls.Add(this.dtb_deadline);
+            this.pnl_search.Controls.Add(this.txt_step);
+            this.pnl_search.Controls.Add(this.label63);
+            this.pnl_search.Controls.Add(this.label62);
+            this.pnl_search.Controls.Add(this.label61);
+            this.pnl_search.Controls.Add(this.dtp_init_date_upperlimit);
+            this.pnl_search.Controls.Add(this.dtp_deadline_upperlimit);
+            this.pnl_search.Controls.Add(this.txt_result);
+            this.pnl_search.Controls.Add(this.label60);
+            this.pnl_search.Controls.Add(this.chk_save_date);
+            this.pnl_search.Controls.Add(this.chk_deadline);
+            this.pnl_search.Controls.Add(this.dtp_init_date_init);
+            this.pnl_search.Controls.Add(this.dtb_deadline_init);
             this.pnl_search.Controls.Add(this.label58);
             this.pnl_search.Controls.Add(this.label56);
             this.pnl_search.Controls.Add(this.txt_search_procces);
@@ -1504,27 +1537,121 @@
             this.pnl_search.TabIndex = 12;
             this.pnl_search.Visible = false;
             // 
-            // dtp_init_date
+            // txt_step
             // 
-            this.dtp_init_date.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtp_init_date.Location = new System.Drawing.Point(901, 71);
-            this.dtp_init_date.Name = "dtp_init_date";
-            this.dtp_init_date.Size = new System.Drawing.Size(149, 22);
-            this.dtp_init_date.TabIndex = 24;
-            this.dtp_init_date.Value = new System.DateTime(2019, 1, 28, 0, 0, 0, 0);
+            this.txt_step.Location = new System.Drawing.Point(275, 68);
+            this.txt_step.Name = "txt_step";
+            this.txt_step.Size = new System.Drawing.Size(72, 22);
+            this.txt_step.TabIndex = 125;
+            this.txt_step.TextChanged += new System.EventHandler(this.tableSeach);
             // 
-            // dtb_deadline
+            // label63
             // 
-            this.dtb_deadline.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtb_deadline.Location = new System.Drawing.Point(901, 38);
-            this.dtb_deadline.Name = "dtb_deadline";
-            this.dtb_deadline.Size = new System.Drawing.Size(149, 22);
-            this.dtb_deadline.TabIndex = 23;
+            this.label63.Location = new System.Drawing.Point(214, 70);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(66, 21);
+            this.label63.TabIndex = 124;
+            this.label63.Text = "Aşama  :";
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.Location = new System.Drawing.Point(933, 75);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(13, 17);
+            this.label62.TabIndex = 123;
+            this.label62.Text = "-";
+            // 
+            // label61
+            // 
+            this.label61.AutoSize = true;
+            this.label61.Location = new System.Drawing.Point(933, 43);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(13, 17);
+            this.label61.TabIndex = 122;
+            this.label61.Text = "-";
+            // 
+            // dtp_init_date_upperlimit
+            // 
+            this.dtp_init_date_upperlimit.Enabled = false;
+            this.dtp_init_date_upperlimit.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtp_init_date_upperlimit.Location = new System.Drawing.Point(954, 73);
+            this.dtp_init_date_upperlimit.Name = "dtp_init_date_upperlimit";
+            this.dtp_init_date_upperlimit.Size = new System.Drawing.Size(119, 22);
+            this.dtp_init_date_upperlimit.TabIndex = 121;
+            this.dtp_init_date_upperlimit.ValueChanged += new System.EventHandler(this.tableSeach);
+            // 
+            // dtp_deadline_upperlimit
+            // 
+            this.dtp_deadline_upperlimit.Enabled = false;
+            this.dtp_deadline_upperlimit.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtp_deadline_upperlimit.Location = new System.Drawing.Point(952, 40);
+            this.dtp_deadline_upperlimit.Name = "dtp_deadline_upperlimit";
+            this.dtp_deadline_upperlimit.Size = new System.Drawing.Size(119, 22);
+            this.dtp_deadline_upperlimit.TabIndex = 120;
+            this.dtp_deadline_upperlimit.ValueChanged += new System.EventHandler(this.tableSeach);
+            // 
+            // txt_result
+            // 
+            this.txt_result.Enabled = false;
+            this.txt_result.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.txt_result.Location = new System.Drawing.Point(1128, 51);
+            this.txt_result.Name = "txt_result";
+            this.txt_result.Size = new System.Drawing.Size(100, 30);
+            this.txt_result.TabIndex = 119;
+            // 
+            // label60
+            // 
+            this.label60.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label60.Location = new System.Drawing.Point(1124, 27);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(169, 46);
+            this.label60.TabIndex = 118;
+            this.label60.Text = "Diş adeti :";
+            // 
+            // chk_save_date
+            // 
+            this.chk_save_date.AutoSize = true;
+            this.chk_save_date.Location = new System.Drawing.Point(1079, 73);
+            this.chk_save_date.Name = "chk_save_date";
+            this.chk_save_date.Size = new System.Drawing.Size(18, 17);
+            this.chk_save_date.TabIndex = 117;
+            this.chk_save_date.UseVisualStyleBackColor = true;
+            this.chk_save_date.CheckedChanged += new System.EventHandler(this.chk_save_date_CheckedChanged);
+            // 
+            // chk_deadline
+            // 
+            this.chk_deadline.AutoSize = true;
+            this.chk_deadline.Location = new System.Drawing.Point(1077, 43);
+            this.chk_deadline.Name = "chk_deadline";
+            this.chk_deadline.Size = new System.Drawing.Size(18, 17);
+            this.chk_deadline.TabIndex = 116;
+            this.chk_deadline.UseVisualStyleBackColor = true;
+            this.chk_deadline.CheckedChanged += new System.EventHandler(this.chk_deadline_CheckedChanged);
+            // 
+            // dtp_init_date_init
+            // 
+            this.dtp_init_date_init.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtp_init_date_init.Location = new System.Drawing.Point(809, 73);
+            this.dtp_init_date_init.Name = "dtp_init_date_init";
+            this.dtp_init_date_init.Size = new System.Drawing.Size(115, 22);
+            this.dtp_init_date_init.TabIndex = 24;
+            this.dtp_init_date_init.Value = new System.DateTime(2019, 1, 29, 0, 0, 0, 0);
+            this.dtp_init_date_init.ValueChanged += new System.EventHandler(this.tableSeach);
+            // 
+            // dtb_deadline_init
+            // 
+            this.dtb_deadline_init.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtb_deadline_init.Location = new System.Drawing.Point(809, 40);
+            this.dtb_deadline_init.Name = "dtb_deadline_init";
+            this.dtb_deadline_init.Size = new System.Drawing.Size(115, 22);
+            this.dtb_deadline_init.TabIndex = 23;
+            this.dtb_deadline_init.ValueChanged += new System.EventHandler(this.tableSeach);
             // 
             // label58
             // 
             this.label58.AutoSize = true;
-            this.label58.Location = new System.Drawing.Point(762, 75);
+            this.label58.Location = new System.Drawing.Point(670, 77);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(132, 17);
             this.label58.TabIndex = 22;
@@ -1532,7 +1659,7 @@
             // 
             // label56
             // 
-            this.label56.Location = new System.Drawing.Point(411, 76);
+            this.label56.Location = new System.Drawing.Point(353, 71);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(93, 17);
             this.label56.TabIndex = 10;
@@ -1540,7 +1667,7 @@
             // 
             // txt_search_procces
             // 
-            this.txt_search_procces.Location = new System.Drawing.Point(517, 74);
+            this.txt_search_procces.Location = new System.Drawing.Point(454, 67);
             this.txt_search_procces.Name = "txt_search_procces";
             this.txt_search_procces.Size = new System.Drawing.Size(188, 22);
             this.txt_search_procces.TabIndex = 21;
@@ -1557,16 +1684,17 @@
             // 
             // txt_id
             // 
-            this.txt_id.Location = new System.Drawing.Point(159, 71);
+            this.txt_id.Location = new System.Drawing.Point(158, 68);
             this.txt_id.Name = "txt_id";
-            this.txt_id.Size = new System.Drawing.Size(188, 22);
+            this.txt_id.Size = new System.Drawing.Size(50, 22);
             this.txt_id.TabIndex = 18;
             this.txt_id.TextChanged += new System.EventHandler(this.txt_id_TextChanged);
+            this.txt_id.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_id_KeyPress);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(741, 40);
+            this.label16.Location = new System.Drawing.Point(649, 42);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(153, 17);
             this.label16.TabIndex = 6;
@@ -1574,7 +1702,7 @@
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(411, 40);
+            this.label10.Location = new System.Drawing.Point(348, 40);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 17);
             this.label10.TabIndex = 4;
@@ -1582,7 +1710,7 @@
             // 
             // txt_search_patient
             // 
-            this.txt_search_patient.Location = new System.Drawing.Point(517, 38);
+            this.txt_search_patient.Location = new System.Drawing.Point(454, 38);
             this.txt_search_patient.Name = "txt_search_patient";
             this.txt_search_patient.Size = new System.Drawing.Size(188, 22);
             this.txt_search_patient.TabIndex = 19;
@@ -1749,6 +1877,7 @@
             // 
             // txt_total_payment
             // 
+            this.txt_total_payment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txt_total_payment.Location = new System.Drawing.Point(379, 696);
             this.txt_total_payment.Name = "txt_total_payment";
             this.txt_total_payment.Size = new System.Drawing.Size(97, 22);
@@ -1757,6 +1886,7 @@
             // 
             // label59
             // 
+            this.label59.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label59.AutoSize = true;
             this.label59.Location = new System.Drawing.Point(192, 699);
             this.label59.Name = "label59";
@@ -1935,7 +2065,7 @@
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(88, 17);
             this.label54.TabIndex = 3;
-            this.label54.Text = "Version1.1.3";
+            this.label54.Text = "Version1.2.0";
             // 
             // pictureBox4
             // 
@@ -2200,7 +2330,7 @@
         private System.Windows.Forms.DateTimePicker dt_fromdate;
         private System.Windows.Forms.PictureBox pb_printp;
         private System.Windows.Forms.Panel pnl_payment;
-        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label lbl_payments;
         private System.Windows.Forms.PictureBox pb_payment;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.DataGridView dgv_dr_payment;
@@ -2230,8 +2360,20 @@
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.TextBox txt_total_payment;
         private System.Windows.Forms.Label label59;
-        private System.Windows.Forms.DateTimePicker dtp_init_date;
-        private System.Windows.Forms.DateTimePicker dtb_deadline;
+        private System.Windows.Forms.DateTimePicker dtp_init_date_init;
+        private System.Windows.Forms.DateTimePicker dtb_deadline_init;
+        private System.Windows.Forms.CheckBox chk_save_date;
+        private System.Windows.Forms.CheckBox chk_deadline;
+        private System.Windows.Forms.TextBox txt_result;
+        private System.Windows.Forms.Label label60;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Button btn_addColor;
+        private System.Windows.Forms.DateTimePicker dtp_init_date_upperlimit;
+        private System.Windows.Forms.DateTimePicker dtp_deadline_upperlimit;
+        private System.Windows.Forms.Label label62;
+        private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.TextBox txt_step;
+        private System.Windows.Forms.Label label63;
     }
 }
 

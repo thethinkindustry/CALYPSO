@@ -59,7 +59,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(105, 17);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Version 1.1.3";
+            this.label1.Text = "Version 1.2.0";
             // 
             // init_form
             // 
