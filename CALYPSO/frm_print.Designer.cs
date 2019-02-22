@@ -34,8 +34,8 @@
             this.DataQuery = new CALYPSO.DataQuery();
             this.tbl_mainTableAdapter = new CALYPSO.DataQueryTableAdapters.tbl_mainTableAdapter();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
-            this.patientBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.patientBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tbl_mainBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataQuery)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.patientBindingSource)).BeginInit();
@@ -55,30 +55,22 @@
             // 
             this.tbl_mainTableAdapter.ClearBeforeFill = true;
             // 
+            // reportViewer
+            // 
+            resources.ApplyResources(this.reportViewer, "reportViewer");
+            this.reportViewer.Name = "reportViewer";
+            // 
             // patientBindingSource
             // 
             this.patientBindingSource.DataSource = typeof(CALYPSO.patient);
             // 
-            // reportViewer
-            // 
-            this.reportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reportViewer.Location = new System.Drawing.Point(0, 0);
-            this.reportViewer.Name = "reportViewer";
-            this.reportViewer.Size = new System.Drawing.Size(990, 702);
-            this.reportViewer.TabIndex = 0;
-            // 
             // frm_print
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(990, 702);
             this.Controls.Add(this.reportViewer);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MinimizeBox = false;
             this.Name = "frm_print";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Yazdırma Ekranı";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frm_print_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tbl_mainBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataQuery)).EndInit();

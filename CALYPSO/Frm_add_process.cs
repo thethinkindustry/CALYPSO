@@ -21,6 +21,8 @@ namespace CALYPSO
         public Frm_add_process()
         {
             InitializeComponent();
+            this.TransparencyKey = Color.Turquoise;
+            this.BackColor = Color.Turquoise;
             this.TopMost = true;
             this.BringToFront();
             string connetionString = null;
@@ -58,6 +60,10 @@ namespace CALYPSO
                     cnn.Close();
                     this.Close();
                 }
+                else
+                {
+                    lbl_error.Text = "*Boş alan bırakılamaz.";
+                }
             }
             catch (Exception ex)
             {
@@ -69,7 +75,7 @@ namespace CALYPSO
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (cmb_procces_delete.SelectedItem.ToString() != "")
+            if (cmb_procces_delete.SelectedIndex>-1)
             {
                 cnn.Open();
                 sql = "DELETE FROM tbl_process  WHERE process = @proc";
@@ -80,6 +86,26 @@ namespace CALYPSO
                 cnn.Close();
                 this.Close();
             }
+            else
+            {
+                lbl_er.Text = "*Kaldırılacak işlem seçilmedi";
+            }
+        }
+
+        private void btn_esc_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btn_process_addpnl_Click(object sender, EventArgs e)
+        {
+            pnl_process_add.Visible = true;
+        }
+
+        private void btn_process_removepnl_Click(object sender, EventArgs e)
+        {
+
+            pnl_process_add.Visible = false;
         }
     }
 }

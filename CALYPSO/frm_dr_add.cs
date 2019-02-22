@@ -22,6 +22,8 @@ namespace CALYPSO
         {
            
             InitializeComponent();
+            this.TransparencyKey = Color.Turquoise;
+            this.BackColor = Color.Turquoise;
             this.TopMost = true;
             this.BringToFront();
             string connetionString = "Data Source=DESKTOP-93568HR\\SQL_2014;Initial Catalog=db_calypso;Integrated Security=True";
@@ -46,15 +48,23 @@ namespace CALYPSO
         {
             try
             {
-                cnn.Open();
-                string sql = "insert into tbl_dr (d_name ,d_number,payment) values(@pname,@number,@payment)";
-                SqlCommand command = new SqlCommand(sql, cnn);
-                command.Parameters.Add(new SqlParameter("@pname", txt_doctor_name.Text));
-                command.Parameters.Add(new SqlParameter("@number", txt_dr_number.Text));
-                command.Parameters.Add(new SqlParameter("@payment", "0"));
-                command.ExecuteNonQuery();
-               cnn.Close();
-                this.Close();
+                if (txt_doctor_name.Text!=""&&txt_dr_number.Text!="")
+                {
+                    cnn.Open();
+                    string sql = "insert into tbl_dr (d_name ,d_number,payment) values(@pname,@number,@payment)";
+                    SqlCommand command = new SqlCommand(sql, cnn);
+                    command.Parameters.Add(new SqlParameter("@pname", txt_doctor_name.Text));
+                    command.Parameters.Add(new SqlParameter("@number", txt_dr_number.Text));
+                    command.Parameters.Add(new SqlParameter("@payment", "0"));
+                    command.ExecuteNonQuery();
+                    cnn.Close();
+                    this.Close();
+                }
+                else
+                {
+                    lbl_error.Text = "Boş alan bırakılamaz.";
+                }
+                
             }
             catch (Exception ex )
             {
@@ -66,7 +76,7 @@ namespace CALYPSO
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (cmb_dr_delete.SelectedItem.ToString()!="")
+            if (cmb_dr_delete.SelectedIndex>-1)
             {
                 cnn.Open();
                 sql = "DELETE FROM tbl_dr  WHERE d_name = @name";
@@ -77,7 +87,28 @@ namespace CALYPSO
                 cnn.Close();
                 this.Close();
             }
+            else
+            {
+                lbl_er.Text = "*Kaldırılacak doktor seçilmedi.";
+            }
            
         }
+
+        private void btn_esc_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btn_dr_remove_btn_Click(object sender, EventArgs e)
+        {
+            pnl_dr_add.Visible = false;
+        }
+
+        private void btn_dr_add_btn_Click(object sender, EventArgs e)
+        {
+            pnl_dr_add.Visible = true;
+        }
+
+       
     }
 }

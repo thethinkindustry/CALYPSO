@@ -411,6 +411,12 @@
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
+                            <TextRun>
+                              <Value>₺</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
@@ -476,15 +482,21 @@
                   <FontSize>8pt</FontSize>
                 </Style>
               </TextRun>
+              <TextRun>
+                <Value>₺</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>ReportParameter_totalprice</rd:DefaultName>
-        <Top>1.68684cm</Top>
+        <Top>1.65156cm</Top>
         <Left>14.08278cm</Left>
         <Height>0.6cm</Height>
-        <Width>0.976cm</Width>
+        <Width>1.87205cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -508,15 +520,21 @@
                   <FontSize>8pt</FontSize>
                 </Style>
               </TextRun>
+              <TextRun>
+                <Value>₺</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>ReportParameter_total_debt</rd:DefaultName>
-        <Top>2.93484cm</Top>
-        <Left>14.08278cm</Left>
+        <Top>2.32212cm</Top>
+        <Left>14.0475cm</Left>
         <Height>0.6cm</Height>
-        <Width>0.976cm</Width>
+        <Width>1.90733cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -545,7 +563,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>2.97011cm</Top>
+        <Top>2.35739cm</Top>
         <Left>10.79017cm</Left>
         <Height>0.6cm</Height>
         <Width>3.32789cm</Width>
@@ -592,75 +610,11 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox8">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Parameters!ReportParameter_lastpayment.Value</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox8</rd:DefaultName>
-        <Top>2.29956cm</Top>
-        <Left>14.08278cm</Left>
-        <Height>0.6cm</Height>
-        <Width>0.94072cm</Width>
-        <ZIndex>5</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox6">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Alınan Bakiye :</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>2.28684cm</Top>
-        <Left>11.69561cm</Left>
-        <Height>0.6cm</Height>
-        <Width>2.31661cm</Width>
-        <ZIndex>6</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
     </ReportItems>
-    <Height>1.475in</Height>
+    <Height>1.21667in</Height>
     <Style />
   </Body>
-  <Width>6.40776in</Width>
+  <Width>8.19943in</Width>
   <Page>
     <PageHeader>
       <Height>3.87237cm</Height>
@@ -905,10 +859,6 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="ReportParameter_total_debt">
-      <DataType>String</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="ReportParameter_lastpayment">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>

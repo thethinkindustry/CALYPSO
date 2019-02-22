@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +20,7 @@ namespace CALYPSO
         public Frm_update_patient frm_update;
         public frm_print Frm_print;
         public frm_login Frm_login;
+        public Frm_print_payment_historycs frm_print_payment_history;
         public frm_addColor Frm_addColor;
         SqlConnection cnn;
         SqlCommand command;
@@ -29,7 +32,9 @@ namespace CALYPSO
         public  print_informations p_info = new print_informations();
         public int Totalprice = 0;
         DataTable table = new DataTable();
+        public List<payment_history> lst2 = new List<payment_history>();
         public List<patient> lst = new List<patient>();
+        
         public Form1(int _status)
         { 
 
@@ -37,8 +42,10 @@ namespace CALYPSO
             status = _status;
             Frm_print = new frm_print();
             frm_update = new Frm_update_patient();
+            frm_print_payment_history = new Frm_print_payment_historycs();
             Frm_print.frm1 = this;
             frm_update.frm1 = this;
+            frm_print_payment_history.frm1 = this;
             string connetionString = null;
             connetionString = "Data Source=DESKTOP-93568HR\\SQL_2014;Initial Catalog=db_calypso;Integrated Security=True";
             cnn = new SqlConnection(connetionString);
@@ -46,11 +53,11 @@ namespace CALYPSO
             if (status == 0)
             {
                 pb_payment.Visible = false;
-                lbl_payments.Visible = false;
+               
             }
             else {
                 pb_payment.Visible = true;
-                lbl_payments.Visible = true;
+               
             }
             try
             {
@@ -124,31 +131,13 @@ namespace CALYPSO
             }
 
         }
-        private void ManageCheckGroupBox(CheckBox chk, GroupBox grp)
-        {
-            // Make sure the CheckBox isn't in the GroupBox.
-            // This will only happen the first time.
-            if (chk.Parent == grp)
-            {
-                // Reparent the CheckBox so it's not in the GroupBox.
-                grp.Parent.Controls.Add(chk);
-
-                // Adjust the CheckBox's location.
-                chk.Location = new Point(
-                    chk.Left + grp.Left,
-                    chk.Top + grp.Top);
-
-                // Move the CheckBox to the top of the stacking order.
-                chk.BringToFront();
-            }
-
-            // Enable or disable the GroupBox.
-            grp.Enabled = chk.Checked;
-        }
+       
         private void btn_dr_add_Click(object sender, EventArgs e)
         {
+            pnl_add_info.Visible = false;
            Form frmDRadd = new frm_dr_add();
             frmDRadd.ShowDialog();
+            pnl_add_info.Visible = true;
             cb_doctor_name.Items.Clear();
             try
             {
@@ -174,8 +163,10 @@ namespace CALYPSO
         private void btn_add_process_Click(object sender, EventArgs e)
         {
             //con.Close();
+            pnl_add_info.Visible = false;
             Form frm_add_process = new Frm_add_process();
             frm_add_process.ShowDialog();
+            pnl_add_info.Visible = true;
             cb_procces_bar.Items.Clear();
             try
             {
@@ -199,8 +190,10 @@ namespace CALYPSO
         }
         private void btn_addColor_Click(object sender, EventArgs e)
         {
+            pnl_add_info.Visible = false;
             Form frm_add_Color = new frm_addColor();
             frm_add_Color.ShowDialog();
+            pnl_add_info.Visible = true;
             cb_color.Items.Clear();
             try
             {
@@ -227,29 +220,25 @@ namespace CALYPSO
             pnl_add_patient.Visible = false;
             pnl_init.Visible = true;
         }
-        private void btn_save_Click(object sender, EventArgs e)
+        private void btn_add_proc_Click(object sender, EventArgs e)
         {
-           bool istrue = false;
-            var rbtn = grb_steps.Controls.OfType<RadioButton>();
-            bool bitis=false;
+            bool istrue=false;
+            string step = "";
+            bool bitis = false; ;
+            var rbtn = pnl_add_info.Controls.OfType<RadioButton>();
             foreach (var rb in rbtn)
             {
                 if (rb.Checked)
                 {
+                    
                     istrue = true;
+                    step = rb.Text;
                     if (rb.Text == "Bitiş")
                     {
                         bitis = true;
                     }
+                    break;
                 }
-               
-            }
-            if (txt_patient_name.Text == "" || string.IsNullOrEmpty(cb_doctor_name.Text) ||
-                string.IsNullOrEmpty(cb_procces_bar.Text) || !istrue)
-            {
-                MessageBox.Show("Zorunlu Alnlar Doldurulmalıdır.");
-
-                return;
             }
             if (bitis)
             {
@@ -258,14 +247,22 @@ namespace CALYPSO
                     MessageBox.Show("Bitiş aşamasında fiyat girilimelidir.");
                     return;
                 }
-               
+
             }
-           
+            if (txt_patient_name.Text == "" || string.IsNullOrEmpty(cb_doctor_name.Text) ||
+                string.IsNullOrEmpty(cb_procces_bar.Text) || !istrue)
+            {
+               lbl_error.Text="Zorunlu Alnlar Doldurulmalıdır.";
+                return;
+            }
+            else
+            {
+                lbl_error.Text = "";
+            }
             if (string.IsNullOrEmpty(cb_color.Text))
             {
                 cb_color.Text = "Yok";
             }
-            
             var picture = grb_teeth.Controls.OfType<PictureBox>();
             int counter = 0;
             string teeth = "";
@@ -277,7 +274,7 @@ namespace CALYPSO
                     teeth += pb.Name.ToString() + "/";
                 }
             }
-            if (counter==0)
+            if (counter == 0)
             {
                 counter = 1;
             }
@@ -285,87 +282,153 @@ namespace CALYPSO
             {
                 txt_unit_price.Text = "0";
             }
+            if (string.IsNullOrEmpty(teeth))
+            {
+                teeth = "X";
+            }
+            int i = dgv_procs.Rows.Add();
+          
+            dgv_procs.Rows[i].Cells[0].Value = cb_procces_bar.Text; 
+            dgv_procs.Rows[i].Cells[1].Value = step;
+            dgv_procs.Rows[i].Cells[2].Value = teeth;
+            dgv_procs.Rows[i].Cells[3].Value = cb_color.Text;
+            dgv_procs.Rows[i].Cells[4].Value = counter.ToString();
+            dgv_procs.Rows[i].Cells[5].Value = txt_unit_price.Text;
+            dgv_procs.Rows[i].Cells[6].Value = (int.Parse(txt_unit_price.Text)*counter).ToString();
+            for (int j = 0; j < dgv_procs.Rows.Count; j+= 2)
+            {
+
+                dgv_procs.Rows[j].DefaultCellStyle.BackColor = Color.LightGray;
+
+            }
+            total_price();
+        }
+        private void dgv_procs_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (this.dgv_procs.SelectedRows.Count > 0)
+            {
+                dgv_procs.Rows.RemoveAt(this.dgv_procs.SelectedRows[0].Index);
+                total_price();
+            }
+            for (int j = 0; j < dgv_procs.Rows.Count; j += 2)
+            {
+
+                dgv_procs.Rows[j].DefaultCellStyle.BackColor = Color.LightGray;
+
+            }
+        }
+        void total_price()
+        {
+            UInt32 prices = 0;
+            for (int i = 0; i < dgv_procs.RowCount; i++)
+            {
+                prices += Convert.ToUInt32(dgv_procs.Rows[i].Cells[6].Value.ToString());
+            }
+            txt_all_prices.Text = prices.ToString();
+        }
+        private void btn_save_Click(object sender, EventArgs e)
+        {
+            if (dgv_procs.RowCount > 0)
+            {
+               
             if (string.IsNullOrEmpty(rtx_doctor_notes.Text))
             {
                 rtx_doctor_notes.Text = "Yok";
             }
-            if (string.IsNullOrEmpty(teeth))
+                string[] datas = new string[7];
+                for (int j = 0; j < 7; j++)
             {
-                teeth = "-";
+                for (int i = 0; i < dgv_procs.RowCount; i++)
+                {
+                    datas[j] += dgv_procs.Rows[i].Cells[j].Value.ToString() + "-";
+                }
             }
-            int val = Convert.ToInt32(txt_unit_price.Text) * counter;
-            try
-            {
-                cnn.Open();
-                sql = "insert into tbl_main(dr_name,patient_name,process_name,color,teeth,num ,unit_price,price,step, init_date,deadline,dr_note)values(@pname,@pat,@proc,@color,@teeth,@num,@price,@total_price,@step,@init_date,@deadline,@dr_note)";
-                command = new SqlCommand(sql,cnn);
-                command.Parameters.Add(new SqlParameter("@pname", cb_doctor_name.Text));
-                command.Parameters.Add(new SqlParameter("@pat", txt_patient_name.Text));
-                command.Parameters.Add(new SqlParameter("@proc", cb_procces_bar.Text));
-                command.Parameters.Add(new SqlParameter("@color", cb_color.Text));
-                command.Parameters.Add(new SqlParameter("@teeth", teeth));
-                command.Parameters.Add(new SqlParameter("@num", counter.ToString()));
-                command.Parameters.Add(new SqlParameter("@price", txt_unit_price.Text));
-                command.Parameters.Add(new SqlParameter("@total_price",val.ToString() ));
-               var radioButtons = grb_steps.Controls.OfType<RadioButton>();
-                 foreach (var rb in radioButtons)
-                 {
-                     if (rb.Checked)
-                     {
-                        command.Parameters.Add(new SqlParameter("@step", rb.Text));
-                     }
-                 }
-                command.Parameters.Add(new SqlParameter("@init_date",dtp_register_date.Value.ToString("yyyy-MM-dd")));
-                command.Parameters.Add(new SqlParameter("@deadline", dtp_deadline.Value.ToString("yyyy-MM-dd")));
-                command.Parameters.Add(new SqlParameter("@dr_note", rtx_doctor_notes.Text));
-                command.ExecuteNonQuery();
-                command.Dispose();
-                cnn.Close();
-                cnn.Open();
-                sql= "SELECT kimlik, payment FROM tbl_dr WHERE d_name='"+ cb_doctor_name.Text + "' ";
-                command= new SqlCommand(sql,cnn);
-                dataReader = command.ExecuteReader();
-                double payment=0;
-                int kimlik=0;
-                while (dataReader.Read())
-                  {
-                    payment =Convert.ToDouble(dataReader["payment"].ToString());
-                    kimlik = Convert.ToInt16(dataReader["kimlik"].ToString());
-                  }
-                dataReader.Close();
-                command.Dispose();
-                cnn.Close();
-                cnn.Open();
-                payment += counter*Convert.ToDouble(txt_unit_price.Text);
-                sql = "UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id";
-                command = new SqlCommand(sql,cnn);
-                command.Parameters.AddWithValue("@pay", payment.ToString());
-                command.Parameters.AddWithValue("@id", kimlik);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                cnn.Close();
-                MessageBox.Show("Kayıt başarıyla tamamlandı");
-                pnl_add_patient.Visible = false;
-                pnl_init.Visible = true;
+                try
+                {
+                    cnn.Open();
+                    sql = "insert into tbl_main(dr_name,patient_name,process_name,color,teeth,num ,unit_price,price,step, init_date,deadline,dr_note)values(@pname,@pat,@proc,@color,@teeth,@num,@price,@total_price,@step,@init_date,@deadline,@dr_note)";
+                    command = new SqlCommand(sql, cnn);
+                    command.Parameters.Add(new SqlParameter("@pname", cb_doctor_name.Text));
+                    command.Parameters.Add(new SqlParameter("@pat", txt_patient_name.Text));
+                    command.Parameters.Add(new SqlParameter("@proc", datas[0]));
+                    command.Parameters.Add(new SqlParameter("@color", datas[3]));
+                    command.Parameters.Add(new SqlParameter("@teeth", datas[2]));
+                    command.Parameters.Add(new SqlParameter("@num", datas[4]));
+                    command.Parameters.Add(new SqlParameter("@price", datas[5]));
+                    command.Parameters.Add(new SqlParameter("@total_price", datas[6]));
+                    command.Parameters.Add(new SqlParameter("@step", datas[1]));
+                    command.Parameters.Add(new SqlParameter("@init_date", dtp_register_date.Value.ToString("yyyy-MM-dd")));
+                    command.Parameters.Add(new SqlParameter("@deadline", dtp_deadline.Value.ToString("yyyy-MM-dd")));
+                    command.Parameters.Add(new SqlParameter("@dr_note", rtx_doctor_notes.Text));
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                    cnn.Close();
+                    cnn.Open();
+                    sql = "SELECT kimlik, payment FROM tbl_dr WHERE d_name='" + cb_doctor_name.Text + "' ";
+                    command = new SqlCommand(sql, cnn);
+                    dataReader = command.ExecuteReader();
+                    double payment = 0;
+                    int kimlik = 0;
+                    while (dataReader.Read())
+                    {
+                        payment = Convert.ToDouble(dataReader["payment"].ToString());
+                        kimlik = Convert.ToInt16(dataReader["kimlik"].ToString());
+                    }
+                    dataReader.Close();
+                    command.Dispose();
+                    cnn.Close();
+                    cnn.Open();
+                    payment += double.Parse(txt_all_prices.Text);
+                    sql = "UPDATE tbl_dr SET payment = @pay WHERE kimlik = @id";
+                    command = new SqlCommand(sql, cnn);
+                    command.Parameters.AddWithValue("@pay", payment.ToString());
+                    command.Parameters.AddWithValue("@id", kimlik);
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                    cnn.Close();
+                    MessageBox.Show("Kayıt başarıyla tamamlandı");
+                    pnl_add_patient.Visible = false;
+                    pnl_init.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("hata" + ex);
+                    throw;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("hata" + ex);
-                throw;
+              MessageBox.Show("Kayılı bir işlem Yok");
             }
         }
+
         private void txt_unit_price_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
         private void pB_add_pattient_Click(object sender, EventArgs e)
         {
+            
+           pB_add_pattient.Image = CALYPSO.Properties.Resources.Add_patient_white;
+           pb_search.Image = CALYPSO.Properties.Resources.Search;
+            pB_data_view.Image = CALYPSO.Properties.Resources.Print;
+           pb_payment.Image = CALYPSO.Properties.Resources.Payment;
             pnl_add_patient.Visible = true;
             pnl_search.Visible = false;
             pnl_print.Visible = false;
             pnl_payment.Visible = false;
             pnl_init.Visible = false;
+            dgv_procs.ColumnCount = 7;
+            dgv_procs.Columns[0].Name = "Yapılacak işlem";
+            dgv_procs.Columns[1].Name = "Aşama";
+            dgv_procs.Columns[2].Name = "Dişler";
+            dgv_procs.Columns[3].Name = "Renk";
+            dgv_procs.Columns[4].Name = "Adet";
+            dgv_procs.Columns[5].Name = "Birim fiyat";
+            dgv_procs.Columns[6].Name = "Fiyat";
             clearText(pnl_add_patient);
+            clearText(pnl_add_info);
+            clearText(pnl_patient_save);
             try
             {
                 cnn.Open();
@@ -385,13 +448,14 @@ namespace CALYPSO
                 MessageBox.Show("HATA" + ex);
                 throw;
             }
+           
+
         }
         public void clearText(Panel PanelID)
         {
-            var grb = PanelID.Controls.OfType<GroupBox>();
-            foreach (GroupBox rb in grb)
-            {
-                foreach (Control c in rb.Controls)
+           
+            
+                foreach (Control c in PanelID.Controls)
                 {
                     if (c is TextBox)
                     {
@@ -417,10 +481,14 @@ namespace CALYPSO
                             questionTextBox.Text = "";
                         }
                     }
-                    else if (c is PictureBox)
+                    else if (c is GroupBox)
                     {
-                        PictureBox questionTextBox = c as PictureBox;
-                        questionTextBox.BackColor = Color.Transparent;
+                    var pic = c.Controls.OfType<PictureBox>();
+                    foreach (var item in pic)
+                    {
+                       // PictureBox questionTextBox = pic as PictureBox;
+                        item.BackColor = Color.Transparent;
+                    }
                     }
                     else if (c is RadioButton)
                     {
@@ -430,9 +498,12 @@ namespace CALYPSO
                             questionTextBox.Checked = false;
                         }
                     }
+                    else if (c is DataGridView)
+                {
+                    DataGridView questionDataGripView= c as DataGridView;
+                    questionDataGripView.Rows.Clear();
                 }
-         
-            }
+                }
         }
         private void lbl_ad_patient_Click(object sender, EventArgs e)
         {
@@ -443,11 +514,15 @@ namespace CALYPSO
         {
             for (int i = 0; i < dgv_main.Rows.Count; i += 2)
             {
-                dgv_main.Rows[i].DefaultCellStyle.BackColor = Color.LightGray;
+                dgv_main.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(96, 182, 167);
             }
         }
         private void pb_search_Click(object sender, EventArgs e)
         {
+            pB_add_pattient.Image = CALYPSO.Properties.Resources.Add_patient;
+            pb_search.Image = CALYPSO.Properties.Resources.Search_white;
+            pB_data_view.Image = CALYPSO.Properties.Resources.Print;
+            pb_payment.Image = CALYPSO.Properties.Resources.Payment;
             pnl_payment.Visible = false;
             pnl_search.Visible = true;
             pnl_add_patient.Visible = false;
@@ -525,7 +600,19 @@ namespace CALYPSO
             int totalTeeth = 0; ;
              for (int i = 0; i < dgv_main.Rows.Count; i++)
             {
-                totalTeeth += int.Parse(dgv_main.Rows[i].Cells[9].Value.ToString());
+                
+                string value = dgv_main.Rows[i].Cells[9].Value.ToString();
+                string[] values = value.Split('-');
+                for (int j = 0; j < values.Length-1; j++)
+                {
+                    if (values[j]!="")
+                    {
+                        totalTeeth += int.Parse(values[j]);
+                    }
+                   
+                }
+                // totalTeeth += int.Parse(dgv_main.Rows[i].Cells[9].Value.ToString());
+              
             }
             txt_result.Text = totalTeeth.ToString();
         }
@@ -541,6 +628,20 @@ namespace CALYPSO
                 dv = new DataView(table);
                 dv.RowFilter = string.Format(CultureInfo.InvariantCulture.NumberFormat, "proc_id={0}", int.Parse(txt_id.Text));
                 dgv_main.DataSource = dv;
+                int totalTeeth = 0; 
+                for (int i = 0; i < dgv_main.Rows.Count; i++)
+                {
+                    string value = dgv_main.Rows[i].Cells[9].Value.ToString();
+                    string[] values = value.Split('-');
+                    for (int j = 0; j < values.Length - 1; j++)
+                    {
+                        if (values[j] != "")
+                        {
+                            totalTeeth += int.Parse(values[j]);
+                        }
+
+                    }
+                }
             }
             else
             {
@@ -579,6 +680,10 @@ namespace CALYPSO
         }
         private void pB_data_view_Click(object sender, EventArgs e)
         {
+            pB_add_pattient.Image = CALYPSO.Properties.Resources.Add_patient;
+            pb_search.Image = CALYPSO.Properties.Resources.Search;
+            pB_data_view.Image = CALYPSO.Properties.Resources.Print_white;
+            pb_payment.Image = CALYPSO.Properties.Resources.Payment;
             cmb_select_dr.Items.Clear();
             pnl_payment.Visible = false;
             pnl_print.Visible = true;
@@ -606,10 +711,11 @@ namespace CALYPSO
         }
         private void cmb_select_dr_SelectedIndexChanged(object sender, EventArgs e)
         {
+         
              try
             {
                 cnn.Open();
-                sql= "SELECT proc_id,patient_name , process_name,deadline ,num ,unit_price, price,printed FROM tbl_main  WHERE dr_name='" + cmb_select_dr.Text + "' AND step Like '%" +"Bitiş" + "%' AND (( deadline >= '" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "' AND deadline <='" + dt_todate.Value.ToString("yyyy-MM-dd") + "')) ";
+                sql= "SELECT proc_id,patient_name , process_name,deadline ,num ,unit_price, price,step,printed FROM tbl_main  WHERE dr_name='" + cmb_select_dr.Text + "' AND step Like '%" +"Bitiş" + "%' AND (( deadline >= '" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "' AND deadline <='" + dt_todate.Value.ToString("yyyy-MM-dd") + "')) ";
                 adapter = new SqlDataAdapter(sql, cnn);
                 DataTable ptable = new DataTable();
                 adapter.Fill(ptable);
@@ -621,11 +727,47 @@ namespace CALYPSO
                 dgv_patients.Columns[4].HeaderText = "Adet";
                 dgv_patients.Columns[5].HeaderText = "Birim Fiyat";
                 dgv_patients.Columns[6].HeaderText = "Fiyat";
-                dgv_patients.Columns[7].HeaderText = "Yazdırıldı";
+                dgv_patients.Columns[7].HeaderText = "Toplam Ücret";
+                dgv_patients.Columns[8].HeaderText = "Yazdırıldı";
+                dgv_patients.Columns[4].Visible = false;
+                dgv_patients.Columns[5].Visible = false;
+                dgv_patients.Columns[6].Visible = false;
+                string[] datas = new string[5];
+                  for (int i = 0; i < dgv_patients.Rows.Count-1; i++)
+                  {
+                      datas[0] = dgv_patients.Rows[i].Cells[2].Value.ToString();//işlem
+                      datas[1] = dgv_patients.Rows[i].Cells[7].Value.ToString();//aşama
+                      datas[2] = dgv_patients.Rows[i].Cells[4].Value.ToString();//adet
+                      datas[3] = dgv_patients.Rows[i].Cells[5].Value.ToString();//birimfiyat
+                      datas[4] = dgv_patients.Rows[i].Cells[6].Value.ToString();//toplam fiyat
+                    string[] processList = datas[0].Split('-');
+                    string[] stepList = datas[1].Split('-');
+                    string[] numberList = datas[2].Split('-');
+                    string[] upriceList = datas[3].Split('-');
+                    string[] priceList = datas[4].Split('-');
+                    dgv_patients.Rows[i].Cells[2].Value = DBNull.Value;
+                    dgv_patients.Rows[i].Cells[4].Value = DBNull.Value;
+                    dgv_patients.Rows[i].Cells[5].Value = DBNull.Value;
+                    dgv_patients.Rows[i].Cells[6].Value=DBNull.Value;
+                    UInt16 total = 0;
+                    for (int j = 0; j < stepList.Length-1; j++)
+                    {
+                        if (stepList[j] =="Bitiş")
+                        {
+                            ArrayList myAL = new ArrayList();
+                            dgv_patients.Rows[i].Cells[2].Value +=processList[j]+"\n" ;
+                            dgv_patients.Rows[i].Cells[4].Value+=  numberList[j] + "\n";
+                            dgv_patients.Rows[i].Cells[5].Value += upriceList[j] + "\n";
+                            dgv_patients.Rows[i].Cells[6].Value += priceList[j] + "\n";
+                            total += UInt16.Parse(priceList[j]);
+                        } 
+                    }
+                    dgv_patients.Rows[i].Cells[8].Value = total;
+                }
                 dgv_patients.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 adapter.Dispose();
                 cnn.Close();
-                cnn.Open();
+               /* cnn.Open();
                 sql = "SELECT payment_price FROM tbl_payment  WHERE doctor_name='" + cmb_select_dr.Text + "'  AND (( payment_date >= '" + dt_fromdate.Value.ToString("yyyy-MM-dd") + "' AND payment_date <= '" + dt_todate.Value.ToString("yyyy-MM-dd") + "')) ";
                 adapter= new SqlDataAdapter(sql,cnn);
                 DataTable table = new DataTable();
@@ -637,7 +779,7 @@ namespace CALYPSO
                 }
                 p_info.dr_last_payment = dr_last_payment;
                 adapter.Dispose();
-                cnn.Close();
+                cnn.Close();*/
             }
             catch (Exception ex)
             {
@@ -655,6 +797,10 @@ namespace CALYPSO
         }
         private void pb_payment_Click(object sender, EventArgs e)
         {
+            pB_add_pattient.Image = CALYPSO.Properties.Resources.Add_patient;
+            pb_search.Image = CALYPSO.Properties.Resources.Search;
+            pB_data_view.Image = CALYPSO.Properties.Resources.Print;
+            pb_payment.Image = CALYPSO.Properties.Resources.Payment_white;
             pnl_print.Visible = false;
             pnl_add_patient.Visible = false;
             pnl_search.Visible = false;
@@ -768,7 +914,7 @@ namespace CALYPSO
                             total_price = dgv_patients.Rows[i].Cells[6].Value.ToString()
 
                         });
-                        Totalprice += int.Parse(dgv_patients.Rows[i].Cells[6].Value.ToString());
+                       Totalprice += int.Parse(dgv_patients.Rows[i].Cells[8].Value.ToString());
                     }
                     p_info.SelectedDoctorName = cmb_select_dr.Text;
                     p_info.fromDate = dt_fromdate.Value.ToString("yyyy-MM-dd");
@@ -903,7 +1049,37 @@ namespace CALYPSO
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-     
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+              
+            }
+            catch (Exception ex )
+            {
+                MessageBox.Show("Hata :"+ex);
+
+                throw;
+            }
+        }
+
+        private void btn_print_payment_Click(object sender, EventArgs e)
+        {
+            Totalprice = 0;
+            lst2.Clear();
+            for (int i = 0; i < dgv_old_payment.Rows.Count - 1; i++)
+            {
+                lst2.Add(new payment_history
+                {
+                    doctor_name = dgv_old_payment.Rows[i].Cells[0].Value.ToString(),
+                    payment_date = dgv_old_payment.Rows[i].Cells[1].Value.ToString(),
+                    payment_price = dgv_old_payment.Rows[i].Cells[2].Value.ToString()
+                });
+                Totalprice += int.Parse(dgv_old_payment.Rows[i].Cells[2].Value.ToString());
+            }
+          frm_print_payment_history.frm1.frm_print_payment_history.ShowDialog();
+       }
+      }
     }
-}
+
 

@@ -25,6 +25,8 @@ namespace CALYPSO
         public frm_login()
         {
             InitializeComponent();
+            this.TransparencyKey = Color.Turquoise;
+            this.BackColor = Color.Turquoise;
             this.Opacity =.99;
             this.TopMost = true;
             this.BringToFront();
@@ -33,7 +35,8 @@ namespace CALYPSO
             txt_password.PasswordChar = '*';
             string connetionString = "Data Source=DESKTOP-93568HR\\SQL_2014;Initial Catalog=db_calypso;Integrated Security=True";
             cnn = new SqlConnection(connetionString);
-
+            //btn_eye.BackColor = Color.Transparent;
+            
         }
 
         private void btn_eye_MouseDown(object sender, MouseEventArgs e)
@@ -56,7 +59,7 @@ namespace CALYPSO
                 sql = "SELECT * FROM tbl_users WHERE password='" + md5password + "'and user_name='" + txt_user_name.Text + "'";
                 command = new SqlCommand(sql, cnn);
                 int count = 0;
-                
+
                 dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                 {
@@ -68,16 +71,21 @@ namespace CALYPSO
                 cnn.Close();
                 if (count == 1)
                 {
-                     this.Close();
+                    this.Close();
                     th = new Thread(openNewForm);
                     th.SetApartmentState(ApartmentState.STA);
                     th.Start();
                 }
                 else
                 {
-                    lbl_login_error.Text = "*Kullanıcı adı ya da şifre hatalı";
+                    lbl_error.Text = "*Kullanıcı adı ya da şifre hatalı";
                 }
             }
+            else
+            {
+                lbl_error.Text = "*Kullanıcı adı ya da şifre hatalı";
+            }
+            
         }
         public static string MD5eDonustur(string metin)
         {
@@ -101,7 +109,9 @@ namespace CALYPSO
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.Visible = false;
             frm_new_user.ShowDialog();
+            this.Visible = true;
         }
     }
 }

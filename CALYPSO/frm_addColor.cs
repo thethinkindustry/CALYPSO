@@ -20,6 +20,8 @@ namespace CALYPSO
         public frm_addColor()
         {
             InitializeComponent();
+            this.TransparencyKey = Color.Turquoise;
+            this.BackColor = Color.Turquoise;
             this.TopMost = true;
             this.BringToFront();
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -54,20 +56,45 @@ namespace CALYPSO
                 cnn.Close();
                 this.Close();
             }
+            else
+            {
+                lbl_error.Text = "Alan boş bırakılamaz.";
+            }
         }
 
         private void btn_delete_Click(object sender, EventArgs e)
         {
-            cnn.Open();
-            sql = "DELETE FROM tbl_colors  WHERE Color_name = @color";
-            command = new SqlCommand(sql, cnn);
-            command.Parameters.AddWithValue("@color",cmb_color_delete.SelectedItem.ToString());
-            command.ExecuteNonQuery();
-            command.Dispose();
-            cnn.Close();
-            this.Close();
+            if (cmb_color_delete.SelectedIndex>-1)
+            {
+                cnn.Open();
+                sql = "DELETE FROM tbl_colors  WHERE Color_name = @color";
+                command = new SqlCommand(sql, cnn);
+                command.Parameters.AddWithValue("@color", cmb_color_delete.SelectedItem.ToString());
+                command.ExecuteNonQuery();
+                command.Dispose();
+                cnn.Close();
+                this.Close();
+            }
+            else
+            {
+                lbl_er.Text = "*Kaldırılacak rengi seçiniz.";
+            }
+           
         }
 
-      
+        private void btn_add_colorpnl_Click(object sender, EventArgs e)
+        {
+            pnl_add_color.Visible = true;
+        }
+
+        private void btn_color_removepnl_Click(object sender, EventArgs e)
+        {
+            pnl_add_color.Visible = false;
+        }
+
+        private void btn_esc_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

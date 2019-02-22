@@ -38,6 +38,24 @@
   <ItemGroup>
     <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Desktop\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ForEachSMOEnumerator, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.ManagedConnections, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Desktop\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Desktop\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SmoExtended, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Desktop\Microsoft.SqlServer.SmoExtended.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
@@ -97,6 +115,12 @@
     <Compile Include="frm_print.Designer.cs">
       <DependentUpon>frm_print.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_print_payment_historycs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_print_payment_historycs.Designer.cs">
+      <DependentUpon>Frm_print_payment_historycs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_update_patient.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +140,7 @@
       <DependentUpon>frm_login.cs</DependentUpon>
     </Compile>
     <Compile Include="patient.cs" />
+    <Compile Include="payment_history.cs" />
     <Compile Include="print_informations.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,6 +169,9 @@
     <EmbeddedResource Include="frm_print.resx">
       <DependentUpon>frm_print.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Frm_print_payment_historycs.resx">
+      <DependentUpon>Frm_print_payment_historycs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frm_update_patient.resx">
       <DependentUpon>Frm_update_patient.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +189,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Report1.rdlc" />
     <EmbeddedResource Include="ReportPage.rdlc" />
@@ -180,6 +209,8 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\patient.datasource" />
+    <None Include="Properties\DataSources\payment_history.datasource" />
+    <None Include="Properties\DataSources\print_informations.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -200,6 +231,31 @@
     <Content Include="db_calypso.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\hasta-ekle.png" />
+    <None Include="Resources\hasta-takip.png" />
+    <None Include="Resources\ödemeler.png" />
+    <None Include="Resources\Yazdır.png" />
+    <None Include="Resources\ödemeler-ikon.png" />
+    <None Include="Resources\ödemeler-ikon-beyaz.png" />
+    <None Include="Resources\yazdır-ikon.png" />
+    <None Include="Resources\Yazdır-ikon-beyaz.png" />
+    <None Include="Resources\hasta-ekle-ikon.png" />
+    <None Include="Resources\hasta-ekle-ikon-beyaz.png" />
+    <None Include="Resources\hasta-takip-ikon.png" />
+    <None Include="Resources\hasta-takip-ikon-beyaz.png" />
+    <None Include="Resources\Add_patient.png" />
+    <None Include="Resources\Add_patient_white.png" />
+    <None Include="Resources\Payment.png" />
+    <None Include="Resources\Payment_white.png" />
+    <None Include="Resources\Print.png" />
+    <None Include="Resources\Print_white.png" />
+    <None Include="Resources\Search.png" />
+    <None Include="Resources\Search_white.png" />
+    <None Include="Resources\pnl_proccess_info.png" />
+    <None Include="Resources\pnl_save.png" />
+    <None Include="Resources\pnl_print.png" />
+    <None Include="Resources\pnl_search_patient.png" />
+    <None Include="Resources\pnl_payment.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
